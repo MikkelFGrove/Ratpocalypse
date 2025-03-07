@@ -24,6 +24,7 @@
         <module>CommonWeapon</module>
         <module>Weapon</module>
         <module>Collision</module>
+        <module>TileManager</module>
     </modules>
     <properties>
         <java>java</java>

@@ -1,5 +1,6 @@
 package dk.lima.main;
 
+import dk.lima.TileManager.TileManager;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -12,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Map;
@@ -24,6 +24,7 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
+    private final TileManager tileManager = new TileManager(gameWindow);
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -63,6 +64,7 @@ public class Main extends Application {
             public void handle(long now) {
                 update();
                 draw();
+                tileManager.draw();
                 gameData.getInputs().update();
             }
 
