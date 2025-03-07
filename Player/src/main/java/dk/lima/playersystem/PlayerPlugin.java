@@ -16,7 +16,7 @@ public class PlayerPlugin implements IGamePluginService {
 
     private Entity createPlayer(GameData gameData) {
         Entity playerModel = new Player();
-        playerModel.setPolygonCoordinates(5*4,4*4,4*4,4*4,3*4,4*4,2*4,3*4,2*4,5*4,5*4,2*4,5*4,6*4,6*4,4*4,7*4,4*4,7*4,3*4,7*4,5*4,8*4,5*4,8*4,4*4,8*4,3*4);
+        playerModel.setPolygonCoordinates(6.5*4, 3*4, 6*4, 3*4, 5.5*4, 2.5*4, 5.5*4, 2*4, 6*4, 1.5*4, 6.5*4, 1.5*4);
         playerModel.setX(gameData.getDisplayHeight()/2);
         playerModel.setY(gameData.getDisplayWidth()/2);
         playerModel.setRadius(8);
