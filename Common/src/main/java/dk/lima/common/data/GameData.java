@@ -4,11 +4,11 @@ public class GameData {
 
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
-    private final GameInputs keys = new GameInputs();
+    private final GameInputs inputs = new GameInputs();
 
 
     public GameInputs getInputs() {
-        return keys;
+        return inputs;
     }
 
     public void setDisplayWidth(int width) {

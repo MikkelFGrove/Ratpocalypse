@@ -4,7 +4,13 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.services.IGamePluginService;
+import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.commonplayer.Player;
+
+import java.util.Collection;
+import java.util.ServiceLoader;
+
+import static java.util.stream.Collectors.toList;
 
 public class PlayerPlugin implements IGamePluginService {
 
@@ -18,7 +24,7 @@ public class PlayerPlugin implements IGamePluginService {
     }
 
     private Entity createPlayer(GameData gameData) {
-        Entity playerModel = new Player();
+        Player playerModel = new Player();
 
         double[] baseCoordinates = {
                 5, 2,
@@ -42,6 +48,9 @@ public class PlayerPlugin implements IGamePluginService {
         playerModel.setRotation(0);
         playerModel.setColor(new int[]{255, 0, 255});
         playerModel.setPolygonCoordinates(baseCoordinates);
+
+        getWeaponSPI().stream().findFirst().ifPresent(playerModel::setIWeaponSPI);
+
         return playerModel;
     }
 
@@ -50,5 +59,9 @@ public class PlayerPlugin implements IGamePluginService {
         for (Entity player : world.getEntities(Player.class)) {
             world.removeEntity(player);
         }
+    }
+
+    private Collection<? extends IWeaponSPI> getWeaponSPI() {
+        return ServiceLoader.load(IWeaponSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

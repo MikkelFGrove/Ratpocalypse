@@ -33,6 +33,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
                 player.setRotation(player.getRotation() + rotationSpeed);
             }
+            if (gameData.getInputs().isDown(EGameInputs.ACTION)) {
+                Player p = (Player) player;
+                p.getIWeaponSPI().shoot(player, gameData, world);
+            }
 
             if (player.getX() < 0) {
                 player.setX(gameData.getDisplayWidth());
