@@ -21,6 +21,7 @@
         <module>CommonEnemy</module>
         <module>Player</module>
         <module>CommonPlayer</module>
+        <module>Collision</module>
     </modules>
     <properties>
         <java>java</java>
