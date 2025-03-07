@@ -17,6 +17,8 @@
         <module>Input</module>
         <module>CommonBullet</module>
         <module>Bullet</module>
+        <module>Enemy</module>
+        <module>CommonEnemy</module>
     </modules>
     <properties>
         <java>java</java>
