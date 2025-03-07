@@ -13,6 +13,8 @@
     <modules>
         <module>Core</module>
         <module>Common</module>
+        <module>CommonInput</module>
+        <module>Input</module>
     </modules>
     <properties>
         <java>java</java>
