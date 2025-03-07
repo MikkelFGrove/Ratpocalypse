@@ -27,15 +27,15 @@ public class PlayerPlugin implements IGamePluginService {
         Player playerModel = new Player();
 
         double[] baseCoordinates = {
-                5, 2,
-                5, 3,
-                5, 6,
-                3, 4,
-                7, 4,
-                5, 6,
-                4, 9,
-                6, 9,
-                5, 6
+                0.0, -3.44,
+                0.0, -2.44,
+                0.0, 0.56,
+                -2.0, -1.44,
+                2.0, -1.44,
+                0.0, 0.56,
+                -1.0, 3.56,
+                1.0, 3.56,
+                0.0, 0.56
         };
 
         for (int i = 0; i < baseCoordinates.length; i++) {
