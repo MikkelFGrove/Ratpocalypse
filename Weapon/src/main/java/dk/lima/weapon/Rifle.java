@@ -3,7 +3,7 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.weapon.IWeaponSPI;
-import dk.lima.commonBullet.IBulletSPI;
+import dk.lima.common.bullet.IBulletSPI;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

@@ -1,4 +1,4 @@
-package dk.lima.commonInput;
+package dk.lima.common.input;
 
 import dk.lima.common.data.GameData;
 import javafx.event.EventHandler;

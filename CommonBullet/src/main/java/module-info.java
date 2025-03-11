@@ -1,4 +1,4 @@
 module CommonBullet {
     requires Common;
-    exports dk.lima.commonBullet;
+    exports dk.lima.common.bullet;
 }

@@ -1,3 +1,5 @@
+import dk.lima.common.input.IInputSPI;
+
 module Core {
     requires javafx.graphics;
     requires Common;
@@ -8,5 +10,5 @@ module Core {
     uses dk.lima.common.services.IGamePluginService;
     uses dk.lima.common.services.IEntityProcessingService;
     uses dk.lima.common.services.IPostEntityProcessingService;
-    uses dk.lima.commonInput.IInputSPI;
+    uses IInputSPI;
 }

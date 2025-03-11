@@ -2,7 +2,7 @@ package dk.lima.input;
 
 import dk.lima.common.data.EGameInputs;
 import dk.lima.common.data.GameData;
-import dk.lima.commonInput.IInputSPI;
+import dk.lima.common.input.IInputSPI;
 import javafx.event.EventHandler;
 import javafx.scene.input.InputEvent;
 import javafx.scene.input.KeyCode;

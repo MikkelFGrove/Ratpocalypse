@@ -3,7 +3,7 @@ package dk.lima.main;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
-import dk.lima.commonInput.IInputSPI;
+import dk.lima.common.input.IInputSPI;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

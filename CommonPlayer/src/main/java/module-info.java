@@ -4,7 +4,7 @@ module CommonPlayer {
     requires Common;
     requires CommonWeapon;
 
-    exports dk.lima.commonplayer;
+    exports dk.lima.common.player;
 
     uses IWeaponSPI;
 }

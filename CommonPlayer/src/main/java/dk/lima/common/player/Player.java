@@ -1,4 +1,4 @@
-package dk.lima.commonplayer;
+package dk.lima.common.player;
 
 import dk.lima.common.data.Entity;
 import dk.lima.common.weapon.IWeaponSPI;

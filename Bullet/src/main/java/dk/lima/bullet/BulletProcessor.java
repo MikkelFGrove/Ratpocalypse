@@ -4,7 +4,7 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.services.IEntityProcessingService;
-import dk.lima.commonBullet.Bullet;
+import dk.lima.common.bullet.Bullet;
 
 public class BulletProcessor implements IEntityProcessingService {
     @Override

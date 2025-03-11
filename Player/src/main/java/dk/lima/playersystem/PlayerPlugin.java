@@ -5,7 +5,7 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
-import dk.lima.commonplayer.Player;
+import dk.lima.common.player.Player;
 
 import java.util.Collection;
 import java.util.ServiceLoader;

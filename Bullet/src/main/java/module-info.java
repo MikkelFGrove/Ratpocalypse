@@ -2,7 +2,7 @@ import dk.lima.bullet.BulletGamePlugin;
 import dk.lima.bullet.BulletProcessor;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.commonBullet.IBulletSPI;
+import dk.lima.common.bullet.IBulletSPI;
 
 module Bullet {
     requires CommonBullet;

@@ -1,4 +1,4 @@
-import dk.lima.commonInput.IInputSPI;
+import dk.lima.common.input.IInputSPI;
 
 module Input {
     requires Common;

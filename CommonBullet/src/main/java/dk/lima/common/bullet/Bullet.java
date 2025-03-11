@@ -1,4 +1,4 @@
-package dk.lima.commonBullet;
+package dk.lima.common.bullet;
 
 import dk.lima.common.data.Entity;
 

@@ -4,8 +4,8 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.commonBullet.Bullet;
-import dk.lima.commonBullet.IBulletSPI;
+import dk.lima.common.bullet.Bullet;
+import dk.lima.common.bullet.IBulletSPI;
 
 public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
     @Override
@@ -33,6 +33,7 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
         double bulletY = y + changeY * (radius + size);
 
         bullet.setRotation(rotation);
+        bullet.setRadius(size);
         bullet.setX(bulletX);
         bullet.setY(bulletY);
         bullet.setPolygonCoordinates(size, size, -size, size, -size, -size, size, -size);
