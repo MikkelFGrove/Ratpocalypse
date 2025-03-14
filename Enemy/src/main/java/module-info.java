@@ -5,6 +5,7 @@ module Enemy {
     requires Common;
     requires CommonEnemy;
     requires CommonWeapon;
+    requires CommonPlayer;
     provides IGamePluginService with dk.lima.enemy.EnemyPlugin;
     provides IEntityProcessingService with dk.lima.enemy.EnemyProcessor;
 

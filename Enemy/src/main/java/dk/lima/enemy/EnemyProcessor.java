@@ -4,6 +4,7 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.enemy.Enemy;
+import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.weapon.IWeaponSPI;
 
@@ -14,11 +15,15 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 public class EnemyProcessor implements IEntityProcessingService {
-
+    private Entity player;
 
     @Override
     public void process(GameData gameData, World world) {
-
+        if (player == null) {
+            for (Entity p : world.getEntities(Player.class)) {
+                player = p;
+            }
+        }
 
         Random rnd = new Random();
         for (Entity enemy : world.getEntities(Enemy.class)) {
