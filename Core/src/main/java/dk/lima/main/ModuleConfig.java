@@ -4,6 +4,7 @@ import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
 import dk.lima.common.input.IInputSPI;
+import dk.lima.common.services.IWaveSpawner;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -25,5 +26,9 @@ public class ModuleConfig {
 
     public static Collection<? extends IInputSPI> getIInputService() {
         return ServiceLoader.load(IInputSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    public static Collection<? extends IWaveSpawner> getIWaveSpawner() {
+        return ServiceLoader.load(IWaveSpawner.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
