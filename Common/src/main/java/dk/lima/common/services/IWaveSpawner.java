@@ -4,5 +4,5 @@ import dk.lima.common.data.World;
 
 
 public interface IWaveSpawner {
-    void update();
+    void update(GameData gameData, World world);
 }

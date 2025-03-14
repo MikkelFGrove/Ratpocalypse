@@ -4,6 +4,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.services.IWaveSpawner;
 
+
 import java.util.Collection;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -11,21 +12,13 @@ import java.util.stream.Collectors;
 
 public class WaveSpawner implements IWaveSpawner {
 
-    private int waveNumber = 1;
-    private int enemiesPerWave;
-
-
-    private GameData gameData;
-    private World world;
-
-    public WaveSpawner(GameData gameData, World world, int startEnemies) {
-        this.gameData = gameData;
-        this.world = world;
-        this.enemiesPerWave = startEnemies;
-    }
 
     @Override
-    public void update() {
+    public void update(GameData gameData, World world) {
+        if (gameData.getDuration().toSeconds() % 5 == 0) {
+            getEnemies().stream().findFirst().ifPresent(iEnemy -> {world.addEntity(iEnemy.createEnemy(gameData));});
+            System.out.println(getEnemies());
+        }
 
     }
 

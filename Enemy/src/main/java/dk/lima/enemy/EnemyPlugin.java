@@ -32,8 +32,8 @@ public class EnemyPlugin implements IGamePluginService, IEnemy {
         Enemy enemy = new Enemy();
         Random rnd = new Random();
         enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
-        enemy.setX(gameData.getDisplayHeight()/3);
-        enemy.setY(gameData.getDisplayWidth()/3);
+        enemy.setX(rnd.nextInt(gameData.getDisplayWidth()));
+        enemy.setY(rnd.nextInt(gameData.getDisplayHeight()));
         enemy.setRadius(5);
         enemy.setRotation(rnd.nextInt(90));
         getWeaponSPI().stream().findFirst().ifPresent(enemy::setIWeaponSPI);
