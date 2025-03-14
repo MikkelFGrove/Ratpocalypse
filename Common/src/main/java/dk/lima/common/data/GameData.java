@@ -1,11 +1,14 @@
 package dk.lima.common.data;
 
+import java.time.Duration;
+
 public class GameData {
 
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
     private final GameInputs inputs = new GameInputs();
-
+    private boolean isGameRunning = true;
+    private Duration duration = Duration.ofSeconds(0);
 
     public GameInputs getInputs() {
         return inputs;
@@ -28,4 +31,23 @@ public class GameData {
     }
 
 
+    public synchronized Duration getDuration() {
+        return duration;
+    }
+
+    public synchronized void setDuration(Duration duration) {
+        this.duration = duration;
+    }
+
+    public synchronized void addDuration(Duration duration) {
+        this.duration = this.duration.plus(duration);
+    }
+
+    public boolean isGameRunning() {
+        return isGameRunning;
+    }
+
+    public void setGameRunning(boolean gameRunning) {
+        isGameRunning = gameRunning;
+    }
 }
