@@ -83,7 +83,7 @@ public class Main extends Application {
                 update();
                 draw();
                 drawHUD();
-                tileManager.draw();
+                tileManager.draw(world);
                 gameData.getInputs().update();
             }
 
@@ -118,17 +118,16 @@ public class Main extends Application {
                 gameWindow.getChildren().add(polygon);
             }
 
-            if (!(entity instanceof Player) || !playerDrawn) {
-                if (entity instanceof Player) {
-                    playerDrawn = true;
-                    polygon.setTranslateX(entity.getX());
-                    polygon.setTranslateY(entity.getY());
-                } else {
-                    polygon.setTranslateX(entity.getX() - world.getPlayerX());
-                    polygon.setTranslateY(entity.getY() - world.getPlayerY());
-
-                }
+            if (entity instanceof Player) {
+                polygon.setTranslateX(gameData.getDisplayWidth() / 2);
+                polygon.setTranslateY(gameData.getDisplayHeight() / 2);
+            } else {
+                polygon.setTranslateX(entity.getX() + world.getPlayerX());
+                polygon.setTranslateY(entity.getY() + world.getPlayerY());
             }
+
+
+
             polygon.setRotate(entity.getRotation());
         }
     }

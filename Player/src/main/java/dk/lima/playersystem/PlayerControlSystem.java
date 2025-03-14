@@ -13,16 +13,22 @@ public class PlayerControlSystem implements IEntityProcessingService {
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
 
-            double velocity = 1;
+
+
+            double velocity = 2;
             double rotationSpeed = 3;
 
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
-                player.setX(player.getX() + changeX * velocity);
-                player.setY(player.getY() + changeY * velocity);
+                world.setPlayerX(world.getPlayerX() - changeX * velocity);
+                world.setPlayerY(world.getPlayerY() - changeY * velocity);
+                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
+                player.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2);
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                player.setX(player.getX() - changeX * velocity);
-                player.setY(player.getY() - changeY * velocity);
+                world.setPlayerX(world.getPlayerX() + changeX * velocity);
+                world.setPlayerY(world.getPlayerY() + changeY * velocity);
+                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
+                player.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2);
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
                 player.setRotation(player.getRotation() - rotationSpeed);
@@ -33,18 +39,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
             if (gameData.getInputs().isDown(EGameInputs.ACTION)) {
                 Player p = (Player) player;
                 p.getIWeaponSPI().shoot(player, gameData, world);
-            }
-
-            if (player.getX() < 0) {
-                player.setX(gameData.getDisplayWidth());
-            } else if (player.getX() > gameData.getDisplayWidth()) {
-                player.setX(0);
-            }
-
-            if (player.getY() < 0) {
-                player.setY(gameData.getDisplayHeight());
-            } else if (player.getY() > gameData.getDisplayHeight()) {
-                player.setY(0);
             }
 
             Coordinate playerPosition = new Coordinate(player.getX(), player.getY());

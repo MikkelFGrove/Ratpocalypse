@@ -22,11 +22,9 @@ public class Rifle implements IWeaponSPI{
     @Override
     public void shoot(Entity e, GameData gameData, World world) {
         if(System.currentTimeMillis() - lastShot > fireRate) {
-            double x = e.getX();
-            double y = e.getY();
             double rotation = e.getRotation();
             double radius = e.getRadius();
-            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(x,y,rotation,radius));});
+            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(e.getX(),e.getY(),rotation,radius));});
             lastShot = System.currentTimeMillis();
         }
 

@@ -1,6 +1,7 @@
 package dk.lima.TileManager;
 
 import dk.lima.common.data.GameData;
+import dk.lima.common.data.World;
 
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,6 +27,9 @@ public class TileManager {
     // World settings
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
+
+    private double playerCoordinateX;
+    private double playerCoordinateY;
 
 
     // Needed for the tile management
@@ -104,16 +108,27 @@ public class TileManager {
 
     }
 
-    public void draw() {
+    public void draw(World world) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for(int col = 0;  col < maxWorldCol; col++) {
-            for(int row = 0; row < maxWorldRow; row++) {
-                int tileNum = mapTileNum[col][row];
-                double x = col * tileSize;
-                double y = row * tileSize;
-                if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
-                    gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
-                }
+
+        int worldCol = 0;
+        int worldRow = 0;
+
+        playerCoordinateX = world.getPlayerX() - (double) gameData.getDisplayWidth() / 2;
+        playerCoordinateY = world.getPlayerY() - (double) gameData.getDisplayHeight() / 2;
+
+        while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
+            int tileNum = mapTileNum[worldCol][worldRow];
+            double x = worldCol * tileSize + playerCoordinateX ;
+            double y = worldRow * tileSize + playerCoordinateY ;
+            if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
+                gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
+            }
+            worldCol++;
+
+            if(worldCol == maxWorldCol) {
+                worldCol = 0;
+                worldRow++;
             }
         }
     }
