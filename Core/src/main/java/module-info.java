@@ -4,6 +4,7 @@ module Core {
     requires javafx.graphics;
     requires Common;
     requires CommonInput;
+    requires CommonPlayer;
     requires TileManager;
 
     opens dk.lima.main to javafx.graphics;
