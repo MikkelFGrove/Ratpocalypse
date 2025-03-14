@@ -29,6 +29,7 @@ public class Main extends Application {
     private final TileManager tileManager = new TileManager(gameWindow);
 
     private Text timeText;
+    private Text scoreText;
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -42,6 +43,11 @@ public class Main extends Application {
         timeText.setFont(new Font("Arial", 20));
         timeText.setFill(Color.WHITE);
         gameWindow.getChildren().add(timeText);
+
+        scoreText = new Text(10, 40, "Score: 0");
+        scoreText.setFont(new Font("Arial", 20));
+        scoreText.setFill(Color.WHITE);
+        gameWindow.getChildren().add(scoreText);
 
 
         Scene scene = new Scene(gameWindow);
@@ -115,6 +121,7 @@ public class Main extends Application {
 
     private void drawHUD() {
         timeText.setText(String.format("Time: %d:%d", gameData.getDuration().toMinutes() % 60, gameData.getDuration().toSeconds() % 60));
+        scoreText.setText(String.format("Score: %d", gameData.getScore()));
     }
 }
 
