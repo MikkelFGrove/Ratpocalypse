@@ -12,9 +12,14 @@ public class BulletProcessor implements IEntityProcessingService {
         for (Entity bullet : world.getEntities(Bullet.class)) {
             double changeX = Math.cos(Math.toRadians(bullet.getRotation()));
             double changeY = Math.sin(Math.toRadians(bullet.getRotation()));
-
             bullet.setX(bullet.getX() + changeX * 3);
             bullet.setY(bullet.getY() + changeY * 3);
+            if(bullet.getX() + world.getPlayerX() > gameData.getDisplayWidth() ||
+            bullet.getY() + world.getPlayerY() > gameData.getDisplayHeight() ||
+            bullet.getX() + world.getPlayerX() < 0 ||
+            bullet.getY() + world.getPlayerY() < 0) {
+                world.removeEntity(bullet);
+            }
         }
     }
 }

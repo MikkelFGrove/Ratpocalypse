@@ -17,8 +17,18 @@ import static java.util.stream.Collectors.toList;
 public class EnemyPlugin implements IGamePluginService, IEnemy {
     @Override
     public void start(GameData gameData, World world) {
-        Entity enemy = createEnemy(gameData);
-        world.addEntity(enemy);
+        Entity enemy1 = createEnemy(gameData);
+        Entity enemy2 = createEnemy(gameData);
+        Entity enemy3 = createEnemy(gameData);
+        enemy1.setX(100);
+        enemy1.setY(100);
+        enemy2.setX(200);
+        enemy2.setY(200);
+        enemy3.setX(700);
+        enemy3.setY(700);
+        world.addEntity(enemy1);
+        world.addEntity(enemy2);
+        world.addEntity(enemy3);
     }
 
     @Override

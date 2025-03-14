@@ -4,6 +4,7 @@ import dk.lima.TileManager.TileManager;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
@@ -27,6 +28,7 @@ public class Main extends Application {
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
     private final TileManager tileManager = new TileManager(gameWindow);
+    private boolean playerDrawn = false;
 
     private Text timeText;
     private Text scoreText;
@@ -81,7 +83,7 @@ public class Main extends Application {
                 update();
                 draw();
                 drawHUD();
-                tileManager.draw();
+                tileManager.draw(world);
                 gameData.getInputs().update();
             }
 
@@ -115,8 +117,17 @@ public class Main extends Application {
                 polygons.put(entity, polygon);
                 gameWindow.getChildren().add(polygon);
             }
-            polygon.setTranslateX(entity.getX());
-            polygon.setTranslateY(entity.getY());
+
+            if (entity instanceof Player) {
+                polygon.setTranslateX(gameData.getDisplayWidth() / 2);
+                polygon.setTranslateY(gameData.getDisplayHeight() / 2);
+            } else {
+                polygon.setTranslateX(entity.getX() + world.getPlayerX());
+                polygon.setTranslateY(entity.getY() + world.getPlayerY());
+            }
+
+
+
             polygon.setRotate(entity.getRotation());
         }
     }
