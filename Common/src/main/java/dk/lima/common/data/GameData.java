@@ -9,6 +9,7 @@ public class GameData {
     private final GameInputs inputs = new GameInputs();
     private boolean isGameRunning = true;
     private Duration duration = Duration.ofSeconds(0);
+    private int score = 0;
 
     public GameInputs getInputs() {
         return inputs;
@@ -43,11 +44,23 @@ public class GameData {
         this.duration = this.duration.plus(duration);
     }
 
-    public boolean isGameRunning() {
+    public synchronized boolean isGameRunning() {
         return isGameRunning;
     }
 
-    public void setGameRunning(boolean gameRunning) {
+    public synchronized void setGameRunning(boolean gameRunning) {
         isGameRunning = gameRunning;
+    }
+
+    public synchronized int getScore() {
+        return score;
+    }
+
+    public synchronized void setScore(int score) {
+        this.score = score;
+    }
+
+    public synchronized void addScore(int score) {
+        this.score += score;
     }
 }

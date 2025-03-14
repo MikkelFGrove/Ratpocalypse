@@ -15,6 +15,10 @@ public class TimerTask implements Runnable{
     public void run() {
         if (gameData.isGameRunning()) {
             gameData.addDuration(Duration.ofSeconds(1));
+
+            if (gameData.getDuration().toSeconds() % 10 == 0) {
+                gameData.addScore(1);
+            }
         }
     }
 }
