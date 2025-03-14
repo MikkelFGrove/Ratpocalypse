@@ -15,8 +15,6 @@
     <file url="file://$PROJECT_DIR$/CommonInput/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CommonPlayer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CommonPlayer/src/main/resources" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/CommonTimer/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/CommonTimer/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CommonWeapon/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/CommonWeapon/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Core/src/main/java" charset="UTF-8" />
@@ -31,8 +29,19 @@
     <file url="file://$PROJECT_DIR$/Test/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TileManager/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/TileManager/src/main/resources" charset="UTF-8" />
+<<<<<<< HEAD
+=======
     <file url="file://$PROJECT_DIR$/Timer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Timer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WaveSpawner/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WaveSpawner/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Weapon/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/Weapon/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TileManager/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/TileManager/src/main/resources" charset="UTF-8" />
+>>>>>>> origin/IR4-61-the-system-spawns-enemies-according-to-the-time-passed
+    <file url="file://$PROJECT_DIR$/WaveSpawner/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/WaveSpawner/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Weapon/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/Weapon/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
