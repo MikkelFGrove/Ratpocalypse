@@ -11,6 +11,8 @@ mods-mvn
 .idea/compiler.xml
 .idea/encodings.xml
 .idea/libraries/
+.idea/encodings.xml
+.idea/misc.xml
 *.iws
 *.iml
 *.ipr
