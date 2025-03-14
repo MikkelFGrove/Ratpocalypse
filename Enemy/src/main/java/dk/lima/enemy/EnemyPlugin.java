@@ -4,6 +4,7 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.enemy.Enemy;
+import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 
@@ -13,7 +14,7 @@ import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class EnemyPlugin implements IGamePluginService {
+public class EnemyPlugin implements IGamePluginService, IEnemy {
     @Override
     public void start(GameData gameData, World world) {
         Entity enemy = createEnemy(gameData);
@@ -27,7 +28,7 @@ public class EnemyPlugin implements IGamePluginService {
         }
     }
 
-    private Entity createEnemy(GameData gameData) {
+    public Entity createEnemy(GameData gameData) {
         Enemy enemy = new Enemy();
         Random rnd = new Random();
         enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
