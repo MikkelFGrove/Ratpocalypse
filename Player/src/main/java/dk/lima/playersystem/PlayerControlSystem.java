@@ -13,22 +13,23 @@ public class PlayerControlSystem implements IEntityProcessingService {
             double changeX = Math.cos(angle);
             double changeY = Math.sin(angle);
 
-
-
             double velocity = 2;
             double rotationSpeed = 3;
 
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
-                world.setPlayerX(world.getPlayerX() - changeX * velocity);
-                world.setPlayerY(world.getPlayerY() - changeY * velocity);
-                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
-                player.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2);
+                world.setPlayerPosition(new Coordinate(world.getPlayerPosition().getX()- changeX * velocity,
+                        world.getPlayerPosition().getY() - changeY * velocity) );
+
+                player.setPosition(new Coordinate(-world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2,
+                        -world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2));
+
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                world.setPlayerX(world.getPlayerX() + changeX * velocity);
-                world.setPlayerY(world.getPlayerY() + changeY * velocity);
-                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
-                player.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2);
+                world.setPlayerPosition(new Coordinate(world.getPlayerPosition().getX() + changeX * velocity,
+                        world.getPlayerPosition().getY() + changeY * velocity) );
+
+                player.setPosition(new Coordinate(-world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2,
+                        -world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2));
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
                 player.setRotation(player.getRotation() - rotationSpeed);
@@ -41,7 +42,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 p.getIWeaponSPI().shoot(player, gameData, world);
             }
 
-            Coordinate playerPosition = new Coordinate(player.getX(), player.getY());
+            Coordinate playerPosition = new Coordinate(player.getPosition().getX(), player.getPosition().getY());
             world.setPlayerPosition(playerPosition);
         }
     }

@@ -1,5 +1,6 @@
 package dk.lima.bullet;
 
+import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -34,8 +35,7 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
 
         bullet.setRotation(rotation);
         bullet.setRadius(size);
-        bullet.setX(bulletX);
-        bullet.setY(bulletY);
+        bullet.setPosition(new Coordinate(bulletX, bulletY));
         bullet.setPolygonCoordinates(size, size, -size, size, -size, -size, size, -size);
         return bullet;
     }

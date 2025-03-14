@@ -109,8 +109,8 @@ public class Main extends Application {
                 polygon.setTranslateX(gameData.getDisplayWidth() / 2);
                 polygon.setTranslateY(gameData.getDisplayHeight() / 2);
             } else {
-                polygon.setTranslateX(entity.getX() + world.getPlayerX());
-                polygon.setTranslateY(entity.getY() + world.getPlayerY());
+                polygon.setTranslateX(entity.getPosition().getX() + world.getPlayerPosition().getX());
+                polygon.setTranslateY(entity.getPosition().getY() + world.getPlayerPosition().getY());
             }
 
             polygon.setRotate(entity.getRotation());

@@ -21,8 +21,8 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
 
                 // Using Pythagoras' distance formula
-                double xDistance = e.getX() - e2.getX();
-                double yDistance = e.getY() - e2.getY();
+                double xDistance = e.getPosition().getX() - e2.getPosition().getX();
+                double yDistance = e.getPosition().getY() - e2.getPosition().getY();
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
                 if (distance < (e.getRadius() + e2.getRadius())) {

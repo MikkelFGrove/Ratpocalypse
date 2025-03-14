@@ -24,7 +24,7 @@ public class Rifle implements IWeaponSPI{
         if(System.currentTimeMillis() - lastShot > fireRate) {
             double rotation = e.getRotation();
             double radius = e.getRadius();
-            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(e.getX(),e.getY(),rotation,radius));});
+            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(e.getPosition().getX(), e.getPosition().getY(),rotation,radius));});
             lastShot = System.currentTimeMillis();
         }
 
