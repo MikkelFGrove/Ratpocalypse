@@ -18,14 +18,15 @@ public class EnemyProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity enemy : world.getEntities(Enemy.class)) {
-            Coordinate start = new Coordinate(enemy.getX(), enemy.getY());
-            Coordinate nextStep = new Coordinate(enemy.getX(), enemy.getY());
+            Coordinate start = new Coordinate(enemy.getPosition().getX(), enemy.getPosition().getY());
+            Coordinate nextStep = new Coordinate(enemy.getPosition().getX(), enemy.getPosition().getY());
             if (getPathfindingSPI().stream().findFirst().isPresent() && world.getPlayerPosition() != null) {
+
                 nextStep = getPathfindingSPI().stream().findFirst().get().calculateNextStep(start, world.getPlayerPosition());
+
             }
 
-            enemy.setX(nextStep.getX());
-            enemy.setY(nextStep.getY());
+            enemy.setPosition(nextStep);
 
             double ratio = (nextStep.getY() - start.getY()) / (nextStep.getX() - start.getX());
             double angle = Math.toDegrees(Math.atan(ratio));

@@ -1,5 +1,6 @@
 package dk.lima.enemy;
 
+import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -20,12 +21,12 @@ public class EnemyPlugin implements IGamePluginService, IEnemy {
         Entity enemy1 = createEnemy(gameData);
         Entity enemy2 = createEnemy(gameData);
         Entity enemy3 = createEnemy(gameData);
-        enemy1.setX(100);
-        enemy1.setY(100);
-        enemy2.setX(200);
-        enemy2.setY(200);
-        enemy3.setX(700);
-        enemy3.setY(700);
+
+        enemy1.setPosition(new Coordinate(100, 100));
+
+        enemy2.setPosition(new Coordinate(200, 200));
+
+        enemy3.setPosition(new Coordinate(700, 700));
         world.addEntity(enemy1);
         world.addEntity(enemy2);
         world.addEntity(enemy3);
@@ -42,8 +43,7 @@ public class EnemyPlugin implements IGamePluginService, IEnemy {
         Enemy enemy = new Enemy();
         Random rnd = new Random();
         enemy.setPolygonCoordinates(-5,-5,10,0,-5,5);
-        enemy.setX(rnd.nextInt(gameData.getDisplayWidth()));
-        enemy.setY(rnd.nextInt(gameData.getDisplayHeight()));
+        enemy.setPosition(new Coordinate(rnd.nextInt(gameData.getDisplayWidth()), rnd.nextInt(gameData.getDisplayHeight())));
         enemy.setRadius(5);
         enemy.setRotation(rnd.nextInt(90));
         getWeaponSPI().stream().findFirst().ifPresent(enemy::setIWeaponSPI);
