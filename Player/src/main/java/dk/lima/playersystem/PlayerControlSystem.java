@@ -1,9 +1,6 @@
 package dk.lima.playersystem;
 
-import dk.lima.common.data.EGameInputs;
-import dk.lima.common.data.Entity;
-import dk.lima.common.data.GameData;
-import dk.lima.common.data.World;
+import dk.lima.common.data.*;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.player.Player;
 
@@ -49,6 +46,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
             } else if (player.getY() > gameData.getDisplayHeight()) {
                 player.setY(0);
             }
+
+            Coordinate playerPosition = new Coordinate(player.getX(), player.getY());
+            world.setPlayerPosition(playerPosition);
         }
     }
 }

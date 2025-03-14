@@ -13,6 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private Coordinate playerPosition;
 
     public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
@@ -47,4 +48,11 @@ public class World {
         return entityMap.get(ID);
     }
 
+    public Coordinate getPlayerPosition() {
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(Coordinate playerPosition) {
+        this.playerPosition = playerPosition;
+    }
 }
