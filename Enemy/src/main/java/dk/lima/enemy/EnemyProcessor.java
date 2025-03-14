@@ -6,7 +6,6 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.enemy.Enemy;
 import dk.lima.common.pathfinding.IPathfindingSPI;
-import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.weapon.IWeaponSPI;
 
