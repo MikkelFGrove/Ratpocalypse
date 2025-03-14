@@ -26,6 +26,8 @@
         <module>Collision</module>
         <module>TileManager</module>
         <module>Timer</module>
+        <module>CommonPathfinding</module>
+        <module>Pathfinding</module>
     </modules>
     <properties>
         <java>java</java>
