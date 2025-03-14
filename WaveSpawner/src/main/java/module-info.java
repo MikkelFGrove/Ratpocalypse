@@ -1,9 +1,9 @@
-import dk.lima.common.services.IWaveSpawner;
-import dk.lima.wavespawner.WaveSpawner;
+import dk.lima.common.services.ITimeTask;
+import dk.lima.wavespawner.WaveSpawnerTask;
 
 module WaveSpawner {
     uses dk.lima.common.enemy.IEnemy;
     requires Common;
     requires CommonEnemy;
-    provides IWaveSpawner with WaveSpawner;
+    provides ITimeTask with WaveSpawnerTask;
 }

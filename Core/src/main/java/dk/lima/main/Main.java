@@ -97,8 +97,6 @@ public class Main extends Application {
         for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
             postEntityProcessorService.process(gameData, world);
         }
-
-        ModuleConfig.getIWaveSpawner().stream().findFirst().ifPresent(wave -> wave.update(gameData, world));
     }
 
     private void draw() {
