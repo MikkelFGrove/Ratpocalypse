@@ -7,16 +7,20 @@ public class AStarPathfinding implements IPathfindingSPI {
     @Override
     public Coordinate calculateNextStep(Coordinate start, Coordinate goal) {
         Coordinate result = new Coordinate(start.getX(), start.getY());
-        if (goal.getY() > start.getY()) {
-            result.setY(result.getY() + 1);
-        } else if (goal.getY() < start.getY()) {
-            result.setY(result.getY() - 1);
+        double scalingFactor = 0.2;
+        int yDiff = (int) (goal.getY() - start.getY());
+        int xDiff = (int) (goal.getX() - start.getX());
+
+        if (yDiff > 0) {
+            result.setY(result.getY() + scalingFactor);
+        } else if (yDiff < 0) {
+            result.setY(result.getY() - scalingFactor);
         }
 
-        if (goal.getX() > start.getX()) {
-            result.setX(result.getX() + 1);
-        } else if (goal.getX() < start.getX()) {
-            result.setX(result.getX() - 1);
+        if (xDiff > 0) {
+            result.setX(result.getX() + scalingFactor);
+        } else if (xDiff < 0) {
+            result.setX(result.getX() - scalingFactor);
         }
 
         return result;
