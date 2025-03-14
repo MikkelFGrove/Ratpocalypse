@@ -13,6 +13,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Map;
@@ -26,6 +28,9 @@ public class Main extends Application {
     private final Pane gameWindow = new Pane();
     private final TileManager tileManager = new TileManager(gameWindow);
 
+    private Text timeText;
+    private Text scoreText;
+
     public static void main(String[] args) {
         launch(Main.class);
     }
@@ -33,6 +38,17 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+
+        timeText = new Text(10, 20, "Time: ");
+        timeText.setFont(new Font("Arial", 20));
+        timeText.setFill(Color.WHITE);
+        gameWindow.getChildren().add(timeText);
+
+        scoreText = new Text(10, 40, "Score: 0");
+        scoreText.setFont(new Font("Arial", 20));
+        scoreText.setFill(Color.WHITE);
+        gameWindow.getChildren().add(scoreText);
+
 
         Scene scene = new Scene(gameWindow);
         ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
@@ -64,6 +80,7 @@ public class Main extends Application {
             public void handle(long now) {
                 update();
                 draw();
+                drawHUD();
                 tileManager.draw();
                 gameData.getInputs().update();
             }
@@ -100,7 +117,11 @@ public class Main extends Application {
             polygon.setTranslateY(entity.getY());
             polygon.setRotate(entity.getRotation());
         }
+    }
 
+    private void drawHUD() {
+        timeText.setText(String.format("Time: %d:%d", gameData.getDuration().toMinutes() % 60, gameData.getDuration().toSeconds() % 60));
+        scoreText.setText(String.format("Score: %d", gameData.getScore()));
     }
 }
 

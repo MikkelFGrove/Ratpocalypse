@@ -25,6 +25,7 @@
         <module>Weapon</module>
         <module>Collision</module>
         <module>TileManager</module>
+        <module>Timer</module>
     </modules>
     <properties>
         <java>java</java>
