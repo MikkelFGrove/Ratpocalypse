@@ -17,7 +17,6 @@ public class WaveSpawner implements IWaveSpawner {
     public void update(GameData gameData, World world) {
         if (gameData.getDuration().toSeconds() % 5 == 0) {
             getEnemies().stream().findFirst().ifPresent(iEnemy -> {world.addEntity(iEnemy.createEnemy(gameData));});
-            System.out.println(getEnemies());
         }
 
     }
