@@ -55,13 +55,11 @@
             <groupId>dk.lima</groupId>
             <artifactId>TileManager</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
-            <artifactId>CommonPlayer</artifactId>
+            <artifactId>CommonGraphics</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
     <build>

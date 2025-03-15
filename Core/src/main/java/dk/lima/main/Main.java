@@ -4,6 +4,7 @@ import dk.lima.TileManager.TileManager;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.graphics.IGraphicsComponent;
 import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
@@ -14,8 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.Map;
@@ -30,9 +29,6 @@ public class Main extends Application {
     private final TileManager tileManager = new TileManager(gameWindow);
     private boolean playerDrawn = false;
 
-    private Text timeText;
-    private Text scoreText;
-
     public static void main(String[] args) {
         launch(Main.class);
     }
@@ -40,25 +36,18 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-
-        timeText = new Text(10, 20, "Time: ");
-        timeText.setFont(new Font("Arial", 20));
-        timeText.setFill(Color.WHITE);
-        gameWindow.getChildren().add(timeText);
-
-        scoreText = new Text(10, 40, "Score: 0");
-        scoreText.setFont(new Font("Arial", 20));
-        scoreText.setFill(Color.WHITE);
-        gameWindow.getChildren().add(scoreText);
-
-
         Scene scene = new Scene(gameWindow);
+
         ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
             scene.setOnKeyPressed(service.getInputHandlerPress(gameData));
         });
         ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
             scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
         });
+
+        for (IGraphicsComponent graphicsComponent : ModuleConfig.getGraphicComponents()) {
+            gameWindow.getChildren().add(graphicsComponent.createComponent(gameData));
+        }
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
@@ -82,11 +71,10 @@ public class Main extends Application {
             public void handle(long now) {
                 update();
                 draw();
-                drawHUD();
+                updateGraphics();
                 tileManager.draw(world);
                 gameData.getInputs().update();
             }
-
         }.start();
     }
 
@@ -132,9 +120,10 @@ public class Main extends Application {
         }
     }
 
-    private void drawHUD() {
-        timeText.setText(String.format("Time: %d:%d", gameData.getDuration().toMinutes() % 60, gameData.getDuration().toSeconds() % 60));
-        scoreText.setText(String.format("Score: %d", gameData.getScore()));
+    private void updateGraphics() {
+        for (IGraphicsComponent graphicsComponent : ModuleConfig.getGraphicComponents()) {
+            graphicsComponent.updateComponent(gameData);
+        }
     }
 }
 

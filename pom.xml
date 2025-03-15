@@ -29,6 +29,8 @@
         <module>Timer</module>
         <module>CommonPathfinding</module>
         <module>Pathfinding</module>
+        <module>CommonGraphics</module>
+        <module>HUD</module>
     </modules>
     <properties>
         <java>java</java>
@@ -102,7 +104,9 @@
                         I still wanted to do it for clarity, but for some reason that results
                         in "java.lang.module.FindException: Module monitor.observer.zero not found";
                         strange... -->
+                        <!--
                         <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument>
+                        -->
                         <argument>--module=Core/dk.lima.main.Main</argument>
                         <argument>--add-modules javafx.graphics</argument>
                     </arguments>
