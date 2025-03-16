@@ -17,6 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -27,6 +29,7 @@ public class Main extends Application {
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
     private final TileManager tileManager = new TileManager(gameWindow);
+    private List<IGraphicsComponent> graphicsComponents;
     private boolean playerDrawn = false;
 
     public static void main(String[] args) {
@@ -45,7 +48,8 @@ public class Main extends Application {
             scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
         });
 
-        for (IGraphicsComponent graphicsComponent : ModuleConfig.getGraphicComponents()) {
+        graphicsComponents = new ArrayList<>(ModuleConfig.getGraphicComponents());
+        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData));
         }
 
@@ -121,7 +125,7 @@ public class Main extends Application {
     }
 
     private void updateGraphics() {
-        for (IGraphicsComponent graphicsComponent : ModuleConfig.getGraphicComponents()) {
+        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
             graphicsComponent.updateComponent(gameData);
         }
     }

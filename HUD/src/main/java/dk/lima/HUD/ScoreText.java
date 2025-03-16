@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class ScoreText implements IGraphicsComponent {
-    private static Text scoreText;
+    private Text scoreText;
 
     @Override
     public Node createComponent(GameData gameData) {

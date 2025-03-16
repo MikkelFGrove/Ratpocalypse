@@ -8,7 +8,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 public class TimeText implements IGraphicsComponent {
-    private static Text timeText;
+    private Text timeText;
 
     @Override
     public Node createComponent(GameData gameData) {
