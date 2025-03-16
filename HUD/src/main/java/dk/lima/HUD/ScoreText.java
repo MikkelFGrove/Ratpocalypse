@@ -1,6 +1,7 @@
 package dk.lima.HUD;
 
 import dk.lima.common.data.GameData;
+import dk.lima.common.data.World;
 import dk.lima.common.graphics.IGraphicsComponent;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
@@ -19,7 +20,7 @@ public class ScoreText implements IGraphicsComponent {
     }
 
     @Override
-    public void updateComponent(GameData gameData) {
+    public void updateComponent(GameData gameData, World world) {
         scoreText.setText(String.format("Score: %d", gameData.getScore()));
     }
 

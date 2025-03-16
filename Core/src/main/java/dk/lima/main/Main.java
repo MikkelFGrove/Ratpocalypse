@@ -1,6 +1,5 @@
 package dk.lima.main;
 
-import dk.lima.TileManager.TileManager;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -28,7 +27,6 @@ public class Main extends Application {
     private final World world = new World();
     private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    private final TileManager tileManager = new TileManager(gameWindow);
     private List<IGraphicsComponent> graphicsComponents;
     private boolean playerDrawn = false;
 
@@ -76,7 +74,6 @@ public class Main extends Application {
                 update();
                 draw();
                 updateGraphics();
-                tileManager.draw(world);
                 gameData.getInputs().update();
             }
         }.start();
@@ -126,7 +123,7 @@ public class Main extends Application {
 
     private void updateGraphics() {
         for (IGraphicsComponent graphicsComponent : graphicsComponents) {
-            graphicsComponent.updateComponent(gameData);
+            graphicsComponent.updateComponent(gameData, world);
         }
     }
 }

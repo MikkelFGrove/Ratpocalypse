@@ -3,6 +3,8 @@ package dk.lima.TileManager;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 
+import dk.lima.common.graphics.IGraphicsComponent;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager {
+public class TileManager implements IGraphicsComponent {
 
     // Screen Settings
     final int originalTileSize = 16; // 16x16 tile
@@ -33,28 +35,11 @@ public class TileManager {
 
 
     // Needed for the tile management
-    private final Pane game;
-    private final GameData gameData;
-    private final Tile[] tiles;
-    private final int[][] mapTileNum;
-    private final Canvas canvas;
-    private final GraphicsContext gc;
+    private Tile[] tiles;
+    private int[][] mapTileNum;
+    private Canvas canvas;
+    private GraphicsContext gc;
 
-
-    public TileManager(Pane pane) {
-        this.game = pane;
-        gameData = new GameData();
-        tiles = new Tile[30];
-        mapTileNum = new int[maxWorldCol][maxWorldRow];
-
-        canvas = new Canvas(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gc = canvas.getGraphicsContext2D();
-        game.getChildren().add(canvas);
-
-        getFileImage();
-        loadMap("/TileManager/Maps/worldMap01.txt");
-
-    }
 
     public void getFileImage() {
         tiles[0] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/smallPath03.png")));
@@ -108,7 +93,22 @@ public class TileManager {
 
     }
 
-    public void draw(World world) {
+    @Override
+    public Node createComponent(GameData gameData) {
+        tiles = new Tile[30];
+        mapTileNum = new int[maxWorldCol][maxWorldRow];
+
+        canvas = new Canvas(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        gc = canvas.getGraphicsContext2D();
+
+        getFileImage();
+        loadMap("/TileManager/Maps/worldMap01.txt");
+
+        return canvas;
+    }
+
+    @Override
+    public void updateComponent(GameData gameData, World world) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         int worldCol = 0;
@@ -131,6 +131,11 @@ public class TileManager {
                 worldRow++;
             }
         }
+    }
+
+    @Override
+    public void showComponent(Boolean shouldShow) {
+        canvas.setVisible(shouldShow);
     }
 }
 
