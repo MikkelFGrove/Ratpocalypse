@@ -115,8 +115,6 @@ public class Main extends Application {
                 polygon.setTranslateY(entity.getY() + world.getPlayerY());
             }
 
-
-
             polygon.setRotate(entity.getRotation());
         }
     }
