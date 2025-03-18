@@ -29,6 +29,8 @@
         <module>Timer</module>
         <module>CommonPathfinding</module>
         <module>Pathfinding</module>
+        <module>CommonGraphics</module>
+        <module>HUD</module>
         <module>TaskSchedulerPlugin</module>
     </modules>
     <properties>
