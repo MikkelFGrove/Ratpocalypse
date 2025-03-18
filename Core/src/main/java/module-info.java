@@ -1,4 +1,5 @@
 import dk.lima.common.input.IInputSPI;
+import dk.lima.common.services.ITimeTask;
 
 module Core {
     requires javafx.graphics;
@@ -12,5 +13,5 @@ module Core {
     uses dk.lima.common.services.IEntityProcessingService;
     uses dk.lima.common.services.IPostEntityProcessingService;
     uses IInputSPI;
-    uses dk.lima.common.services.IWaveSpawner;
+    uses ITimeTask;
 }

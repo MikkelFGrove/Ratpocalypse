@@ -1,7 +1,7 @@
-import dk.lima.common.services.IGamePluginService;
+import dk.lima.common.services.ITimeTask;
 
 module Timer {
     requires Common;
 
-    provides IGamePluginService with dk.lima.timer.GameTimer;
+    provides ITimeTask with dk.lima.timer.ClockTask;
 }

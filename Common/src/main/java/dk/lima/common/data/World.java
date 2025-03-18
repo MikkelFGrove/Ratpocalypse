@@ -17,7 +17,7 @@ public class World {
     private double playerY;
     private Coordinate playerPosition;
 
-    public String addEntity(Entity entity) {
+    synchronized public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
     }
