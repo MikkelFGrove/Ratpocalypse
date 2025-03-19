@@ -12,7 +12,7 @@ public class ScoreText implements IGraphicsComponent {
     private Text scoreText;
 
     @Override
-    public Node createComponent(GameData gameData) {
+    public Node createComponent(GameData gameData, World world) {
         scoreText = new Text(10, 40, "Score: 0");
         scoreText.setFont(new Font("Arial", 20));
         scoreText.setFill(Color.WHITE);

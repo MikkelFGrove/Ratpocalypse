@@ -32,6 +32,7 @@
         <module>CommonGraphics</module>
         <module>HUD</module>
         <module>TaskSchedulerPlugin</module>
+        <module>EntityRenderer</module>
     </modules>
     <properties>
         <java>java</java>
