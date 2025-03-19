@@ -2,10 +2,11 @@ package dk.lima.common.input;
 
 import dk.lima.common.data.GameData;
 import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.input.InputEvent;
 
 public interface IInputSPI {
-    public EventHandler<InputEvent> getInputHandlerPress(GameData gameData);
+    EventType<? extends InputEvent> getInputEvent();
 
-    public EventHandler<InputEvent> getInputHandlerRelease(GameData gameData);
+    EventHandler<InputEvent> getInputHandler(GameData gameData);
 }

@@ -4,6 +4,7 @@ import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.input.IInputSPI;
 import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
@@ -39,12 +40,10 @@ public class Main extends Application {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         Scene scene = new Scene(gameWindow);
 
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyPressed(service.getInputHandlerPress(gameData));
-        });
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
-        });
+
+        for (IInputSPI inputSPI : ModuleConfig.getIInputService()) {
+            gameWindow.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));
+        }
 
         graphicsComponents = new ArrayList<>(ModuleConfig.getGraphicComponents());
         for (IGraphicsComponent graphicsComponent : graphicsComponents) {

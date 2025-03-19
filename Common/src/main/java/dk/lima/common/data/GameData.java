@@ -10,6 +10,7 @@ public class GameData {
     private boolean isGameRunning = true;
     private Duration duration = Duration.ofSeconds(0);
     private int score = 0;
+    private Coordinate mousePosition = new Coordinate(0,0);
 
     public GameInputs getInputs() {
         return inputs;
@@ -62,5 +63,13 @@ public class GameData {
 
     public synchronized void addScore(int score) {
         this.score += score;
+    }
+
+    public Coordinate getMousePosition() {
+        return mousePosition;
+    }
+
+    public void setMousePosition(Coordinate mousePosition) {
+        this.mousePosition = mousePosition;
     }
 }

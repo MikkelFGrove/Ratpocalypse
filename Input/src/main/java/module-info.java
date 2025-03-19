@@ -1,10 +1,17 @@
 import dk.lima.common.input.IInputSPI;
+import dk.lima.input.KeyPressHandler;
+import dk.lima.input.KeyReleaseHandler;
+import dk.lima.input.MouseMovedHandler;
 
 module Input {
     requires Common;
     requires CommonInput;
     requires javafx.graphics;
-    provides IInputSPI with dk.lima.input.InputHandler;
+    requires java.desktop;
+    provides IInputSPI with
+            KeyPressHandler,
+            KeyReleaseHandler,
+            MouseMovedHandler;
 }
 
 
