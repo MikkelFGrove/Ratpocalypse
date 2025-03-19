@@ -32,8 +32,8 @@ public class PlayerPlugin implements IGamePluginService {
             polygonCoordinates[i] *= scale;
         }
 
-        playerModel.setPosition(new Coordinate(gameData.getDisplayHeight() / 2, gameData.getDisplayWidth() / 2));
-        playerModel.setRadius(8);
+        playerModel.setPosition(new Coordinate(gameData.getDisplayWidth() / 2, gameData.getDisplayHeight() / 2));
+        playerModel.setRadius((float)(scale));
         playerModel.setRotation(0);
         playerModel.setColor(new int[]{255, 0, 255});
         playerModel.setPolygonCoordinates(polygonCoordinates);

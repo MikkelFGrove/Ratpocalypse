@@ -16,20 +16,20 @@ public class PlayerControlSystem implements IEntityProcessingService {
             double velocity = 2;
             double rotationSpeed = 3;
 
+            // Get the player's world position
+            Coordinate worldPosition = world.getPlayerPosition();
+            if (worldPosition == null) {
+                worldPosition = new Coordinate(0, 0); // Default starting position
+                world.setPlayerPosition(worldPosition);
+            }
+
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
-                world.setPlayerPosition(new Coordinate(world.getPlayerPosition().getX()- changeX * velocity,
-                        world.getPlayerPosition().getY() - changeY * velocity) );
-
-                player.setPosition(new Coordinate(-world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2,
-                        -world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2));
-
+                worldPosition = new Coordinate(worldPosition.getX() - changeX * velocity,
+                        worldPosition.getY() - changeY * velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                world.setPlayerPosition(new Coordinate(world.getPlayerPosition().getX() + changeX * velocity,
-                        world.getPlayerPosition().getY() + changeY * velocity) );
-
-                player.setPosition(new Coordinate(-world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2,
-                        -world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2));
+                worldPosition = new Coordinate(worldPosition.getX() + changeX * velocity,
+                        worldPosition.getY() + changeY * velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
                 player.setRotation(player.getRotation() - rotationSpeed);
@@ -42,8 +42,17 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 p.getIWeaponSPI().shoot(player, gameData, world);
             }
 
-            Coordinate playerPosition = new Coordinate(player.getPosition().getX(), player.getPosition().getY());
-            world.setPlayerPosition(playerPosition);
+            // Update the world position
+            world.setPlayerPosition(worldPosition);
+
+            // Convert world position to screen position
+            Coordinate screenPosition = new Coordinate(
+                    -worldPosition.getX() + gameData.getDisplayWidth() / 2.0,
+                    -worldPosition.getY() + gameData.getDisplayHeight() / 2.0
+            );
+
+            // Update the player position on screen
+            player.setPosition(screenPosition);
         }
     }
 }

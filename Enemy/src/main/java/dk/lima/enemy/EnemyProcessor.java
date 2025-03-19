@@ -18,6 +18,7 @@ public class EnemyProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity enemy : world.getEntities(Enemy.class)) {
+
             Coordinate start = new Coordinate(enemy.getPosition().getX(), enemy.getPosition().getY());
             Coordinate nextStep = new Coordinate(enemy.getPosition().getX(), enemy.getPosition().getY());
             if (getPathfindingSPI().stream().findFirst().isPresent() && world.getPlayerPosition() != null) {
