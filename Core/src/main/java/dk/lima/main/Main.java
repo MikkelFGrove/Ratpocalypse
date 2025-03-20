@@ -42,7 +42,7 @@ public class Main extends Application {
 
 
         for (IInputSPI inputSPI : ModuleConfig.getIInputService()) {
-            gameWindow.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));
+            scene.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));
         }
 
         graphicsComponents = new ArrayList<>(ModuleConfig.getGraphicComponents());
