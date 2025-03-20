@@ -9,32 +9,27 @@ public class PlayerControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player: world.getEntities(Player.class)) {
-            double angle = Math.toRadians(player.getRotation());
-            double changeX = Math.cos(angle);
-            double changeY = Math.sin(angle);
+            double x = gameData.getMousePosition().getX() - ((double) gameData.getDisplayWidth() / 2);
+            double y = gameData.getMousePosition().getY() - ((double) gameData.getDisplayHeight() / 2);
+            double angle = Math.atan2(y, x);
+            player.setRotation(Math.toDegrees(angle));
 
-
-
-            double velocity = 2;
-            double rotationSpeed = 3;
-
+            double velocity = 1.5;
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
-                world.setPlayerX(world.getPlayerX() - changeX * velocity);
-                world.setPlayerY(world.getPlayerY() - changeY * velocity);
-                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
+                world.setPlayerY(world.getPlayerY() + velocity);
                 player.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2);
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                world.setPlayerX(world.getPlayerX() + changeX * velocity);
-                world.setPlayerY(world.getPlayerY() + changeY * velocity);
-                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
+                world.setPlayerY(world.getPlayerY() - velocity);
                 player.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2);
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
-                player.setRotation(player.getRotation() - rotationSpeed);
+                world.setPlayerX(world.getPlayerX() + velocity);
+                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
             }
             if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
-                player.setRotation(player.getRotation() + rotationSpeed);
+                world.setPlayerX(world.getPlayerX() - velocity);
+                player.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2);
             }
             if (gameData.getInputs().isDown(EGameInputs.ACTION)) {
                 Player p = (Player) player;
