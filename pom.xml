@@ -28,12 +28,12 @@
         <module>TileManager</module>
         <module>WaveSpawner</module>
         <module>Timer</module>
-        <module>CommonPathfinding</module>
-        <module>Pathfinding</module>
         <module>CommonGraphics</module>
         <module>TaskSchedulerPlugin</module>
         <module>Graphics</module>
         <module>Persistence</module>
+        <module>EntityRenderer</module>
+        <module>PathfindingComponent</module>
     </modules>
     <properties>
         <java>java</java>

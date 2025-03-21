@@ -9,7 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>Pathfinding</artifactId>
+    <artifactId>PathfindingComponent</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -18,11 +18,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>dk.lima</groupId>
-            <artifactId>CommonPathfinding</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
             <artifactId>Common</artifactId>

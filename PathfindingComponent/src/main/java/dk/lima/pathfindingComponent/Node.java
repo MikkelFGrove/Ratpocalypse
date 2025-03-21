@@ -1,4 +1,4 @@
-package dk.lima.pathfinding;
+package dk.lima.pathfindingComponent;
 
 import dk.lima.common.data.Coordinate;
 
