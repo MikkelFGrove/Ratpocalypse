@@ -36,11 +36,7 @@ public class PersistentScore implements IPostEntityProcessingService {
                 highScore = Integer.parseInt(line);
             }
 
-        } catch (FileNotFoundException e) {
-            System.out.println("Not found, default 0");
-            highScore = 0;
         } catch (IOException e) {
-            System.out.println("Could not read the file");
             highScore = 0;
         }
         return highScore;
