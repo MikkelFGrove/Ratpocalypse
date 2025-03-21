@@ -1,11 +1,9 @@
 package dk.lima.main;
 
-import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.graphics.IGraphicsComponent;
 import dk.lima.common.input.IInputSPI;
-import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
@@ -13,7 +11,6 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -35,7 +32,6 @@ public class Main extends Application {
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         Scene scene = new Scene(gameWindow);
-
 
         for (IInputSPI inputSPI : ModuleConfig.getIInputService()) {
             scene.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));

@@ -1,16 +1,17 @@
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.enemy.EnemyPlugin;
+import dk.lima.meleerat.MeleeRatPlugin;
+import dk.lima.meleerat.MeleeRatProcessor;
 
-module Enemy {
+module MeleeRat {
     requires Common;
     requires CommonEnemy;
     requires CommonWeapon;
     requires CommonPathfinding;
-    provides IGamePluginService with dk.lima.enemy.EnemyPlugin;
-    provides IEntityProcessingService with dk.lima.enemy.EnemyProcessor;
-    provides IEnemy with EnemyPlugin;
+    provides IGamePluginService with MeleeRatPlugin;
+    provides IEntityProcessingService with MeleeRatProcessor;
+    provides IEnemy with MeleeRatPlugin;
 
     uses dk.lima.common.weapon.IWeaponSPI;
     uses dk.lima.common.pathfinding.IPathfindingSPI;

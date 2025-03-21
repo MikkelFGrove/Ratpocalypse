@@ -5,7 +5,9 @@ import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.services.ITimeTask;
 
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Random;
 import java.util.ServiceLoader;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -42,7 +44,21 @@ public class WaveSpawnerTask implements ITimeTask {
 
     @Override
     public void run() {
-        getEnemies().stream().findFirst().ifPresent(iEnemy -> {world.addEntity(iEnemy.createEnemy(gameData));});
+        ArrayList<IEnemy> enemies = new ArrayList<>(getEnemies());
+
+        if (gameData.isGameRunning() & !enemies.isEmpty()) {
+            Random rand = new Random();
+
+            if (gameData.getDuration().toSeconds() % 30 >= 25) {
+                for (int i = 0; i < 10; i++) {
+                    int randNum = rand.nextInt(0, getEnemies().size());
+                    world.addEntity(enemies.get(randNum).createEnemy(gameData, world));
+                }
+            } else {
+                int randNum = rand.nextInt(0, getEnemies().size());
+                world.addEntity(enemies.get(randNum).createEnemy(gameData, world));
+            }
+        }
     }
 
     private Collection<? extends IEnemy> getEnemies() {
