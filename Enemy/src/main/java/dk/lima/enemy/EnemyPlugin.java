@@ -1,12 +1,11 @@
 package dk.lima.enemy;
 
-import dk.lima.common.data.Entity;
-import dk.lima.common.data.GameData;
-import dk.lima.common.data.World;
+import dk.lima.common.data.*;
 import dk.lima.common.enemy.Enemy;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
+import dk.lima.pathfindingComponent.PathfindingComponent;
 
 import java.util.Collection;
 import java.util.Random;
@@ -17,18 +16,10 @@ import static java.util.stream.Collectors.toList;
 public class EnemyPlugin implements IGamePluginService, IEnemy {
     @Override
     public void start(GameData gameData, World world) {
-        Entity enemy1 = createEnemy(gameData);
-        Entity enemy2 = createEnemy(gameData);
-        Entity enemy3 = createEnemy(gameData);
+        Entity enemy1 = createEnemy(gameData, world);
         enemy1.setX(100);
         enemy1.setY(100);
-        enemy2.setX(200);
-        enemy2.setY(200);
-        enemy3.setX(700);
-        enemy3.setY(700);
         world.addEntity(enemy1);
-        world.addEntity(enemy2);
-        world.addEntity(enemy3);
     }
 
     @Override
@@ -38,7 +29,7 @@ public class EnemyPlugin implements IGamePluginService, IEnemy {
         }
     }
 
-    public Entity createEnemy(GameData gameData) {
+    public Entity createEnemy(GameData gameData, World world) {
         Enemy enemy = new Enemy();
         Random rnd = new Random();
         int scalingFactor = 6;
@@ -51,6 +42,7 @@ public class EnemyPlugin implements IGamePluginService, IEnemy {
         enemy.setY(rnd.nextInt(gameData.getDisplayHeight()));
         enemy.setRadius(2 * scalingFactor);
         enemy.setRotation(rnd.nextInt(90));
+        enemy.addComponent(new PathfindingComponent(enemy));
         getWeaponSPI().stream().findFirst().ifPresent(enemy::setIWeaponSPI);
         return enemy;
     }

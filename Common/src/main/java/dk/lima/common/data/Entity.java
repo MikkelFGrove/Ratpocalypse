@@ -1,6 +1,7 @@
 package dk.lima.common.data;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Entity implements Serializable {
@@ -13,6 +14,7 @@ public class Entity implements Serializable {
     private double rotation;
     private float radius;
     private int[] color = new int[]{0, 0, 0};
+    private ArrayList<IEntityComponent> components = new ArrayList<>();
             
 
     public String getID() {
@@ -69,5 +71,13 @@ public class Entity implements Serializable {
 
     public int[] getColor() {
         return this.color;
+    }
+
+    public ArrayList<IEntityComponent> getComponents() {
+        return components;
+    }
+
+    public void addComponent(IEntityComponent component) {
+        this.components.add(component);
     }
 }

@@ -42,7 +42,7 @@ public class WaveSpawnerTask implements ITimeTask {
 
     @Override
     public void run() {
-        getEnemies().stream().findFirst().ifPresent(iEnemy -> {world.addEntity(iEnemy.createEnemy(gameData));});
+        getEnemies().stream().findFirst().ifPresent(iEnemy -> {world.addEntity(iEnemy.createEnemy(gameData, world));});
     }
 
     private Collection<? extends IEnemy> getEnemies() {
