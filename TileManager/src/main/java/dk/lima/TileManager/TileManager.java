@@ -25,14 +25,9 @@ public class TileManager implements IGraphicsComponent {
     public final int maxScreenCol = 16; // screen length in tiles
     public final int maxScreenRow = 12; //  Screen height in tiles
 
-
     // World settings
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-
-    private double playerCoordinateX;
-    private double playerCoordinateY;
-
 
     // Needed for the tile management
     private Tile[] tiles;
@@ -114,13 +109,13 @@ public class TileManager implements IGraphicsComponent {
         int worldCol = 0;
         int worldRow = 0;
 
-        playerCoordinateX = world.getPlayerX() - (double) gameData.getDisplayWidth() / 2;
-        playerCoordinateY = world.getPlayerY() - (double) gameData.getDisplayHeight() / 2;
+        double playerCoordinateX = world.getPlayerX() - (double) gameData.getDisplayWidth() / 2;
+        double playerCoordinateY = world.getPlayerY() - (double) gameData.getDisplayHeight() / 2;
 
         while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
-            double x = worldCol * tileSize + playerCoordinateX ;
-            double y = worldRow * tileSize + playerCoordinateY ;
+            double x = worldCol * tileSize + playerCoordinateX;
+            double y = worldRow * tileSize + playerCoordinateY;
             if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
                 gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
             }
