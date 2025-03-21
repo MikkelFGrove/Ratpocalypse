@@ -17,7 +17,8 @@
         <module>Input</module>
         <module>CommonBullet</module>
         <module>Bullet</module>
-        <module>Enemy</module>
+        <module>RangedRat</module>
+        <module>MeleeRat</module>
         <module>CommonEnemy</module>
         <module>Player</module>
         <module>CommonPlayer</module>

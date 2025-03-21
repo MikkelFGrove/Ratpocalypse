@@ -1,23 +1,21 @@
-package dk.lima.enemy;
+package dk.lima.meleerat;
 
 import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.enemy.Enemy;
 import dk.lima.common.pathfinding.IPathfindingSPI;
 import dk.lima.common.services.IEntityProcessingService;
-import dk.lima.common.weapon.IWeaponSPI;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class EnemyProcessor implements IEntityProcessingService {
+public class MeleeRatProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Entity enemy : world.getEntities(MeleeRat.class)) {
             Coordinate start = new Coordinate(enemy.getX(), enemy.getY());
             Coordinate nextStep = new Coordinate(enemy.getX(), enemy.getY());
             if (getPathfindingSPI().stream().findFirst().isPresent() && world.getPlayerPosition() != null) {

@@ -1,8 +1,8 @@
-package dk.lima.common.enemy;
+package dk.lima.enemy.rangedrat;
 import dk.lima.common.data.Entity;
 import dk.lima.common.weapon.IWeaponSPI;
 
-public class Enemy extends Entity {
+public class RangedRat extends Entity {
     private IWeaponSPI iWeaponSPI;
 
     public void setIWeaponSPI(IWeaponSPI iWeaponSPI) {
