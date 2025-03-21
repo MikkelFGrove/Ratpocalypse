@@ -3,25 +3,46 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.services.IPostEntityProcessingService;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 
 public class PersistentScore implements IPostEntityProcessingService {
 
+    private int highScore;
+    private static final String SCORE_FILE = "scores.txt";
+
     @Override
     public void process(GameData gameData, World world) {
-        saveScoreToFile(gameData.getScore());
+        highScore = readScoreFromFile();
+        if (gameData.getScore() > highScore) {
+            highScore = gameData.getScore();
+            saveScoreToFile(gameData.getScore());
+        }
     }
 
     public void saveScoreToFile(int score) {
-        try {
-            FileWriter writer = new FileWriter("scores.txt", false);
+        try (FileWriter writer = new FileWriter(SCORE_FILE, false)) {
             writer.write(String.valueOf(score));
-            writer.close();
-
         } catch (IOException e) {
             System.out.println("FEJLFEJLFEJFLEJLE");
             e.printStackTrace();
         }
+    }
+
+    public int readScoreFromFile() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(SCORE_FILE))) {
+            String line = reader.readLine();
+
+            if (line != null) {
+                highScore = Integer.parseInt(line);
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println("Not found, default 0");
+            highScore = 0;
+        } catch (IOException e) {
+            System.out.println("Could not read the file");
+            highScore = 0;
+        }
+        return highScore;
     }
 }
