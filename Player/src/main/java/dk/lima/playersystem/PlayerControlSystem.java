@@ -16,12 +16,14 @@ public class PlayerControlSystem implements IEntityProcessingService {
             double velocity = 2;
             double rotationSpeed = 3;
 
+
             // Get the player's world position
             Coordinate worldPosition = world.getPlayerPosition();
             if (worldPosition == null) {
                 worldPosition = new Coordinate(0, 0); // Default starting position
                 world.setPlayerPosition(worldPosition);
             }
+
 
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
                 worldPosition = new Coordinate(worldPosition.getX() - changeX * velocity,
@@ -53,6 +55,10 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
             // Update the player position on screen
             player.setPosition(screenPosition);
+
+            world.setPlayerScreenPos(screenPosition);
+
+
         }
     }
 }

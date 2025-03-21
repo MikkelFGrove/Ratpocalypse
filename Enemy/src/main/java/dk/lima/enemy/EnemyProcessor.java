@@ -21,9 +21,9 @@ public class EnemyProcessor implements IEntityProcessingService {
 
             Coordinate start = new Coordinate(enemy.getPosition().getX(), enemy.getPosition().getY());
             Coordinate nextStep = new Coordinate(enemy.getPosition().getX(), enemy.getPosition().getY());
-            if (getPathfindingSPI().stream().findFirst().isPresent() && world.getPlayerPosition() != null) {
+            if (getPathfindingSPI().stream().findFirst().isPresent() && world.getPlayerScreenPos() != null) {
 
-                nextStep = getPathfindingSPI().stream().findFirst().get().calculateNextStep(start, world.getPlayerPosition());
+                nextStep = getPathfindingSPI().stream().findFirst().get().calculateNextStep(start, world.getPlayerScreenPos());
 
             }
 

@@ -30,7 +30,10 @@ public class EnemyPlugin implements IGamePluginService, IEnemy {
         world.addEntity(enemy1);
         world.addEntity(enemy2);
         world.addEntity(enemy3);
+
     }
+
+
 
     @Override
     public void stop(GameData gameData, World world) {

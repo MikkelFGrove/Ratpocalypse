@@ -15,6 +15,8 @@ public class World {
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private Coordinate playerPosition;
 
+    private Coordinate playerScreenPos;
+
     synchronized public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
@@ -54,5 +56,13 @@ public class World {
 
     public void setPlayerPosition(Coordinate playerPosition) {
         this.playerPosition = playerPosition;
+    }
+
+    public Coordinate getPlayerScreenPos() {
+        return playerScreenPos;
+    }
+
+    public void setPlayerScreenPos(Coordinate playerScreenPos) {
+        this.playerScreenPos = playerScreenPos;
     }
 }

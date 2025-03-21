@@ -9,7 +9,8 @@ public class AStarPathfinding implements IPathfindingSPI {
         Coordinate result = new Coordinate(start.getX(), start.getY());
         double scalingFactor = 0.2;
         int yDiff = (int) (goal.getY() - start.getY());
-        int xDiff = (int) (goal.getX() - start.getX());
+        int xDiff = (int) (goal.getX()- start.getX());
+
 
         if (yDiff > 0) {
             result.setY(result.getY() + scalingFactor);
