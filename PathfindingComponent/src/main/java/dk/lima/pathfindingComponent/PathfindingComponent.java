@@ -21,8 +21,11 @@ public class PathfindingComponent implements IEntityComponent {
     }
 
     public void process(GameData gameData, World world) {
+        if (world.getPlayerPosition() == null){
+            return;
+        }
         if (path == null || (stepsTaken > 4 || path.length == 0)) {
-            path = calculateNextSteps(new Coordinate(entity.getX(), entity.getY()), new Coordinate(world.getPlayerX(), world.getPlayerY()));
+            path = calculateNextSteps(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
             stepsTaken = 0;
         }
 
