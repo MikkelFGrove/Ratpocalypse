@@ -6,15 +6,13 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.data.IEntityComponent;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PathfindingComponent implements IEntityComponent {
     private int stepsTaken;
     private Coordinate[] path;
     private Entity entity;
-    private double scalingFactor = 1;
+    private double scalingFactor = 0.8;
 
     public PathfindingComponent(Entity entity) {
         this.entity = entity;
@@ -24,7 +22,7 @@ public class PathfindingComponent implements IEntityComponent {
         if (world.getPlayerPosition() == null){
             return;
         }
-        if (path == null || (stepsTaken > 4 || path.length == 0)) {
+        if (path == null || (stepsTaken > 10 || path.length == 0)) {
             path = calculateNextSteps(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
             stepsTaken = 0;
         }
@@ -49,16 +47,22 @@ public class PathfindingComponent implements IEntityComponent {
 
     public Coordinate[] calculateNextSteps(Coordinate start, Coordinate goal) {
         List<Node> fringe = new ArrayList<>();
+        Set<Coordinate> visited = new HashSet<>();
         Node initialNode = new Node(start);
         fringe.add(initialNode);
         while (!fringe.isEmpty()) {
             Node currentNode = fringe.getFirst();
             fringe.removeFirst();
+            if (visited.contains(currentNode.getCoordinates())) {
+                continue; // Skip if already visited
+            }
+            visited.add(currentNode.getCoordinates());
             if (currentNode.getCoordinates().equals(goal)) {
                 // Return the next steps coordinates.
-                Coordinate[] coordinates = new Coordinate[currentNode.getPath().size()];
-                for (int i = 0; i < coordinates.length; i++) {
-                    coordinates[i] = currentNode.getPath().get((coordinates.length - 1) - i).getCoordinates();
+                List<Node> path = currentNode.getPath(); // already reversed (start to goal)
+                Coordinate[] coordinates = new Coordinate[path.size()];
+                for (int i = 0; i < path.size(); i++) {
+                    coordinates[i] = path.get(i).getCoordinates();
                 }
                 return coordinates;
             }
@@ -68,8 +72,8 @@ public class PathfindingComponent implements IEntityComponent {
                 fringe.add(child);
             }
             fringe.sort(null);
-            if (fringe.size() > 20) {
-                fringe.subList(20, fringe.size()).clear();
+            if (fringe.size() > 5) {
+                fringe.subList(5, fringe.size()).clear();
             }
         }
 

@@ -3,6 +3,7 @@ package dk.lima.pathfindingComponent;
 import dk.lima.common.data.Coordinate;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Node implements Comparable<Node>{
     private Node parentNode;
@@ -49,11 +50,11 @@ public class Node implements Comparable<Node>{
     public ArrayList<Node> getPath() {
         ArrayList<Node> path = new ArrayList<>();
         Node currentNode = this;
-        path.add(currentNode);
-        while (currentNode.parentNode != null) {
+        while (currentNode != null) {
             path.add(currentNode);
             currentNode = currentNode.parentNode;
         }
+        Collections.reverse(path);
         return path;
     }
 
