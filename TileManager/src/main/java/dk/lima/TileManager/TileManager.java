@@ -95,6 +95,7 @@ public class TileManager implements IGraphicsComponent {
 
         canvas = new Canvas(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gc = canvas.getGraphicsContext2D();
+        gc.setImageSmoothing(false);
 
         getFileImage();
         loadMap("/TileManager/Maps/worldMap01.txt");
