@@ -28,8 +28,8 @@ public class AStarPathfinding implements IPathfindingSPI {
         return result;
     }
 
-    private double calculateCost(double startX, double startY, double goalX, double goalY) {
-        return heuristic(startX, startY, goalX, goalY);
+    private double calculateCost(Node state, double goalX, double goalY) {
+        return state.getTotalCost() + heuristic(state.getCoordinates().getX(), state.getCoordinates().getY(), goalX, goalY);
     }
 
     private double heuristic(double startX, double startY, double goalX, double goalY) {
@@ -39,48 +39,15 @@ public class AStarPathfinding implements IPathfindingSPI {
 
     private Node[] expandNode(Node parentState){
         Node[] successorStates = new Node[9];
-        successorStates[0] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX(), parentState.getCoordinates().getY()), 1);
+        successorStates[0] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX(), parentState.getCoordinates().getY()), 0);
         successorStates[1] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1* scalingFactor, parentState.getCoordinates().getY()), 1);
         successorStates[2] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX() + 1*scalingFactor, parentState.getCoordinates().getY()), 1);
         successorStates[3] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX(), parentState.getCoordinates().getY()+1*scalingFactor), 1);
         successorStates[4] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX(), parentState.getCoordinates().getY()-1*scalingFactor), 1);
-        successorStates[5] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX() +1*scalingFactor, parentState.getCoordinates().getY()+1*scalingFactor), 1);
-        successorStates[6] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()+1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), 1);
-        successorStates[7] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor,parentState.getCoordinates().getY()+1*scalingFactor), 1);
-        successorStates[8] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), 1);
+        successorStates[5] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX() +1*scalingFactor, parentState.getCoordinates().getY()+1*scalingFactor), Math.sqrt(2));
+        successorStates[6] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()+1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), Math.sqrt(2));
+        successorStates[7] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor,parentState.getCoordinates().getY()+1*scalingFactor), Math.sqrt(2));
+        successorStates[8] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), Math.sqrt(2));
         return successorStates;
-    }
-}
-
-class Node {
-    private Node parentNode;
-    private Coordinate coordinates;
-    private double totalCost;
-
-    public Node(Node parentNode, Coordinate coordinates, double cost) {
-        this.parentNode = parentNode;
-        this.coordinates = coordinates;
-        this.totalCost = parentNode.totalCost +cost;
-    }
-
-    public Node(Coordinate coordinates) {
-        this.coordinates = coordinates;
-        this.totalCost = 0;
-    }
-
-    public Coordinate getCoordinates() {
-        return coordinates;
-    }
-
-    public void setCoordinates(Coordinate coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public double getTotalCost() {
-        return totalCost;
-    }
-
-    public void setTotalCost(double totalCost) {
-        this.totalCost = totalCost;
     }
 }
