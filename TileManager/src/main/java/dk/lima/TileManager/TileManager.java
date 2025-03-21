@@ -94,7 +94,7 @@ public class TileManager implements IGraphicsComponent {
     }
 
     @Override
-    public Node createComponent(GameData gameData) {
+    public Node createComponent(GameData gameData, World world) {
         tiles = new Tile[30];
         mapTileNum = new int[maxWorldCol][maxWorldRow];
 

@@ -12,7 +12,7 @@ public class TimeText implements IGraphicsComponent {
     private Text timeText;
 
     @Override
-    public Node createComponent(GameData gameData) {
+    public Node createComponent(GameData gameData, World world) {
         timeText = new Text(10, 20, "Time: 00:00");
         timeText.setFont(new Font("Arial", 20));
         timeText.setFill(Color.WHITE);
