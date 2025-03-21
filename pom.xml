@@ -33,6 +33,7 @@
         <module>HUD</module>
         <module>TaskSchedulerPlugin</module>
         <module>EntityRenderer</module>
+        <module>Persistence</module>
     </modules>
     <properties>
         <java>java</java>
