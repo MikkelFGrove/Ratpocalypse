@@ -3,13 +3,15 @@ package dk.lima.pathfinding;
 import dk.lima.common.data.Coordinate;
 import dk.lima.common.pathfinding.IPathfindingSPI;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class AStarPathfinding implements IPathfindingSPI {
-    double scalingFactor = 0.2;
+    double scalingFactor = 1;
     @Override
     public Coordinate calculateNextStep(Coordinate start, Coordinate goal) {
-        Coordinate result = new Coordinate(start.getX(), start.getY());
+        /*Coordinate result = new Coordinate(start.getX(), start.getY());
         int yDiff = (int) (goal.getY() - start.getY());
         int xDiff = (int) (goal.getX() - start.getX());
 
@@ -25,16 +27,37 @@ public class AStarPathfinding implements IPathfindingSPI {
             result.setX(result.getX() - scalingFactor);
         }
 
-        return result;
+        return result;*/
+
+        List<Node> fringe = new ArrayList<>();
+        Node initialNode = new Node(start);
+        fringe.add(initialNode);
+        while (!fringe.isEmpty()) {
+            Node currentNode = fringe.getFirst();
+            fringe.removeFirst();
+            System.out.println("Goal: " + goal.getX() + " " + goal.getY());
+            System.out.println(currentNode.getCoordinates().getX() + " " + currentNode.getCoordinates().getY());
+            if (currentNode.getCoordinates().equals(goal)) {
+                // Return the next steps coordinates.
+                return currentNode.getPath().getLast().getCoordinates();
+            }
+            List<Node> children = List.of(expandNode(currentNode));
+            for (Node child : children) {
+                child.setHeuristicCost(heuristic(child.getCoordinates(), goal));
+            }
+            fringe.addAll(children);
+            fringe.sort(null);
+            /*if (fringe.size() > 5) {
+                fringe.subList(5, fringe.size()).clear();
+            }*/
+        }
+
+        return start;
     }
 
-    private double calculateCost(Node state, double goalX, double goalY) {
-        return state.getTotalCost() + heuristic(state.getCoordinates().getX(), state.getCoordinates().getY(), goalX, goalY);
-    }
-
-    private double heuristic(double startX, double startY, double goalX, double goalY) {
+    private double heuristic(Coordinate start, Coordinate goal) {
         //returns the straight line distance between start and goal
-        return Math.sqrt(Math.pow((goalX - startX), 2) + Math.pow((goalY - startY), 2));
+        return Math.sqrt(Math.pow((goal.getX() - start.getX()), 2) + Math.pow((goal.getY() - start.getY()), 2));
     }
 
     private Node[] expandNode(Node parentState){
