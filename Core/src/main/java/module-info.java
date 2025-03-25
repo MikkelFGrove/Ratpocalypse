@@ -9,6 +9,7 @@ module Core {
     requires CommonPlayer;
     requires CommonGraphics;
     requires TileManager;
+    requires Graphics;
 
     opens dk.lima.main to javafx.graphics;
     uses dk.lima.common.services.IGamePluginService;
