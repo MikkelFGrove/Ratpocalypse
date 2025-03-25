@@ -3,10 +3,12 @@ package dk.lima.main;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IMenu;
 import dk.lima.common.input.IInputSPI;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
+import dk.lima.graphics.menuRender.StartMenu;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -23,6 +25,7 @@ public class Main extends Application {
     private final World world = new World();
     private final Pane gameWindow = new Pane();
     private List<IGraphicsComponent> graphicsComponents;
+    private List <IMenu> menuComponents;
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -47,19 +50,23 @@ public class Main extends Application {
             iGamePlugin.start(gameData, world);
         }
 
+
+        gameData.setGameRunning(false);
         render();
         window.setScene(scene);
         window.setTitle("Ratpocalypse");
-        window.show();
+        window.show();  
     }
 
     private void render() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                update();
-                updateGraphics();
-                gameData.getInputs().update();
+                if (gameData.isGameRunning()){
+                    update();
+                    updateGraphics();
+                    gameData.getInputs().update();
+                }
             }
         }.start();
     }

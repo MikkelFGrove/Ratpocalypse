@@ -8,11 +8,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>EntityRenderer</artifactId>
+    <artifactId>Graphics</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>EntityRenderer</name>
+    <name>Graphics</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,6 +43,10 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>CommonPlayer</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
         </dependency>
     </dependencies>
 </project>

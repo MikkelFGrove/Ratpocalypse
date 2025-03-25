@@ -1,4 +1,4 @@
-package dk.lima.entityrenderer;
+package dk.lima.graphics.gameRender;
 
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
