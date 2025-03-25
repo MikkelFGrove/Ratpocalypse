@@ -4,6 +4,7 @@ target/
 !**/src/test/**/target/
 libs
 mods-mvn
+scores.txt
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
