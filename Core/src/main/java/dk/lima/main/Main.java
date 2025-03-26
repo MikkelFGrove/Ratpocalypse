@@ -50,8 +50,6 @@ public class Main extends Application {
             iGamePlugin.start(gameData, world);
         }
 
-
-        gameData.setGameRunning(false);
         render();
         window.setScene(scene);
         window.setTitle("Ratpocalypse");
