@@ -1,4 +1,6 @@
 import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.graphics.HUD.ScoreText;
+import dk.lima.graphics.HUD.TimeText;
 import dk.lima.graphics.gameRender.EntityRenderer;
 import dk.lima.graphics.menuRender.StartMenu;
 
@@ -12,7 +14,10 @@ module Graphics {
     requires javafx.controls;
 
     provides IGraphicsComponent with
-            EntityRenderer, StartMenu;
+            EntityRenderer,
+            ScoreText,
+            TimeText,
+            StartMenu;
 }
 
 
