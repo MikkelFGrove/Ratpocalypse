@@ -3,19 +3,18 @@ package dk.lima.TileManager;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 
-import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager implements IGraphicsComponent {
+public class TileManager implements IGraphicsService {
 
     // Screen Settings
     final int originalTileSize = 16; // 16x16 tile

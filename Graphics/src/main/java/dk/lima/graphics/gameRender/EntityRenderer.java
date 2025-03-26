@@ -3,7 +3,7 @@ package dk.lima.graphics.gameRender;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.player.Player;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -13,7 +13,7 @@ import javafx.scene.shape.Polygon;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EntityRenderer implements IGraphicsComponent {
+public class EntityRenderer implements IGraphicsService {
     private Pane entityPane;
     private Map<Entity, Polygon> polygons;
 
