@@ -1,11 +1,10 @@
 package dk.lima.main;
 
-import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IGraphicsService;
+import dk.lima.common.graphics.IMenu;
 import dk.lima.common.input.IInputSPI;
-import dk.lima.common.player.Player;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
@@ -13,7 +12,6 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -25,7 +23,8 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Pane gameWindow = new Pane();
-    private List<IGraphicsComponent> graphicsComponents;
+    private List<IGraphicsService> graphicsServices;
+    private List <IMenu> menuComponents;
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -36,13 +35,12 @@ public class Main extends Application {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         Scene scene = new Scene(gameWindow);
 
-
         for (IInputSPI inputSPI : ModuleConfig.getIInputService()) {
             scene.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));
         }
 
-        graphicsComponents = new ArrayList<>(ModuleConfig.getGraphicComponents());
-        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
+        graphicsServices = new ArrayList<>(ModuleConfig.getGraphicComponents());
+        for (IGraphicsService graphicsComponent : graphicsServices) {
             gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
 
@@ -54,16 +52,18 @@ public class Main extends Application {
         render();
         window.setScene(scene);
         window.setTitle("Ratpocalypse");
-        window.show();
+        window.show();  
     }
 
     private void render() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                update();
-                updateGraphics();
-                gameData.getInputs().update();
+                if (gameData.isGameRunning()){
+                    update();
+                    updateGraphics();
+                    gameData.getInputs().update();
+                }
             }
         }.start();
     }
@@ -78,8 +78,8 @@ public class Main extends Application {
     }
 
     private void updateGraphics() {
-        for (IGraphicsComponent graphicsComponent : graphicsComponents) {
-            graphicsComponent.updateComponent(gameData, world);
+        for (IGraphicsService graphicsService : graphicsServices) {
+            graphicsService.updateComponent(gameData, world);
         }
     }
 }

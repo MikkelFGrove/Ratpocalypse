@@ -30,7 +30,7 @@ public class PlayerPlugin implements IGamePluginService {
             polygonCoordinates[i] *= scale;
         }
 
-        playerModel. setX(gameData.getDisplayHeight() / 2);
+        playerModel.setX(gameData.getDisplayHeight() / 2);
         playerModel.setY(gameData.getDisplayWidth() / 2);
         playerModel.setRadius((float) scale);
         playerModel.setRotation(0);

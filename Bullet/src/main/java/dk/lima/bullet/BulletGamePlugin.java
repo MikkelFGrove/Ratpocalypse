@@ -23,9 +23,7 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
     @Override
     public Bullet createBullet(double x, double y, double rotation, double radius) {
         Bullet bullet = new Bullet();
-        int size = 1;
-
-
+        double size = 1.5;
 
         double changeX = Math.cos(Math.toRadians(rotation));
         double changeY = Math.sin(Math.toRadians(rotation));
@@ -33,7 +31,7 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
         double bulletY = y + changeY * (radius + size);
 
         bullet.setRotation(rotation);
-        bullet.setRadius(size);
+        bullet.setRadius((float) size);
         bullet.setX(bulletX);
         bullet.setY(bulletY);
         bullet.setPolygonCoordinates(size, size, -size, size, -size, -size, size, -size);

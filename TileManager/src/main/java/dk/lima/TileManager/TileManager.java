@@ -3,19 +3,18 @@ package dk.lima.TileManager;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 
-import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager implements IGraphicsComponent {
+public class TileManager implements IGraphicsService {
 
     // Screen Settings
     final int originalTileSize = 16; // 16x16 tile
@@ -25,14 +24,9 @@ public class TileManager implements IGraphicsComponent {
     public final int maxScreenCol = 16; // screen length in tiles
     public final int maxScreenRow = 12; //  Screen height in tiles
 
-
     // World settings
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-
-    private double playerCoordinateX;
-    private double playerCoordinateY;
-
 
     // Needed for the tile management
     private Tile[] tiles;
@@ -56,11 +50,9 @@ public class TileManager implements IGraphicsComponent {
         tiles[11] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/smallPath04.png")));
         tiles[12] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/wall.png")));
         tiles[13] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/grass.png")));
-        tiles[14] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/water.png")));
+        tiles[14] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/toxic_water.png")));
         tiles[15] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/tree01.png")));
         tiles[16] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/flowerField01.png")));
-
-
     }
 
     public void loadMap(String map) {
@@ -100,6 +92,7 @@ public class TileManager implements IGraphicsComponent {
 
         canvas = new Canvas(gameData.getDisplayWidth(), gameData.getDisplayHeight());
         gc = canvas.getGraphicsContext2D();
+        gc.setImageSmoothing(false);
 
         getFileImage();
         loadMap("/TileManager/Maps/worldMap01.txt");
@@ -114,13 +107,13 @@ public class TileManager implements IGraphicsComponent {
         int worldCol = 0;
         int worldRow = 0;
 
-        playerCoordinateX = world.getPlayerX() - (double) gameData.getDisplayWidth() / 2;
-        playerCoordinateY = world.getPlayerY() - (double) gameData.getDisplayHeight() / 2;
+        double playerCoordinateX = world.getPlayerX() - (double) gameData.getDisplayWidth() / 2;
+        double playerCoordinateY = world.getPlayerY() - (double) gameData.getDisplayHeight() / 2;
 
         while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
-            double x = worldCol * tileSize + playerCoordinateX ;
-            double y = worldRow * tileSize + playerCoordinateY ;
+            double x = worldCol * tileSize + playerCoordinateX;
+            double y = worldRow * tileSize + playerCoordinateY;
             if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
                 gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
             }

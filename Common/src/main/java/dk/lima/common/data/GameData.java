@@ -7,7 +7,7 @@ public class GameData {
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
     private final GameInputs inputs = new GameInputs();
-    private boolean isGameRunning = true;
+    private boolean isGameRunning = false;
     private Duration duration = Duration.ofSeconds(0);
     private int score = 0;
     private Coordinate mousePosition = new Coordinate(0,0);
