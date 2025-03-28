@@ -12,7 +12,9 @@ public class PathfindingComponent implements IEntityComponent {
     private int stepsTaken;
     private Coordinate[] path;
     private Entity entity;
-    private double scalingFactor = 0.8;
+    private double scalingFactor = 0.5;
+    // Value specifying how long the player has to move from the calculated path to calculate a new path
+    private double goalRadius = 40;
 
     public PathfindingComponent(Entity entity) {
         this.entity = entity;
@@ -22,30 +24,59 @@ public class PathfindingComponent implements IEntityComponent {
         if (world.getPlayerPosition() == null){
             return;
         }
-        if (path == null || (stepsTaken > 10 || path.length == 0)) {
-            path = calculateNextSteps(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
-            stepsTaken = 0;
-        }
 
-        if (path.length > stepsTaken) {
-            Coordinate nextStep = path[stepsTaken];
+        Coordinate nextStep = new Coordinate(entity.getX(), entity.getY());
 
-            double ratio = (nextStep.getY() - entity.getY()) / (nextStep.getX() - entity.getX());
-            double angle = Math.toDegrees(Math.atan(ratio));
-
-            // If difference is negative, add 180 to angle, to get correct angle
-            if (nextStep.getX() - entity.getX() < 0) {
-                angle = 180 + angle;
+        // If enemy is within the radius, use straight-line pathfinding
+        if (heuristic(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition()) <= goalRadius) {
+            Coordinate step = calculateStraightlineStep(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
+            nextStep.setX(step.getX());
+            nextStep.setY(step.getY());
+        } else {
+            // Use A* for pathfinding if enemy is outside radius
+            // Calculate new path if not existing, or if player has moved outside radius
+            if (path == null || heuristic(path[path.length - 1], world.getPlayerPosition()) > goalRadius) {
+                path = calculatePath(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
+                stepsTaken = 0;
             }
 
-            entity.setX(nextStep.getX());
-            entity.setY(nextStep.getY());
-            entity.setRotation(angle);
-            stepsTaken++;
+            if (path.length > stepsTaken) {
+                nextStep = path[stepsTaken];
+                // Increase amount of steps taken in the current A* path.
+                stepsTaken++;
+            }
         }
+
+        // We use the coordinates of the player to angle the enemy
+        double yDiff = world.getPlayerPosition().getY() - entity.getY();
+        double xDiff = world.getPlayerPosition().getX() - entity.getX();
+        double angle = Math.toDegrees(Math.atan2(yDiff, xDiff));
+
+        entity.setX(nextStep.getX());
+        entity.setY(nextStep.getY());
+        entity.setRotation(angle);
     }
 
-    public Coordinate[] calculateNextSteps(Coordinate start, Coordinate goal) {
+    private Coordinate calculateStraightlineStep(Coordinate start, Coordinate goal) {
+        Coordinate result = new Coordinate(start.getX(), start.getY());
+        int yDiff = (int) (goal.getY() - start.getY());
+        int xDiff = (int) (goal.getX() - start.getX());
+
+        if (yDiff > 0) {
+            result.setY(entity.getY() + scalingFactor);
+        } else if (yDiff < 0) {
+            result.setY(entity.getY() - scalingFactor);
+        }
+
+        if (xDiff > 0) {
+            result.setX(entity.getX() + scalingFactor);
+        } else if (xDiff < 0) {
+            result.setX(entity.getX() - scalingFactor);
+        }
+        return result;
+    }
+
+    private Coordinate[] calculatePath(Coordinate start, Coordinate goal) {
         List<Node> fringe = new ArrayList<>();
         Set<Coordinate> visited = new HashSet<>();
         Node initialNode = new Node(start);
