@@ -11,6 +11,7 @@ public class GameData {
     private Duration duration = Duration.ofSeconds(0);
     private int score = 0;
     private Coordinate mousePosition = new Coordinate(0,0);
+    private int highscore = 0;
     private boolean isGamePaused;
     private boolean timeScoring = false;
 
@@ -65,6 +66,14 @@ public class GameData {
 
     public synchronized int getScore() {
         return score;
+    }
+
+    public int getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(int highscore) {
+        this.highscore = highscore;
     }
 
     public synchronized void setScore(int score) {
