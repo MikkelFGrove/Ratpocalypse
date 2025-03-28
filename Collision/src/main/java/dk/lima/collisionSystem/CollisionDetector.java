@@ -1,9 +1,10 @@
 package dk.lima.collisionSystem;
 
-
-import dk.lima.common.data.Entity;
+import dk.lima.common.data.Coordinate;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IPostEntityProcessingService;
 
 public class CollisionDetector implements IPostEntityProcessingService {
@@ -14,18 +15,32 @@ public class CollisionDetector implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
+
+            TransformCP eTransformCP = e.getComponent(TransformCP.class);
+            if (eTransformCP == null) {
+                continue;
+            }
+            Coordinate eCoord = eTransformCP.getCoord();
+
             for (Entity e2 : world.getEntities()) {
                 // Make sure entities are different. Cannot collide with oneself
                 if (e.getID().equals(e2.getID())) {
                     continue;
                 }
 
+                TransformCP e2TransformCP = e2.getComponent(TransformCP.class);
+                if (e2TransformCP == null) {
+                    continue;
+                }
+
+                Coordinate e2Coord = e2TransformCP.getCoord();
+
                 // Using Pythagoras' distance formula
-                double xDistance = e.getX() - e2.getX();
-                double yDistance = e.getY() - e2.getY();
+                double xDistance = eCoord.getX() - e2Coord.getX();
+                double yDistance = eCoord.getY() - e2Coord.getY();
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
-                if (distance < (e.getRadius() + e2.getRadius())) {
+                if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
                     world.removeEntity(e);
                     world.removeEntity(e2);
                 }

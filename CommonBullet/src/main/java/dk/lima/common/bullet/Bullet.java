@@ -1,6 +1,6 @@
 package dk.lima.common.bullet;
 
-import dk.lima.common.data.Entity;
+import dk.lima.common.entity.Entity;
 
 public class Bullet extends Entity {
 }

@@ -1,9 +1,11 @@
 package dk.lima.collisionSystem;
 
 import dk.lima.common.bullet.Bullet;
-import dk.lima.common.data.Entity;
+import dk.lima.common.data.Coordinate;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entitycomponents.TransformCP;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -32,14 +34,18 @@ class CollisionDetectorTest {
     @Test
     public void testBulletEntityCollisionRemovesBoth() {
         Bullet bullet = new Bullet();
-        bullet.setX(0);
-        bullet.setY(0);
-        bullet.setRadius(1);
+        bullet.addComponent(new TransformCP(
+                new Coordinate(0,0),
+                0,
+                1
+        ));
 
         Entity entity = new Entity();
-        entity.setX(0);
-        entity.setY(0);
-        entity.setRadius(1);
+        entity.addComponent(new TransformCP(
+                new Coordinate(0,0),
+                0,
+                1
+        ));
 
         world.addEntity(bullet);
         world.addEntity(entity);

@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>CommonEntityCP</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>CommonEntityCP</name>
@@ -28,7 +28,7 @@
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
-            <artifactId>CommonBullet</artifactId>
+            <artifactId>CommonWeapon</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

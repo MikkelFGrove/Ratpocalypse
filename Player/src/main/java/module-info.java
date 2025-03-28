@@ -8,6 +8,7 @@ module Player {
     requires Common;
     requires CommonPlayer;
     requires CommonWeapon;
+    requires CommonEntityCP;
 
     provides IGamePluginService with PlayerPlugin;
     provides IEntityProcessingService with PlayerControlSystem;

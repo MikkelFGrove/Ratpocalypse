@@ -1,6 +1,5 @@
 package dk.lima.meleerat;
-import dk.lima.common.data.Entity;
-import dk.lima.common.weapon.IWeaponSPI;
+import dk.lima.common.entity.Entity;
 
 public class MeleeRat extends Entity {
 }

@@ -1,13 +1,16 @@
 package dk.lima.playersystem;
 
-import dk.lima.common.data.Entity;
+import dk.lima.common.data.Coordinate;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entitycomponents.ShapeCP;
+import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.common.player.Player;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.ServiceLoader;
 
@@ -30,14 +33,24 @@ public class PlayerPlugin implements IGamePluginService {
             polygonCoordinates[i] *= scale;
         }
 
-        playerModel.setX(gameData.getDisplayHeight() / 2);
-        playerModel.setY(gameData.getDisplayWidth() / 2);
-        playerModel.setRadius((float) scale);
-        playerModel.setRotation(0);
-        playerModel.setColor(new int[]{255, 0, 255});
-        playerModel.setPolygonCoordinates(polygonCoordinates);
+        playerModel.addComponent(new TransformCP(
+                new Coordinate(gameData.getDisplayHeight() / 2d, gameData.getDisplayWidth() / 2d),
+                0,
+                scale
+        ));
 
-        getWeaponSPI().stream().findFirst().ifPresent(playerModel::setIWeaponSPI);
+        playerModel.addComponent(new ShapeCP(
+                polygonCoordinates,
+                new int[]{255, 0, 255}
+        ));
+
+        playerModel.addComponent(new WeaponCP(
+                playerModel,
+                getWeaponSPI().stream().findFirst().orElse(null),
+                1,
+                100,
+                false
+        ));
 
         return playerModel;
     }

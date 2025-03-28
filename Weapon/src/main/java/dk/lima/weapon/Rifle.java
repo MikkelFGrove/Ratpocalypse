@@ -1,7 +1,9 @@
 package dk.lima.weapon;
-import dk.lima.common.data.Entity;
+import dk.lima.common.data.Coordinate;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.common.bullet.IBulletSPI;
 
@@ -22,13 +24,13 @@ public class Rifle implements IWeaponSPI{
     @Override
     public void shoot(Entity e, GameData gameData, World world) {
         if(System.currentTimeMillis() - lastShot > fireRate) {
-            double rotation = e.getRotation();
-            double radius = e.getRadius();
-            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(e.getX(),e.getY(),rotation,radius));});
+            TransformCP transformCP = e.getComponent(TransformCP.class);
+
+            double rotation = transformCP.getRotation();
+            double radius = transformCP.getSize();
+            Coordinate coord = transformCP.getCoord();
+            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(coord.getX(),coord.getY(),rotation,radius));});
             lastShot = System.currentTimeMillis();
         }
-
-
-
     }
 }

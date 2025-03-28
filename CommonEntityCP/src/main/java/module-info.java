@@ -1,6 +1,10 @@
+import dk.lima.common.weapon.IWeaponSPI;
+
 module CommonEntityCP {
     requires Common;
-    requires CommonBullet;
+    requires CommonWeapon;
+
+    uses IWeaponSPI;
 
     exports dk.lima.common.entitycomponents;
 }
