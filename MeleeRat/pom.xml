@@ -38,6 +38,12 @@
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
+            <artifactId>CommonEntityCP</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>dk.lima</groupId>
             <artifactId>CommonPathfinding</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

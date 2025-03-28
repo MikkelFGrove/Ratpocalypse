@@ -1,10 +1,11 @@
 package dk.lima.pathfindingComponent;
 
 import dk.lima.common.data.Coordinate;
-import dk.lima.common.data.Entity;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.data.IEntityComponent;
+import dk.lima.common.entity.IEntityComponent;
+import dk.lima.common.entitycomponents.TransformCP;
 
 import java.util.*;
 
@@ -25,18 +26,20 @@ public class PathfindingComponent implements IEntityComponent {
             return;
         }
 
-        Coordinate nextStep = new Coordinate(entity.getX(), entity.getY());
+        TransformCP transformCP = entity.getComponent(TransformCP.class);
+        Coordinate coord = transformCP.getCoord();
+        Coordinate nextStep = transformCP.getCoord().clone();
 
         // If enemy is within the radius, use straight-line pathfinding
-        if (heuristic(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition()) <= goalRadius) {
-            Coordinate step = calculateStraightlineStep(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
+        if (heuristic(new Coordinate(coord.getX(), coord.getY()), world.getPlayerPosition()) <= goalRadius) {
+            Coordinate step = calculateStraightlineStep(coord, world.getPlayerPosition());
             nextStep.setX(step.getX());
             nextStep.setY(step.getY());
         } else {
             // Use A* for pathfinding if enemy is outside radius
             // Calculate new path if not existing, or if player has moved outside radius
             if (path == null || heuristic(path[path.length - 1], world.getPlayerPosition()) > goalRadius) {
-                path = calculatePath(new Coordinate(entity.getX(), entity.getY()), world.getPlayerPosition());
+                path = calculatePath(coord, world.getPlayerPosition());
                 stepsTaken = 0;
             }
 
@@ -48,13 +51,12 @@ public class PathfindingComponent implements IEntityComponent {
         }
 
         // We use the coordinates of the player to angle the enemy
-        double yDiff = world.getPlayerPosition().getY() - entity.getY();
-        double xDiff = world.getPlayerPosition().getX() - entity.getX();
+        double yDiff = world.getPlayerPosition().getY() - coord.getY();
+        double xDiff = world.getPlayerPosition().getX() - coord.getX();
         double angle = Math.toDegrees(Math.atan2(yDiff, xDiff));
 
-        entity.setX(nextStep.getX());
-        entity.setY(nextStep.getY());
-        entity.setRotation(angle);
+        transformCP.setCoord(nextStep);
+        transformCP.setRotation(angle);
     }
 
     private Coordinate calculateStraightlineStep(Coordinate start, Coordinate goal) {
@@ -62,16 +64,19 @@ public class PathfindingComponent implements IEntityComponent {
         int yDiff = (int) (goal.getY() - start.getY());
         int xDiff = (int) (goal.getX() - start.getX());
 
+        TransformCP transformCP = entity.getComponent(TransformCP.class);
+        Coordinate coord = transformCP.getCoord();
+
         if (yDiff > 0) {
-            result.setY(entity.getY() + scalingFactor);
+            result.setY(coord.getY() + scalingFactor);
         } else if (yDiff < 0) {
-            result.setY(entity.getY() - scalingFactor);
+            result.setY(coord.getY() - scalingFactor);
         }
 
         if (xDiff > 0) {
-            result.setX(entity.getX() + scalingFactor);
+            result.setX(coord.getX() + scalingFactor);
         } else if (xDiff < 0) {
-            result.setX(entity.getX() - scalingFactor);
+            result.setX(coord.getX() - scalingFactor);
         }
         return result;
     }

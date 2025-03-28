@@ -1,8 +1,11 @@
 package dk.lima.graphics.gameRender;
 
-import dk.lima.common.data.Entity;
+import dk.lima.common.data.Coordinate;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entitycomponents.ShapeCP;
+import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.player.Player;
 import javafx.scene.Node;
@@ -23,8 +26,9 @@ public class EntityRenderer implements IGraphicsService {
         polygons = new ConcurrentHashMap<>();
 
         for (Entity entity : world.getEntities()) {
-            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
-            polygon.setFill(Color.rgb(entity.getColor()[0] % 256, entity.getColor()[1] % 256, entity.getColor()[2] % 256));
+            ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+            Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
+            polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
             polygons.put(entity, polygon);
             entityPane.getChildren().add(polygon);
         }
@@ -45,21 +49,24 @@ public class EntityRenderer implements IGraphicsService {
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
-                polygon = new Polygon(entity.getPolygonCoordinates());
-                polygon.setFill(Color.rgb(entity.getColor()[0] % 256, entity.getColor()[1] % 256, entity.getColor()[2] % 256));
+                ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+                polygon = new Polygon(shapeCP.getPolygonCoordinates());
+                polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
                 polygons.put(entity, polygon);
                 entityPane.getChildren().add(polygon);
             }
 
+            TransformCP transformCP = entity.getComponent(TransformCP.class);
             if (entity instanceof Player) {
                 polygon.setTranslateX((double) gameData.getDisplayWidth() / 2);
                 polygon.setTranslateY((double) gameData.getDisplayHeight() / 2);
             } else {
-                polygon.setTranslateX(entity.getX() + world.getPlayerX());
-                polygon.setTranslateY(entity.getY() + world.getPlayerY());
+                Coordinate coord = transformCP.getCoord();
+                polygon.setTranslateX(coord.getX() + world.getPlayerX());
+                polygon.setTranslateY(coord.getY() + world.getPlayerY());
             }
 
-            polygon.setRotate(entity.getRotation());
+            polygon.setRotate(transformCP.getRotation());
         }
     }
 

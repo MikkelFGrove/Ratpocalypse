@@ -1,6 +1,6 @@
 package dk.lima.common.data;
 
-public class Coordinate {
+public class Coordinate implements Cloneable {
     private double x;
     private double y;
 
@@ -34,5 +34,10 @@ public class Coordinate {
             }
         }
         return false;
+    }
+
+    @Override
+    public Coordinate clone() {
+        return new Coordinate(this.x, this.y);
     }
 }

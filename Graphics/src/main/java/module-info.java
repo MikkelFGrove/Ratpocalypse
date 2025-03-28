@@ -7,6 +7,7 @@ module Graphics {
     requires Common;
     requires CommonGraphics;
     requires CommonPlayer;
+    requires CommonEntityCP;
 
     requires javafx.graphics;
     requires java.desktop;

@@ -1,7 +1,7 @@
 package dk.lima.pathfindingComponent;
 
 import dk.lima.common.data.Coordinate;
-import dk.lima.common.data.Entity;
+import dk.lima.common.entity.Entity;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 

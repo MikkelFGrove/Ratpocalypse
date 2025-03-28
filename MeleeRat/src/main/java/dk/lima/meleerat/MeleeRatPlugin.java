@@ -1,9 +1,12 @@
 package dk.lima.meleerat;
 
-import dk.lima.common.data.Entity;
+import dk.lima.common.data.Coordinate;
+import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
+import dk.lima.common.entitycomponents.ShapeCP;
+import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.pathfindingComponent.PathfindingComponent;
@@ -40,16 +43,22 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
         for (int i = 0; i < polygonCoordinates.length; i++) {
             polygonCoordinates[i] *= scalingFactor;
         }
-        enemy.setPolygonCoordinates(polygonCoordinates);
+
+        enemy.addComponent(new ShapeCP(
+                polygonCoordinates,
+                new int[]{0,0,0}
+        ));
 
         double angle = rnd.nextDouble(0, 2 * Math.PI);
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + gameData.getDisplayWidth() / 2d - world.getPlayerX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + gameData.getDisplayHeight() / 2d - world.getPlayerY();
-        enemy.setX(x);
-        enemy.setY(y);
 
-        enemy.setRadius(2 * scalingFactor);
-        enemy.setRotation(rnd.nextInt(90));
+        enemy.addComponent(new TransformCP(
+                new Coordinate(x, y),
+                rnd.nextInt(90),
+                2 * scalingFactor
+        ));
+
         enemy.addComponent(new PathfindingComponent(enemy));
         return enemy;
     }

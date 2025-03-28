@@ -33,6 +33,7 @@
         <module>Graphics</module>
         <module>Persistence</module>
         <module>PathfindingComponent</module>
+        <module>CommonEntityCP</module>
     </modules>
     <properties>
         <java>java</java>
