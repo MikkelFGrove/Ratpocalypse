@@ -36,7 +36,7 @@ public class PlayerPlugin implements IGamePluginService {
         }
 
         playerModel.addComponent(new TransformCP(
-                new Coordinate(gameData.getDisplayHeight() / 2d, gameData.getDisplayWidth() / 2d),
+                new Coordinate(0,0),
                 0,
                 scale
         ));
