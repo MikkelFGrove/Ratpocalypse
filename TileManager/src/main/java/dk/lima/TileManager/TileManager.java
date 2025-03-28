@@ -107,8 +107,8 @@ public class TileManager implements IGraphicsService {
         int worldCol = 0;
         int worldRow = 0;
 
-        double playerCoordinateX = world.getPlayerX() - (double) gameData.getDisplayWidth() / 2;
-        double playerCoordinateY = world.getPlayerY() - (double) gameData.getDisplayHeight() / 2;
+        double playerCoordinateX = -world.getPlayerPosition().getX();
+        double playerCoordinateY = -world.getPlayerPosition().getY();
 
         while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];

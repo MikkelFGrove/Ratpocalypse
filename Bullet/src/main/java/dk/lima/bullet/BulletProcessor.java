@@ -21,10 +21,10 @@ public class BulletProcessor implements IEntityProcessingService {
 
             transformCP.setCoord(new Coordinate(coord.getX() + changeX * 3, coord.getY() + changeY * 3));
 
-            if(coord.getX() + world.getPlayerX() > gameData.getDisplayWidth() ||
-            coord.getY() + world.getPlayerY() > gameData.getDisplayHeight() ||
-            coord.getX() + world.getPlayerX() < 0 ||
-            coord.getY() + world.getPlayerY() < 0) {
+            if((coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) > gameData.getDisplayWidth() ||
+                    (coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) > gameData.getDisplayHeight() ||
+                    (coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) < 0 ||
+                    (coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) < 0) {
                 world.removeEntity(bullet);
             }
         }
