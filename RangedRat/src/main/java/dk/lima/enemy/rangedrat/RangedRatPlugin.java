@@ -5,13 +5,13 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.data.*;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
-import dk.lima.pathfindingComponent.PathfindingComponent;
 
 import java.util.Collection;
 import java.util.Random;
@@ -24,7 +24,12 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
     public void start(GameData gameData, World world) {
         for (int i = 0; i < 3; i++) {
             Entity enemy = createEnemy(gameData, world);
-            enemy.addComponent(new PathfindingComponent(enemy));
+            for (IEntityComponent component : getEntityComponents()) {
+                if (component.getType().equals(EntityComponentTypes.PATHFINDING)) {
+                    component.setEntity(enemy);
+                    enemy.addComponent(component);
+                }
+            }
             world.addEntity(enemy);
         }
     }
@@ -73,10 +78,24 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
         ));
 
 
+        enemy.setRadius(2 * scalingFactor);
+        enemy.setRotation(rnd.nextInt(90));
+        for (IEntityComponent component : getEntityComponents()) {
+            if (component.getType().equals(EntityComponentTypes.PATHFINDING)) {
+                component.setEntity(enemy);
+                enemy.addComponent(component);
+            }
+        }
+        enemy.setColor(new int[]{250, 17, 68});
+        getWeaponSPI().stream().findFirst().ifPresent(enemy::setIWeaponSPI);
         return enemy;
     }
 
     private Collection<? extends IWeaponSPI> getWeaponSPI() {
         return ServiceLoader.load(IWeaponSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    public static Collection<? extends IEntityComponent> getEntityComponents() {
+        return ServiceLoader.load(IEntityComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

@@ -6,6 +6,7 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.data.*;
 
 import java.util.*;
 
@@ -17,8 +18,16 @@ public class PathfindingComponent implements IEntityComponent {
     // Value specifying how long the player has to move from the calculated path to calculate a new path
     private double goalRadius = 40;
 
+    public PathfindingComponent() {
+    }
+
     public PathfindingComponent(Entity entity) {
         this.entity = entity;
+    }
+
+    @Override
+    public EntityComponentTypes getType() {
+        return EntityComponentTypes.PATHFINDING;
     }
 
     public void process(GameData gameData, World world) {
@@ -132,5 +141,9 @@ public class PathfindingComponent implements IEntityComponent {
         successorStates[6] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor,parentState.getCoordinates().getY()+1*scalingFactor), Math.sqrt(2));
         successorStates[7] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), Math.sqrt(2));
         return successorStates;
+    }
+
+    public void setEntity(Entity entity) {
+        this.entity = entity;
     }
 }

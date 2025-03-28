@@ -15,4 +15,5 @@ module RangedRat {
     provides IEnemy with RangedRatPlugin;
 
     uses dk.lima.common.weapon.IWeaponSPI;
+    uses dk.lima.common.data.IEntityComponent;
 }
