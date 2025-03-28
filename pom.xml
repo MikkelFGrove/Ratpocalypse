@@ -34,6 +34,7 @@
         <module>TaskSchedulerPlugin</module>
         <module>Graphics</module>
         <module>Persistence</module>
+        <module>CommonEntityCP</module>
     </modules>
     <properties>
         <java>java</java>
