@@ -4,8 +4,14 @@ import java.time.Duration;
 
 public class GameData {
 
+
+    // Screen Settings
     private int displayWidth  = 800 ;
     private int displayHeight = 800;
+    final int originalTileSize = 16; // 16x16 tile
+    final int scale = 3;
+    public final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
+
     private final GameInputs inputs = new GameInputs();
     private boolean isGameRunning = false;
     private Duration duration = Duration.ofSeconds(0);
