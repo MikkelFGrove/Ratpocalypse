@@ -17,9 +17,6 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
             double x = gameData.getMousePosition().getX() - gameData.getDisplayWidth() / 2d;
             double y = gameData.getMousePosition().getY() - gameData.getDisplayHeight() / 2d;
-            if (world.getPlayerPosition() == null){
-                world.setPlayerPosition(new Coordinate(x,y));
-            }
             double angle = Math.atan2(y, x);
             transformCP.setRotation(Math.toDegrees(angle));
 
