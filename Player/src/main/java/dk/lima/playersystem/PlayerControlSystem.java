@@ -16,6 +16,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
             double velocity = 1.5;
 
+
             //Checks what input is registered and then either move, rotate or fires a bullet based on that.
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
 

@@ -16,11 +16,7 @@ import java.io.InputStreamReader;
 
 public class TileManager implements IGraphicsService {
 
-    // Screen Settings
-    final int originalTileSize = 16; // 16x16 tile
-    final int scale = 3;
-
-    public final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
+    //SCreen settings
     public final int maxScreenCol = 16; // screen length in tiles
     public final int maxScreenRow = 12; //  Screen height in tiles
 
@@ -112,10 +108,10 @@ public class TileManager implements IGraphicsService {
 
         while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
-            double x = worldCol * tileSize + playerCoordinateX;
-            double y = worldRow * tileSize + playerCoordinateY;
+            double x = worldCol * gameData.tileSize + playerCoordinateX;
+            double y = worldRow * gameData.tileSize + playerCoordinateY;
             if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
-                gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
+                gc.drawImage(tiles[tileNum].img, x, y, gameData.tileSize, gameData.tileSize);
             }
             worldCol++;
 

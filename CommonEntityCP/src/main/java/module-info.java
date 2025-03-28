@@ -1,6 +1,6 @@
 module CommonEntityCP {
     requires Common;
-    requires CommonBullet;
+    requires javafx.graphics;
 
     exports dk.lima.common.entitycomponents;
 }
