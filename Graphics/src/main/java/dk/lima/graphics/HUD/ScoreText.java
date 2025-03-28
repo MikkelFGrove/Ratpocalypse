@@ -1,14 +1,14 @@
-package dk.lima.HUD;
+package dk.lima.graphics.HUD;
 
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class ScoreText implements IGraphicsComponent {
+public class ScoreText implements IGraphicsService {
     private Text scoreText;
 
     @Override

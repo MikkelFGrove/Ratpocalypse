@@ -1,10 +1,10 @@
 import dk.lima.TileManager.TileManager;
-import dk.lima.common.graphics.IGraphicsComponent;
+import dk.lima.common.graphics.IGraphicsService;
 
 module TileManager {
     requires Common;
     requires CommonGraphics;
     requires javafx.graphics;
 
-    provides IGraphicsComponent with TileManager;
+    provides IGraphicsService with TileManager;
 }

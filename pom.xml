@@ -31,7 +31,6 @@
         <module>CommonPathfinding</module>
         <module>Pathfinding</module>
         <module>CommonGraphics</module>
-        <module>HUD</module>
         <module>TaskSchedulerPlugin</module>
         <module>Graphics</module>
         <module>Persistence</module>
