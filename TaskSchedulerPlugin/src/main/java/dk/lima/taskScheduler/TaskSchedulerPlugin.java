@@ -12,7 +12,7 @@ import java.util.concurrent.*;
 import static java.util.stream.Collectors.toList;
 
 public class TaskSchedulerPlugin implements IGamePluginService {
-    private ScheduledExecutorService executor;
+    private static ScheduledExecutorService executor;
 
     @Override
     public void start(GameData gameData, World world) {
@@ -36,8 +36,7 @@ public class TaskSchedulerPlugin implements IGamePluginService {
 
     @Override
     public void stop(GameData gameData, World world) {
-        executor.shutdown();
-        executor = null;
+        executor.close();
     }
 
     public static Collection<? extends ITimeTask> getITimeTasks() {

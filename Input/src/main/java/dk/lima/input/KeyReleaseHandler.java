@@ -27,6 +27,7 @@ public class KeyReleaseHandler implements IInputSPI {
                         case LEFT, KeyCode.A -> gameData.getInputs().setInput(EGameInputs.LEFT, false);
                         case RIGHT, KeyCode.D -> gameData.getInputs().setInput(EGameInputs.RIGHT, false);
                         case SPACE -> gameData.getInputs().setInput(EGameInputs.ACTION, false);
+                        case ESCAPE -> gameData.getInputs().setInput(EGameInputs.PAUSE, false);
                     }
                 }
             }
