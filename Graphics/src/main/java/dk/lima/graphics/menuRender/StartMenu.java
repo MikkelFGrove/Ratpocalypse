@@ -21,7 +21,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class StartMenu implements IMenu {
-    Pane startMenuPane;
+    static Pane startMenuPane;
     @Override
     public MenuType getType() {
         return MenuType.START;
@@ -78,19 +78,15 @@ public class StartMenu implements IMenu {
         startMenuPane.getChildren().add(text);
         startMenuPane.getChildren().add(button);
         return startMenuPane;
+
     }
 
     @Override
-    public void updateComponent(GameData gameData, World world) {}
+    public void updateComponent(GameData gameData, World world) {
+    }
 
     @Override
     public void showComponent(Boolean shouldShow) {
-        startMenuPane.setOpacity(0);
         startMenuPane.setVisible(shouldShow);
-        for (Node node : startMenuPane.getChildren()) {
-            node.setOpacity(0);
-            node.setVisible(shouldShow);
-        }
-
     }
 }

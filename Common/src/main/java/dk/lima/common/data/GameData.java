@@ -11,6 +11,7 @@ public class GameData {
     private Duration duration = Duration.ofSeconds(0);
     private int score = 0;
     private Coordinate mousePosition = new Coordinate(0,0);
+    private boolean isGamePaused;
 
     public GameInputs getInputs() {
         return inputs;

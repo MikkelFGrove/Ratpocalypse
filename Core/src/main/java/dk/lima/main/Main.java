@@ -52,18 +52,18 @@ public class Main extends Application {
         render();
         window.setScene(scene);
         window.setTitle("Ratpocalypse");
-        window.show();  
+        window.show();
     }
 
     private void render() {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
+                gameData.getInputs().update();
                 if (gameData.isGameRunning()){
                     update();
-                    updateGraphics();
-                    gameData.getInputs().update();
                 }
+                updateGraphics();
             }
         }.start();
     }
