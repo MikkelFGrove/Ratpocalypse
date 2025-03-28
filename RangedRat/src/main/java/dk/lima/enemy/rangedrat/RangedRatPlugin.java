@@ -1,12 +1,8 @@
 package dk.lima.enemy.rangedrat;
 
-<<<<<<< Updated upstream
 import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
-=======
-import dk.lima.common.data.Entity;
 import dk.lima.common.data.EntityTypes;
->>>>>>> Stashed changes
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
