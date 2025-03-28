@@ -3,6 +3,7 @@ import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.common.bullet.IBulletSPI;
@@ -24,7 +25,7 @@ public class Rifle implements IWeaponSPI{
     @Override
     public void shoot(Entity e, GameData gameData, World world) {
         if(System.currentTimeMillis() - lastShot > fireRate) {
-            TransformCP transformCP = e.getComponent(TransformCP.class);
+            TransformCP transformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
 
             double rotation = transformCP.getRotation();
             double radius = transformCP.getSize();

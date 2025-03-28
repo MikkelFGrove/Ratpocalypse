@@ -5,8 +5,9 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.data.*;
 import dk.lima.common.enemy.IEnemy;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
@@ -24,12 +25,6 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
     public void start(GameData gameData, World world) {
         for (int i = 0; i < 3; i++) {
             Entity enemy = createEnemy(gameData, world);
-            for (IEntityComponent component : getEntityComponents()) {
-                if (component.getType().equals(EntityComponentTypes.PATHFINDING)) {
-                    component.setEntity(enemy);
-                    enemy.addComponent(component);
-                }
-            }
             world.addEntity(enemy);
         }
     }
@@ -52,42 +47,40 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
             polygonCoordinates[i] *= scalingFactor;
         }
 
-        enemy.addComponent(new ShapeCP(
-                polygonCoordinates,
-                new int[]{250, 17, 68}
-        ));
-
         double angle = rnd.nextDouble(0, 2 * Math.PI);
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
-        enemy.addComponent(new PathfindingComponent(enemy));
-        enemy.addComponent(new TransformCP(
-                new Coordinate(x, y),
-                rnd.nextInt(90),
-                2 * scalingFactor
-        ));
-
-
-        enemy.addComponent(new WeaponCP(
-                enemy,
-                getWeaponSPI().stream().findFirst().orElse(null),
-                90,
-                100,
-                true
-        ));
-
-
-        enemy.setRadius(2 * scalingFactor);
-        enemy.setRotation(rnd.nextInt(90));
         for (IEntityComponent component : getEntityComponents()) {
-            if (component.getType().equals(EntityComponentTypes.PATHFINDING)) {
-                component.setEntity(enemy);
-                enemy.addComponent(component);
+            switch (component.getType()) {
+                case PATHFINDING -> {
+                    component.setEntity(enemy);
+                    enemy.addComponent(component);
+                }
+                case SHAPE -> {
+                    ShapeCP shapeCP = (ShapeCP) component;
+                    shapeCP.setPolygonCoordinates(polygonCoordinates);
+                    shapeCP.setColor(new int[]{250, 17, 68});
+                    enemy.addComponent(shapeCP);
+                }
+                case TRANSFORM -> {
+                    TransformCP transformCP = (TransformCP) component;
+                    transformCP.setCoord(new Coordinate(x, y));
+                    transformCP.setRotation(rnd.nextInt(90));
+                    transformCP.setSize(2 * scalingFactor);
+                    enemy.addComponent(transformCP);
+                }
+                case WEAPON -> {
+                    WeaponCP weaponCP = (WeaponCP) component;
+                    weaponCP.setEntity(enemy);
+                    weaponCP.setWeaponSPI(getWeaponSPI().stream().findFirst().orElse(null));
+                    weaponCP.setAttackChance(90);
+                    weaponCP.setAttackCooldown(100);
+                    weaponCP.setShouldAttack(true);
+                    enemy.addComponent(weaponCP);
+                }
             }
         }
-        enemy.setColor(new int[]{250, 17, 68});
-        getWeaponSPI().stream().findFirst().ifPresent(enemy::setIWeaponSPI);
         return enemy;
     }
 

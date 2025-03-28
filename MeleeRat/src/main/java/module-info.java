@@ -15,5 +15,5 @@ module MeleeRat {
     provides IEnemy with MeleeRatPlugin;
 
     uses dk.lima.common.weapon.IWeaponSPI;
-    uses dk.lima.common.data.IEntityComponent;
+    uses dk.lima.common.entity.IEntityComponent;
 }

@@ -4,6 +4,7 @@ import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.graphics.IGraphicsService;
@@ -26,7 +27,7 @@ public class EntityRenderer implements IGraphicsService {
         polygons = new ConcurrentHashMap<>();
 
         for (Entity entity : world.getEntities()) {
-            ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+            ShapeCP shapeCP = (ShapeCP) entity.getComponent( EntityComponentTypes.SHAPE);
             Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
             polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
             polygons.put(entity, polygon);
@@ -49,14 +50,14 @@ public class EntityRenderer implements IGraphicsService {
         for (Entity entity : world.getEntities()) {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
-                ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
+                ShapeCP shapeCP = (ShapeCP) entity.getComponent(EntityComponentTypes.SHAPE);
                 polygon = new Polygon(shapeCP.getPolygonCoordinates());
                 polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
                 polygons.put(entity, polygon);
                 entityPane.getChildren().add(polygon);
             }
 
-            TransformCP transformCP = entity.getComponent(TransformCP.class);
+            TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
             if (entity instanceof Player) {
                 polygon.setTranslateX(gameData.getDisplayWidth() / 2d);
                 polygon.setTranslateY(gameData.getDisplayHeight() / 2d);

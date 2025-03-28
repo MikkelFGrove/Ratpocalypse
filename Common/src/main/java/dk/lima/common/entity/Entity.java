@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
-    private final Map<Class<? extends IEntityComponent>, IEntityComponent> entityComponentMap;
+    private final Map<EntityComponentTypes, IEntityComponent> entityComponentMap;
     private EEntityTypes entityType;
 
     public Entity() {
@@ -21,20 +21,20 @@ public class Entity implements Serializable {
         return ID.toString();
     }
 
-    public <E extends IEntityComponent> E getComponent(Class componentClass) {
-        return (E) entityComponentMap.get(componentClass);
+    public IEntityComponent getComponent(EntityComponentTypes componentType) {
+        return entityComponentMap.get(componentType);
     }
 
     public void addComponent(IEntityComponent component) {
-        entityComponentMap.put(component.getClass(), component);
+        entityComponentMap.put(component.getType(), component);
     }
 
-    public void removeComponent(Class<? extends IEntityComponent> componentClass) {
-        entityComponentMap.remove(componentClass);
+    public void removeComponent(EntityComponentTypes componentType) {
+        entityComponentMap.remove(componentType);
     }
 
     public void removeComponent(IEntityComponent component) {
-        entityComponentMap.remove(component.getClass());
+        entityComponentMap.remove(component.getType());
     }
 
     public Collection<IEntityComponent> getComponents() {

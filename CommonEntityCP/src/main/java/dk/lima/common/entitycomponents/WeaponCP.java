@@ -3,18 +3,22 @@ package dk.lima.common.entitycomponents;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.weapon.IWeaponSPI;
 
 import java.util.Random;
 
 public class WeaponCP implements IEntityComponent {
-    private final Entity entity;
+    private Entity entity;
     private IWeaponSPI weaponSPI;
     private int attackChance;
     private int attackCooldown;
     private long lastAttack;
     private boolean shouldAttack;
+
+    public WeaponCP() {
+    }
 
     public WeaponCP(Entity entity, IWeaponSPI weaponSPI, int attackChance, int attackCooldown, boolean shouldAttack) {
         this.entity = entity;
@@ -24,6 +28,16 @@ public class WeaponCP implements IEntityComponent {
         this.shouldAttack = shouldAttack;
     }
 
+
+    @Override
+    public EntityComponentTypes getType() {
+        return EntityComponentTypes.WEAPON;
+    }
+
+    @Override
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
 
     @Override
     public void process(GameData gameData, World world) {
