@@ -4,8 +4,9 @@ import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.data.*;
 import dk.lima.common.enemy.IEnemy;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IGamePluginService;
@@ -22,12 +23,6 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
     public void start(GameData gameData, World world) {
         for (int i = 0; i < 3; i++) {
             Entity enemy = createEnemy(gameData, world);
-            for (IEntityComponent component : getEntityComponents()) {
-                if (component.getType().equals(EntityComponentTypes.PATHFINDING)) {
-                    component.setEntity(enemy);
-                    enemy.addComponent(component);
-                }
-            }
             world.addEntity(enemy);
         }
     }
@@ -49,29 +44,31 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
             polygonCoordinates[i] *= scalingFactor;
         }
 
-        enemy.addComponent(new ShapeCP(
-                polygonCoordinates,
-                new int[]{0,0,0}
-        ));
-
         double angle = rnd.nextDouble(0, 2 * Math.PI);
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + gameData.getDisplayWidth() / 2d - world.getPlayerX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + gameData.getDisplayHeight() / 2d - world.getPlayerY();
 
-        enemy.addComponent(new TransformCP(
-                new Coordinate(x, y),
-                rnd.nextInt(90),
-                2 * scalingFactor
-        ));
-
-        enemy.addComponent(new PathfindingComponent(enemy));
-        enemy.setRadius(2 * scalingFactor);
-        enemy.setRotation(rnd.nextInt(90));
-
         for (IEntityComponent component : getEntityComponents()) {
-            if (component.getType().equals(EntityComponentTypes.PATHFINDING)) {
-                component.setEntity(enemy);
-                enemy.addComponent(component);
+            switch (component.getType()) {
+                case PATHFINDING -> {
+                    component.setEntity(enemy);
+                    enemy.addComponent(component);
+                }
+                case SHAPE -> {
+                    ShapeCP shapeCP = (ShapeCP) component;
+                    shapeCP.setPolygonCoordinates(polygonCoordinates);
+                    shapeCP.setColor(new int[]{0, 0, 0});
+                    shapeCP.setEntity(enemy);
+                    enemy.addComponent(shapeCP);
+                }
+                case TRANSFORM -> {
+                    TransformCP transformCP = (TransformCP) component;
+                    transformCP.setCoord(new Coordinate(x, y));
+                    transformCP.setRotation(rnd.nextInt(90));
+                    transformCP.setSize(2 * scalingFactor);
+                    transformCP.setEntity(enemy);
+                    enemy.addComponent(transformCP);
+                }
             }
         }
         return enemy;

@@ -2,6 +2,7 @@ package dk.lima.playersystem;
 
 import dk.lima.common.data.*;
 import dk.lima.common.entity.Entity;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IEntityProcessingService;
@@ -14,8 +15,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
         for (Entity player: world.getEntities(Player.class)) {
             double velocity = 1.5;
 
-            TransformCP transformCP = player.getComponent(TransformCP.class);
-            WeaponCP weaponCP = player.getComponent(WeaponCP.class);
+            TransformCP transformCP = (TransformCP) player.getComponent(EntityComponentTypes.TRANSFORM);
+            WeaponCP weaponCP = (WeaponCP) player.getComponent(EntityComponentTypes.WEAPON);
             Coordinate coord = transformCP.getCoord();
 
             double x = gameData.getMousePosition().getX() - ((double) gameData.getDisplayWidth() / 2);

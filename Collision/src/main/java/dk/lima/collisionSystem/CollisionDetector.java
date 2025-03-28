@@ -4,6 +4,7 @@ import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IPostEntityProcessingService;
 
@@ -16,7 +17,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
 
-            TransformCP eTransformCP = e.getComponent(TransformCP.class);
+            TransformCP eTransformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
             if (eTransformCP == null) {
                 continue;
             }
@@ -28,7 +29,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     continue;
                 }
 
-                TransformCP e2TransformCP = e2.getComponent(TransformCP.class);
+                TransformCP e2TransformCP = (TransformCP) e2.getComponent(EntityComponentTypes.TRANSFORM);
                 if (e2TransformCP == null) {
                     continue;
                 }
