@@ -1,6 +1,6 @@
 package dk.lima.common.data;
 
-public enum EntityTypes {
+public enum EEntityTypes {
     ENEMY,
     PLAYER,
     BULLET
