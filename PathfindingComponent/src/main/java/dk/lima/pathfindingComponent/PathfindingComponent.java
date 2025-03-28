@@ -76,7 +76,7 @@ public class PathfindingComponent implements IEntityComponent {
         return result;
     }
 
-    private Coordinate[] calculatePath(Coordinate start, Coordinate goal) {
+    public Coordinate[] calculatePath(Coordinate start, Coordinate goal) {
         List<Node> fringe = new ArrayList<>();
         Set<Coordinate> visited = new HashSet<>();
         Node initialNode = new Node(start);
