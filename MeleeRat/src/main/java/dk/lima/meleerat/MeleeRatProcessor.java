@@ -1,19 +1,13 @@
 package dk.lima.meleerat;
 
-import dk.lima.common.pathfinding.IPathfindingSPI;
 import dk.lima.common.data.*;
-import dk.lima.common.enemy.Enemy;
 import dk.lima.common.services.IEntityProcessingService;
 
-import java.util.Collection;
-import java.util.ServiceLoader;
-
-import static java.util.stream.Collectors.toList;
 
 public class MeleeRatProcessor implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity enemy : world.getEntities(Enemy.class)) {
+        for (Entity enemy : world.getEntities(MeleeRat.class)) {
             /*Coordinate start = new Coordinate(enemy.getX(), enemy.getY());
             Coordinate nextStep = new Coordinate(enemy.getX(), enemy.getY());
 

@@ -4,14 +4,9 @@ import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.pathfinding.IPathfindingSPI;
 import dk.lima.common.services.IEntityProcessingService;
-
-import java.util.Collection;
 import java.util.Random;
-import java.util.ServiceLoader;
 
-import static java.util.stream.Collectors.toList;
 
 public class RangedRatProcessor implements IEntityProcessingService {
     @Override
@@ -19,9 +14,6 @@ public class RangedRatProcessor implements IEntityProcessingService {
         for (Entity enemy : world.getEntities(RangedRat.class)) {
             Coordinate start = new Coordinate(enemy.getX(), enemy.getY());
             Coordinate nextStep = new Coordinate(enemy.getX(), enemy.getY());
-            if (getPathfindingSPI().stream().findFirst().isPresent() && world.getPlayerPosition() != null) {
-                nextStep = getPathfindingSPI().stream().findFirst().get().calculateNextStep(start, world.getPlayerPosition());
-            }
 
             enemy.setX(nextStep.getX());
             enemy.setY(nextStep.getY());
@@ -42,9 +34,5 @@ public class RangedRatProcessor implements IEntityProcessingService {
 
             enemy.setRotation(angle);
         }
-    }
-
-    private Collection<? extends IPathfindingSPI> getPathfindingSPI() {
-        return ServiceLoader.load(IPathfindingSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

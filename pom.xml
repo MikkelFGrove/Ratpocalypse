@@ -32,7 +32,6 @@
         <module>TaskSchedulerPlugin</module>
         <module>Graphics</module>
         <module>Persistence</module>
-        <module>EntityRenderer</module>
         <module>PathfindingComponent</module>
     </modules>
     <properties>
