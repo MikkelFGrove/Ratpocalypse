@@ -12,46 +12,37 @@ public class PlayerControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player: world.getEntities(Player.class)) {
-            double velocity = 1.5;
-
             TransformCP transformCP = player.getComponent(TransformCP.class);
             WeaponCP weaponCP = player.getComponent(WeaponCP.class);
-            Coordinate coord = transformCP.getCoord();
 
-            double x = gameData.getMousePosition().getX() - ((double) gameData.getDisplayWidth() / 2);
-            double y = gameData.getMousePosition().getY() - ((double) gameData.getDisplayHeight() / 2);
+            double x = gameData.getMousePosition().getX() - gameData.getDisplayWidth() / 2d;
+            double y = gameData.getMousePosition().getY() - gameData.getDisplayHeight() / 2d;
             if (world.getPlayerPosition() == null){
                 world.setPlayerPosition(new Coordinate(x,y));
             }
-
             double angle = Math.atan2(y, x);
-
             transformCP.setRotation(Math.toDegrees(angle));
 
-
+            Coordinate playerCoord = transformCP.getCoord();
+            double velocity = 1.5;
             //Checks what input is registered and then either move, rotate or fires a bullet based on that.
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                world.setPlayerY(world.getPlayerY() + velocity);
+                playerCoord.setY(playerCoord.getY() - velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                world.setPlayerY(world.getPlayerY() - velocity);
+                playerCoord.setY(playerCoord.getY() + velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                world.setPlayerX(world.getPlayerX() + velocity);
+                playerCoord.setX(playerCoord.getX() - velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                world.setPlayerX(world.getPlayerX() - velocity);
+                playerCoord.setX(playerCoord.getX() + velocity);
             }
-
-            //This ensures that as the player moves around the map, the camera gets adjusted to keep them centered.
-            // Other components (collision, weapons, etc.) depends on these coordinates, to work properly.
-            coord.setY(-world.getPlayerY() + gameData.getDisplayHeight() / 2d);
-            coord.setX(-world.getPlayerX() + gameData.getDisplayWidth() / 2d);
-            world.setPlayerPosition(coord);
+            world.setPlayerPosition(playerCoord);
 
             weaponCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
             weaponCP.process(gameData, world);
