@@ -2,7 +2,7 @@ package dk.lima.bullet;
 
 import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
-import dk.lima.common.data.EntityTypes;
+import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entitycomponents.ShapeCP;
@@ -27,7 +27,7 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
     @Override
     public Bullet createBullet(double x, double y, double rotation, double radius) {
         Bullet bullet = new Bullet();
-        bullet.setEntityType(EntityTypes.BULLET);
+        bullet.setEntityType(EEntityTypes.BULLET);
         double size = 1.5;
 
         double changeX = Math.cos(Math.toRadians(rotation));

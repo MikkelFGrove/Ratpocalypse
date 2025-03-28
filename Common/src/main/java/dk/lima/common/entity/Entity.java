@@ -1,6 +1,6 @@
 package dk.lima.common.entity;
 
-import dk.lima.common.data.EntityTypes;
+import dk.lima.common.data.EEntityTypes;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class Entity implements Serializable {
     private final UUID ID = UUID.randomUUID();
     private final Map<Class<? extends IEntityComponent>, IEntityComponent> entityComponentMap;
-    private EntityTypes entityType;
+    private EEntityTypes entityType;
 
     public Entity() {
         entityComponentMap = new ConcurrentHashMap<>();
@@ -41,11 +41,11 @@ public class Entity implements Serializable {
         return entityComponentMap.values();
     }
 
-    public EntityTypes getEntityType() {
+    public EEntityTypes getEntityType() {
         return entityType;
     }
 
-    public void setEntityType(EntityTypes entityType) {
+    public void setEntityType(EEntityTypes entityType) {
         this.entityType = entityType;
     }
 }
