@@ -1,5 +1,6 @@
 package dk.lima.graphics.menuRender;
 
+import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.EGameInputs;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -111,8 +112,7 @@ public class PauseMenu implements IMenu {
             gameData.setScore(0);
             gameData.setDuration(Duration.ZERO);
             world.getEntities().clear();
-            world.setPlayerX(0);
-            world.setPlayerY(0);
+            world.setPlayerPosition(new Coordinate(0, 0));
 
             for (IGamePluginService plugin : getPluginServices()) {
                 plugin.start(gameData, world);
@@ -153,8 +153,7 @@ public class PauseMenu implements IMenu {
             gameData.setScore(0);
             gameData.setDuration(Duration.ZERO);
             world.getEntities().clear();
-            world.setPlayerX(0);
-            world.setPlayerY(0);
+            world.setPlayerPosition(new Coordinate(0, 0));
 
             for (IGamePluginService plugin : getPluginServices()) {
                 plugin.start(gameData, world);
