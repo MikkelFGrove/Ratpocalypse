@@ -12,6 +12,12 @@ public class RangedRatProcessor implements IEntityProcessingService {
             for (IEntityComponent component : enemy.getComponents()) {
                 component.process(gameData, world);
             }
+
+            Random random = new Random();
+            if (random.nextInt(90) == 0) {
+                RangedRat rat = (RangedRat) enemy;
+                rat.getIWeaponSPI().shoot(enemy, gameData, world);
+            }
         }
     }
 }
