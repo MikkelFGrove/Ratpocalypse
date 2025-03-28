@@ -6,6 +6,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
+import dk.lima.pathfindingComponent.PathfindingComponent;
 
 import java.util.Collection;
 import java.util.Random;
@@ -18,6 +19,7 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
     public void start(GameData gameData, World world) {
         for (int i = 0; i < 3; i++) {
             Entity enemy = createEnemy(gameData, world);
+            enemy.addComponent(new PathfindingComponent(enemy));
             world.addEntity(enemy);
         }
     }
@@ -48,6 +50,7 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
 
         enemy.setRadius(2 * scalingFactor);
         enemy.setRotation(rnd.nextInt(90));
+        enemy.addComponent(new PathfindingComponent(enemy));
         return enemy;
     }
 

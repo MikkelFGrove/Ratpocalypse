@@ -8,11 +8,11 @@ module MeleeRat {
     requires Common;
     requires CommonEnemy;
     requires CommonWeapon;
-    requires CommonPathfinding;
+    requires PathfindingComponent;
+
     provides IGamePluginService with MeleeRatPlugin;
     provides IEntityProcessingService with MeleeRatProcessor;
     provides IEnemy with MeleeRatPlugin;
 
     uses dk.lima.common.weapon.IWeaponSPI;
-    uses dk.lima.common.pathfinding.IPathfindingSPI;
 }
