@@ -58,12 +58,12 @@ public class EntityRenderer implements IGraphicsService {
 
             TransformCP transformCP = entity.getComponent(TransformCP.class);
             if (entity instanceof Player) {
-                polygon.setTranslateX((double) gameData.getDisplayWidth() / 2);
-                polygon.setTranslateY((double) gameData.getDisplayHeight() / 2);
+                polygon.setTranslateX(gameData.getDisplayWidth() / 2d);
+                polygon.setTranslateY(gameData.getDisplayHeight() / 2d);
             } else {
                 Coordinate coord = transformCP.getCoord();
-                polygon.setTranslateX(coord.getX() + world.getPlayerX());
-                polygon.setTranslateY(coord.getY() + world.getPlayerY());
+                polygon.setTranslateX(coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX());
+                polygon.setTranslateY(coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY());
             }
 
             polygon.setRotate(transformCP.getRotation());
