@@ -15,18 +15,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 public class TileManager implements IGraphicsService {
-
     // Screen Settings
-    final int originalTileSize = 16; // 16x16 tile
-    final int scale = 3;
-
-    public final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
-    public final int maxScreenCol = 16; // screen length in tiles
-    public final int maxScreenRow = 12; //  Screen height in tiles
+    private final int originalTileSize = 16; // 16x16 tile
+    private final int scale = 3;
+    private final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
 
     // World settings
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
+    private final int maxWorldCol = 50;
+    private final int maxWorldRow = 50;
 
     // Needed for the tile management
     private Tile[] tiles;
@@ -106,12 +102,10 @@ public class TileManager implements IGraphicsService {
 
         int[] startTile = calculateStartCoord(gameData, world);
         int startCol = startTile[0];
-        int worldCol = startCol;
-        int worldRow = startTile[1];
+        int worldCol = startCol, worldRow = startTile[1];
 
         int[] endTile = calculateEndCoord(gameData, world);
-        int endWorldCol = endTile[0];
-        int endWorldRow = endTile[1];
+        int endWorldCol = endTile[0], endWorldRow = endTile[1];
 
         double playerCoordinateX = gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX();
         double playerCoordinateY = gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY();
@@ -142,28 +136,22 @@ public class TileManager implements IGraphicsService {
         int worldCol = Math.floorDiv((int) (world.getPlayerPosition().getX() - gameData.getDisplayWidth() / 2d), tileSize);
         int worldRow = Math.floorDiv((int) (world.getPlayerPosition().getY() - gameData.getDisplayHeight() / 2d), tileSize);
 
-        // If the start-tile is out of bounds, then just set the row/col to 0.
-        if (worldCol < 0) {
-            worldCol = 0;
-        }
-        if (worldRow < 0) {
-            worldRow = 0;
-        }
+        // If the end-tile is out of bounds, then clamp the values to avoid errors
+        worldCol = Math.clamp(worldCol, 0, maxWorldCol);
+        worldRow = Math.clamp(worldRow, 0, maxWorldRow);
+
         return new int[]{worldCol, worldRow};
     }
 
     private int[] calculateEndCoord(GameData gameData, World world) {
-        // Calculate the position of the tile in the top-left corner e.g. the first tile.
+        // Calculate the position of the tile in the bottom-right corner e.g. the last tile.
         int worldCol = Math.ceilDiv((int) (world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2d), tileSize);
         int worldRow = Math.ceilDiv((int) (world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2d), tileSize);
 
-        // If the start-tile is out of bounds, then just set the row/col to 0.
-        if (worldCol > maxWorldCol) {
-            worldCol = maxWorldCol;
-        }
-        if (worldRow > maxWorldRow) {
-            worldRow = maxWorldRow;
-        }
+        // If the end-tile is out of bounds, then clamp the values to avoid errors
+        worldCol = Math.clamp(worldCol, 0, maxWorldCol);
+        worldRow = Math.clamp(worldRow, 0, maxWorldRow);
+
         return new int[]{worldCol, worldRow};
     }
 }
