@@ -104,13 +104,19 @@ public class TileManager implements IGraphicsService {
     public void updateComponent(GameData gameData, World world) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        int worldCol = 0;
-        int worldRow = 0;
+        int[] startTile = calculateStartCoord(gameData, world);
+        int startCol = startTile[0];
+        int worldCol = startCol;
+        int worldRow = startTile[1];
+
+        int[] endTile = calculateEndCoord(gameData, world);
+        int endWorldCol = endTile[0];
+        int endWorldRow = endTile[1];
 
         double playerCoordinateX = gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX();
         double playerCoordinateY = gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY();
 
-        while(worldCol < maxWorldCol && worldRow < maxWorldRow) {
+        while(worldCol < endWorldCol && worldRow < endWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
             double x = worldCol * tileSize + playerCoordinateX;
             double y = worldRow * tileSize + playerCoordinateY;
@@ -119,8 +125,8 @@ public class TileManager implements IGraphicsService {
             }
             worldCol++;
 
-            if(worldCol == maxWorldCol) {
-                worldCol = 0;
+            if(worldCol == endWorldCol) {
+                worldCol = startCol;
                 worldRow++;
             }
         }
@@ -129,6 +135,36 @@ public class TileManager implements IGraphicsService {
     @Override
     public void showComponent(Boolean shouldShow) {
         canvas.setVisible(shouldShow);
+    }
+
+    private int[] calculateStartCoord(GameData gameData, World world) {
+        // Calculate the position of the tile in the top-left corner e.g. the first tile.
+        int worldCol = Math.floorDiv((int) (world.getPlayerPosition().getX() - gameData.getDisplayWidth() / 2d), tileSize);
+        int worldRow = Math.floorDiv((int) (world.getPlayerPosition().getY() - gameData.getDisplayHeight() / 2d), tileSize);
+
+        // If the start-tile is out of bounds, then just set the row/col to 0.
+        if (worldCol < 0) {
+            worldCol = 0;
+        }
+        if (worldRow < 0) {
+            worldRow = 0;
+        }
+        return new int[]{worldCol, worldRow};
+    }
+
+    private int[] calculateEndCoord(GameData gameData, World world) {
+        // Calculate the position of the tile in the top-left corner e.g. the first tile.
+        int worldCol = Math.ceilDiv((int) (world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2d), tileSize);
+        int worldRow = Math.ceilDiv((int) (world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2d), tileSize);
+
+        // If the start-tile is out of bounds, then just set the row/col to 0.
+        if (worldCol > maxWorldCol) {
+            worldCol = maxWorldCol;
+        }
+        if (worldRow > maxWorldRow) {
+            worldRow = maxWorldRow;
+        }
+        return new int[]{worldCol, worldRow};
     }
 }
 
