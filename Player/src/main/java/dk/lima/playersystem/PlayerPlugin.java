@@ -20,11 +20,11 @@ import static java.util.stream.Collectors.toList;
 public class PlayerPlugin implements IGamePluginService {
     @Override
     public void start(GameData gameData, World world) {
-        Entity player = createPlayer(gameData);
+        Entity player = createPlayer(gameData, world);
         world.addEntity(player);
     }
 
-    private Entity createPlayer(GameData gameData) {
+    private Entity createPlayer(GameData gameData, World world) {
         Player playerModel = new Player();
         playerModel.setEntityType(EEntityTypes.PLAYER);
 
@@ -36,7 +36,7 @@ public class PlayerPlugin implements IGamePluginService {
         }
 
         playerModel.addComponent(new TransformCP(
-                new Coordinate(0,0),
+                world.getPlayerPosition(),
                 0,
                 scale
         ));
