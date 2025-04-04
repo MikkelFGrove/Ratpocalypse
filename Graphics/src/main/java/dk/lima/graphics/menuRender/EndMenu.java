@@ -1,5 +1,6 @@
 package dk.lima.graphics.menuRender;
 
+import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.graphics.IMenu;
@@ -97,8 +98,7 @@ public class EndMenu implements IMenu {
             gameData.setScore(0);
             gameData.setDuration(Duration.ZERO);
             world.getEntities().clear();
-            world.setPlayerX(0);
-            world.setPlayerY(0);
+            world.setPlayerPosition(new Coordinate(0,0));
 
             for (IGamePluginService plugin : getPluginServices()) {
                 plugin.start(gameData, world);
@@ -122,9 +122,11 @@ public class EndMenu implements IMenu {
     @Override
     public void updateComponent(GameData gameData, World world) {
         if (world.getEntities(Player.class).isEmpty()) {
+            gameData.setGameRunning(false);
             showComponent(true);
             endMenuPane.setVisible(true);
             highscoreLabel.setText("Your highscore:\n" + gameData.getHighscore());
+            currentscoreLabel.setText("Current Score: " + gameData.getScore());
         }
     }
 

@@ -7,17 +7,18 @@ import java.io.*;
 
 public class PersistentScore implements IPostEntityProcessingService {
 
-    private int highscore;
+    private int highscore = -1;
     private static final String SCORE_FILE = "scores.txt";
 
     @Override
     public void process(GameData gameData, World world) {
-        highscore = readScoreFromFile();
-
+        if (highscore == -1) {
+            highscore = readScoreFromFile();
+        }
         if (gameData.getScore() > highscore) {
             highscore = gameData.getScore();
-            saveScoreToFile(gameData.getScore());
         }
+        saveScoreToFile(highscore);
         gameData.setHighscore(highscore);
     }
 
