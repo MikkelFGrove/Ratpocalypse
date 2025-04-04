@@ -28,10 +28,13 @@ public class EntityRenderer implements IGraphicsService {
 
         for (Entity entity : world.getEntities()) {
             ShapeCP shapeCP = (ShapeCP) entity.getComponent( EntityComponentTypes.SHAPE);
-            Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
-            polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
-            polygons.put(entity, polygon);
-            entityPane.getChildren().add(polygon);
+            if (shapeCP != null) {
+                Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
+                polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
+                polygons.put(entity, polygon);
+                entityPane.getChildren().add(polygon);
+            }
+            
         }
 
         return entityPane;
@@ -51,23 +54,27 @@ public class EntityRenderer implements IGraphicsService {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
                 ShapeCP shapeCP = (ShapeCP) entity.getComponent(EntityComponentTypes.SHAPE);
-                polygon = new Polygon(shapeCP.getPolygonCoordinates());
-                polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
-                polygons.put(entity, polygon);
-                entityPane.getChildren().add(polygon);
+                if (shapeCP != null) {
+                    polygon = new Polygon(shapeCP.getPolygonCoordinates());
+                    polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
+                    polygons.put(entity, polygon);
+                    entityPane.getChildren().add(polygon);
+                }
             }
 
-            TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
-            if (entity instanceof Player) {
-                polygon.setTranslateX(gameData.getDisplayWidth() / 2d);
-                polygon.setTranslateY(gameData.getDisplayHeight() / 2d);
-            } else {
-                Coordinate coord = transformCP.getCoord();
-                polygon.setTranslateX(coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX());
-                polygon.setTranslateY(coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY());
-            }
+            if (polygon != null) {
+                TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
+                if (entity instanceof Player) {
+                    polygon.setTranslateX(gameData.getDisplayWidth() / 2d);
+                    polygon.setTranslateY(gameData.getDisplayHeight() / 2d);
+                } else {
+                    Coordinate coord = transformCP.getCoord();
+                    polygon.setTranslateX(coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX());
+                    polygon.setTranslateY(coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY());
+                }
 
-            polygon.setRotate(transformCP.getRotation());
+                polygon.setRotate(transformCP.getRotation());
+            }
         }
     }
 

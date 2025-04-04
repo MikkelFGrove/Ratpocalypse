@@ -5,12 +5,13 @@ import dk.lima.common.entitycomponents.*;
 module CommonEntityCP {
     requires Common;
     requires CommonWeapon;
+    requires javafx.graphics;
 
     uses IWeaponSPI;
 
     exports dk.lima.common.entitycomponents;
 
-    provides IEntityComponent with ShapeCP, TransformCP, WeaponCP;
+    provides IEntityComponent with ShapeCP, TransformCP, WeaponCP, SpriteCP;
 }
 
 

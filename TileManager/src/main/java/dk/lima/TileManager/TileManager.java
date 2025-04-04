@@ -112,10 +112,10 @@ public class TileManager implements IGraphicsService {
 
         while(worldCol < endWorldCol && worldRow < endWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
-            double x = worldCol * tileSize + playerCoordinateX;
-            double y = worldRow * tileSize + playerCoordinateY;
+            double x = worldCol * gameData.tileSize + playerCoordinateX;
+            double y = worldRow * gameData.tileSize + playerCoordinateY;
             if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
-                gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
+                gc.drawImage(tiles[tileNum].img, x, y, gameData.tileSize, gameData.tileSize);
             }
             worldCol++;
 
