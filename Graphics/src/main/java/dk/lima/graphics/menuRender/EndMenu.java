@@ -31,6 +31,8 @@ import static java.util.stream.Collectors.toList;
 public class EndMenu implements IMenu {
     static Pane endMenuPane;
     private boolean shouldShow = false;
+    private Text highScore;
+    private Text currentScore;
     @Override
     public MenuType getType() {
         return MenuType.END;
@@ -50,12 +52,11 @@ public class EndMenu implements IMenu {
         text.setFill(Color.WHITE);
         Button retryButton = new Button("Retry");
 
-        System.out.println(gameData.getHighscore());
-        Text highScore = new Text("Your highscore:\n" + gameData.getHighscore());
+        highScore = new Text("Your highscore:\n" + gameData.getHighscore());
         highScore.setFont(new Font("Impact", 35));
         highScore.minHeight(25);
         highScore.setX((gameData.getDisplayWidth() - highScore.getLayoutBounds().getWidth()) / 2);
-        highScore.setY(300);
+        highScore.setY(400);
         highScore.setFill(Color.WHITE);
 
         retryButton.setPrefWidth(250);
@@ -68,7 +69,7 @@ public class EndMenu implements IMenu {
         retryButton.setOnMouseEntered( e-> {
             retryButton.setScaleX(1.03);
             retryButton.setScaleY(1.04);
-            retryButton.setStyle("-fx-background-color: #444563; -fx-border-color: #440599; -fx-border-width: 3px;");
+            retryButton.setStyle("-fx-background-color: #555555; -fx-border-color: #00FF00; -fx-border-width: 3px;");
             retryButton.setCursor(Cursor.HAND);
         });
 
@@ -76,7 +77,7 @@ public class EndMenu implements IMenu {
         retryButton.setOnMouseExited(e -> {
             retryButton.setScaleX(1.0);
             retryButton.setScaleY(1.0);
-            retryButton.setStyle("-fx-background-color: #555555; -fx-border-color: #445577; -fx-border-width: 3px;");
+            retryButton.setStyle("-fx-background-color: #555555; -fx-border-color: #006400; -fx-border-width: 3px;");
         });
 
         retryButton.setLayoutX((gameData.getDisplayHeight() - text.getLayoutBounds().getHeight()) / 2 + 20);
@@ -122,6 +123,7 @@ public class EndMenu implements IMenu {
         if (world.getEntities(Player.class).isEmpty()) {
             showComponent(true);
             endMenuPane.setVisible(true);
+            highScore.setText("Your highscore:\n" + gameData.getHighscore());
         }
     }
 
