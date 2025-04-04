@@ -3,12 +3,18 @@ package dk.lima.common.entitycomponents;
 import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.Entity;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
 
 public class TransformCP implements IEntityComponent {
     private Coordinate coord;
     private double rotation;
     private double size;
+    private Entity entity;
+
+    public TransformCP() {
+    }
 
     public TransformCP(Coordinate coord, double rotation, double size) {
         this.coord = coord;
@@ -16,6 +22,15 @@ public class TransformCP implements IEntityComponent {
         this.size = size;
     }
 
+    @Override
+    public EntityComponentTypes getType() {
+        return EntityComponentTypes.TRANSFORM;
+    }
+
+    @Override
+    public void setEntity(Entity entity) {
+        this.entity = entity;
+    }
 
     @Override
     public void process(GameData gameData, World world) {

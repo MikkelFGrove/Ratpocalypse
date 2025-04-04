@@ -2,6 +2,7 @@ package dk.lima.playersystem;
 
 import dk.lima.common.data.*;
 import dk.lima.common.entity.Entity;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IEntityProcessingService;

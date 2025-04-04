@@ -6,11 +6,12 @@ import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
-import dk.lima.pathfindingComponent.PathfindingComponent;
 
 import java.util.Collection;
 import java.util.Random;
@@ -23,7 +24,6 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
     public void start(GameData gameData, World world) {
         for (int i = 0; i < 3; i++) {
             Entity enemy = createEnemy(gameData, world);
-            enemy.addComponent(new PathfindingComponent(enemy));
             world.addEntity(enemy);
         }
     }
@@ -46,26 +46,41 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
             polygonCoordinates[i] *= scalingFactor;
         }
 
-        enemy.addComponent(new ShapeCP(
-                polygonCoordinates,
-                new int[]{0,0,0}
-        ));
-
         double angle = rnd.nextDouble(0, 2 * Math.PI);
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
-        enemy.addComponent(new TransformCP(
-                new Coordinate(x, y),
-                rnd.nextInt(90),
-                2 * scalingFactor
-        ));
-
-        enemy.addComponent(new PathfindingComponent(enemy));
+        for (IEntityComponent component : getEntityComponents()) {
+            switch (component.getType()) {
+                case PATHFINDING -> {
+                    component.setEntity(enemy);
+                    enemy.addComponent(component);
+                }
+                case SHAPE -> {
+                    ShapeCP shapeCP = (ShapeCP) component;
+                    shapeCP.setPolygonCoordinates(polygonCoordinates);
+                    shapeCP.setColor(new int[]{0, 0, 0});
+                    shapeCP.setEntity(enemy);
+                    enemy.addComponent(shapeCP);
+                }
+                case TRANSFORM -> {
+                    TransformCP transformCP = (TransformCP) component;
+                    transformCP.setCoord(new Coordinate(x, y));
+                    transformCP.setRotation(rnd.nextInt(90));
+                    transformCP.setSize(2 * scalingFactor);
+                    transformCP.setEntity(enemy);
+                    enemy.addComponent(transformCP);
+                }
+            }
+        }
         return enemy;
     }
 
     private Collection<? extends IWeaponSPI> getWeaponSPI() {
         return ServiceLoader.load(IWeaponSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    public static Collection<? extends IEntityComponent> getEntityComponents() {
+        return ServiceLoader.load(IEntityComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }
