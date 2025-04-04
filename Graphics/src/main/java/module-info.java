@@ -20,6 +20,7 @@ module Graphics {
     uses IGraphicsService;
 
     provides IGraphicsService with
+            EntityRenderer,
             SpriteRenderer,
             ScoreText,
             TimeText,
