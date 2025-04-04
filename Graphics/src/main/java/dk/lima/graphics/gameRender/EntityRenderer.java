@@ -27,10 +27,12 @@ public class EntityRenderer implements IGraphicsService {
 
         for (Entity entity : world.getEntities()) {
             ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
-            Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
-            polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
-            polygons.put(entity, polygon);
-            entityPane.getChildren().add(polygon);
+            if (shapeCP != null) {
+                Polygon polygon = new Polygon(shapeCP.getPolygonCoordinates());
+                polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
+                polygons.put(entity, polygon);
+                entityPane.getChildren().add(polygon);
+            }
         }
 
         return entityPane;
@@ -50,10 +52,12 @@ public class EntityRenderer implements IGraphicsService {
             Polygon polygon = polygons.get(entity);
             if (polygon == null) {
                 ShapeCP shapeCP = entity.getComponent(ShapeCP.class);
-                polygon = new Polygon(shapeCP.getPolygonCoordinates());
-                polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
-                polygons.put(entity, polygon);
-                entityPane.getChildren().add(polygon);
+                if (shapeCP != null) {
+                    polygon = new Polygon(shapeCP.getPolygonCoordinates());
+                    polygon.setFill(Color.rgb(shapeCP.getColor()[0] % 256, shapeCP.getColor()[1] % 256, shapeCP.getColor()[2] % 256));
+                    polygons.put(entity, polygon);
+                    entityPane.getChildren().add(polygon);
+                }
             }
 
             TransformCP transformCP = entity.getComponent(TransformCP.class);
