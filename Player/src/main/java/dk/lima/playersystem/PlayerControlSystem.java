@@ -13,8 +13,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player: world.getEntities(Player.class)) {
-            TransformCP transformCP = player.getComponent(TransformCP.class);
-            WeaponCP weaponCP = player.getComponent(WeaponCP.class);
+            TransformCP transformCP = (TransformCP) player.getComponent(EntityComponentTypes.TRANSFORM);
+            WeaponCP weaponCP = (WeaponCP) player.getComponent(EntityComponentTypes.WEAPON);
 
             double x = gameData.getMousePosition().getX() - gameData.getDisplayWidth() / 2d;
             double y = gameData.getMousePosition().getY() - gameData.getDisplayHeight() / 2d;
