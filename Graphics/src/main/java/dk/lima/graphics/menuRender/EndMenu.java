@@ -6,8 +6,11 @@ import dk.lima.common.data.World;
 import dk.lima.common.graphics.IMenu;
 import dk.lima.common.graphics.MenuType;
 import dk.lima.common.services.IGamePluginService;
+import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
+import javafx.scene.image.Image;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
@@ -27,6 +30,7 @@ public class EndMenu implements IMenu {
     private boolean shouldShow = false;
     private Text highscoreLabel;
     private Text currentscoreLabel;
+
     @Override
     public MenuType getType() {
         return MenuType.END;
@@ -36,7 +40,8 @@ public class EndMenu implements IMenu {
     public Node createComponent(GameData gameData, World world) {
         endMenuPane = new Pane();
         endMenuPane.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        endMenuPane.setStyle("-fx-background-color: black;");
+        Image background = new Image("/SplashArtStartScreen.png", gameData.getDisplayWidth() , gameData.getDisplayHeight(), false, false, true);
+        endMenuPane.setBackground(new Background(new BackgroundImage(background, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         Text text = new Text("You were defeated!");
         text.setFont(new Font("Impact", 50));
@@ -44,7 +49,7 @@ public class EndMenu implements IMenu {
         text.setX((gameData.getDisplayWidth() - text.getLayoutBounds().getWidth()) / 2);
         text.setY(150);
         text.setFill(Color.WHITE);
-        Button retryButton = new Button("Retry");
+        Button retryButton = new Button("Try Again");
 
         currentscoreLabel = new Text("Your current score: " + gameData.getScore());
         currentscoreLabel.setFont(new Font("Impact", 35));
@@ -53,35 +58,32 @@ public class EndMenu implements IMenu {
         currentscoreLabel.setY(320);
         currentscoreLabel.setFill(Color.WHITE);
 
-        highscoreLabel = new Text("Your highscore:\n" + gameData.getHighscore());
+        highscoreLabel = new Text("Your highscore: " + gameData.getHighscore());
         highscoreLabel.setFont(new Font("Impact", 35));
         highscoreLabel.minHeight(25);
         highscoreLabel.setX((gameData.getDisplayWidth() - highscoreLabel.getLayoutBounds().getWidth()) / 2);
         highscoreLabel.setY(400);
         highscoreLabel.setFill(Color.WHITE);
 
+        //Reset Button
         retryButton.setPrefWidth(250);
         retryButton.setPrefHeight(70);
-
-        retryButton.setStyle("-fx-background-color: #333333; -fx-border-color: #666655; -fx-border-width: 3px;");
+        retryButton.setStyle("-fx-background-color: #AA5500; -fx-border-color: #FFAA00; -fx-border-width: 3px;");
         retryButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        retryButton.setTextFill(Color.GREEN);
+        retryButton.setTextFill(Color.WHITE);
 
         retryButton.setOnMouseEntered( e-> {
             retryButton.setScaleX(1.03);
             retryButton.setScaleY(1.04);
-            retryButton.setStyle("-fx-background-color: #555555; -fx-border-color: #00FF00; -fx-border-width: 3px;");
+            retryButton.setStyle("-fx-background-color: #CC7700; -fx-border-color: #FFDD55; -fx-border-width: 3px;");
             retryButton.setCursor(Cursor.HAND);
         });
-
 
         retryButton.setOnMouseExited(e -> {
             retryButton.setScaleX(1.0);
             retryButton.setScaleY(1.0);
-            retryButton.setStyle("-fx-background-color: #555555; -fx-border-color: #006400; -fx-border-width: 3px;");
+            retryButton.setStyle("-fx-background-color: #AA5500; -fx-border-color: #FFAA00; -fx-border-width: 3px;");
         });
-
-        retryButton.setLayoutX((gameData.getDisplayHeight() - text.getLayoutBounds().getHeight()) / 2 + 20);
 
         retryButton.widthProperty().addListener((obs, oldVal, newVal) ->
                 retryButton.setLayoutX((gameData.getDisplayWidth() - newVal.doubleValue()) / 2)
@@ -108,11 +110,89 @@ public class EndMenu implements IMenu {
             endMenuPane.setVisible(false);
         });
 
-        endMenuPane.getChildren().add(text);
-        endMenuPane.getChildren().add(highscoreLabel);
-        endMenuPane.getChildren().add(currentscoreLabel);
-        endMenuPane.getChildren().add(retryButton);
+        //Exit to menu button
+        Button backToMenuButton = new Button("Back To Menu!");
+        backToMenuButton.setPrefWidth(250);
+        backToMenuButton.setPrefHeight(70);
+        backToMenuButton.setStyle("-fx-background-color: #333333; -fx-border-color: #555555; -fx-border-width: 3px;");
+        backToMenuButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
+        backToMenuButton.setTextFill(Color.WHITE);
 
+        backToMenuButton.setOnMouseEntered(e -> {
+            backToMenuButton.setScaleX(1.03);
+            backToMenuButton.setScaleY(1.04);
+            backToMenuButton.setStyle("-fx-background-color: #444444; -fx-border-color: #666666; -fx-border-width: 3px;");
+            backToMenuButton.setCursor(Cursor.HAND);
+        });
+
+        backToMenuButton.setOnMouseExited(e -> {
+            backToMenuButton.setScaleX(1.0);
+            backToMenuButton.setScaleY(1.0);
+            backToMenuButton.setStyle("-fx-background-color: #333333; -fx-border-color: #555555; -fx-border-width: 3px;");
+        });
+
+
+        backToMenuButton.setOnAction(e -> {
+            for (IGamePluginService plugin : getPluginServices()) {
+                plugin.stop(gameData, world);
+            }
+
+            gameData.setScore(0);
+            gameData.setDuration(Duration.ZERO);
+            world.getEntities().clear();
+            world.setPlayerPosition(new Coordinate(0, 0));
+
+            for (IGamePluginService plugin : getPluginServices()) {
+                plugin.start(gameData, world);
+            }
+
+            gameData.setGameRunning(false);
+            StartMenu startMenu = new StartMenu();
+            startMenu.showComponent(true);
+            endMenuPane.setVisible(false);
+        });
+
+
+        // Exit Button
+        Button exitButton = new Button("Exit");
+        exitButton.setPrefWidth(250);
+        exitButton.setPrefHeight(70);
+        exitButton.setStyle("-fx-background-color: #550000; -fx-border-color: #ff0000; -fx-border-width: 3px;");
+        exitButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
+        exitButton.setTextFill(Color.WHITE);
+
+        exitButton.setOnMouseEntered(e -> {
+            exitButton.setScaleX(1.03);
+            exitButton.setScaleY(1.04);
+            exitButton.setStyle("-fx-background-color: #770000; -fx-border-color: #ff5555; -fx-border-width: 3px;");
+            exitButton.setCursor(Cursor.HAND);
+        });
+
+        exitButton.setOnMouseExited(e -> {
+            exitButton.setScaleX(1.0);
+            exitButton.setScaleY(1.0);
+            exitButton.setStyle("-fx-background-color: #550000; -fx-border-color: #ff0000; -fx-border-width: 3px;");
+        });
+
+
+        exitButton.setOnAction(e -> {
+            Platform.exit();
+        });
+
+        //Button allignment
+        VBox buttonBox = new VBox(20);
+        buttonBox.setLayoutX((gameData.getDisplayWidth() - retryButton.getPrefWidth()) / 2);
+        buttonBox.setLayoutY(gameData.getDisplayHeight() / 2 + 100);
+        buttonBox.getChildren().addAll(retryButton, backToMenuButton, exitButton);
+        VBox scoreBox = new VBox(20);
+
+        //Text label allignment
+        scoreBox.setPrefWidth(gameData.getDisplayWidth());
+        scoreBox.setLayoutY(280);
+        scoreBox.setAlignment(Pos.CENTER);
+        scoreBox.getChildren().addAll(currentscoreLabel, highscoreLabel);
+
+        endMenuPane.getChildren().addAll(text, buttonBox, scoreBox);
 
         endMenuPane.setVisible(shouldShow);
         return endMenuPane;
@@ -125,7 +205,7 @@ public class EndMenu implements IMenu {
             gameData.setGameRunning(false);
             showComponent(true);
             endMenuPane.setVisible(true);
-            highscoreLabel.setText("Your highscore:\n" + gameData.getHighscore());
+            highscoreLabel.setText("Your highscore: " + gameData.getHighscore());
             currentscoreLabel.setText("Current Score: " + gameData.getScore());
         }
     }
