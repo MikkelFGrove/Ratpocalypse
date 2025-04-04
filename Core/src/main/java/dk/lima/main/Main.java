@@ -51,6 +51,7 @@ public class Main extends Application {
 
         render();
         window.setScene(scene);
+        window.setResizable(false);
         window.setTitle("Ratpocalypse");
         window.show();
     }
