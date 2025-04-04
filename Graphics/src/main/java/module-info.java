@@ -2,6 +2,7 @@ import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.services.ITimeTask;
 import dk.lima.graphics.HUD.*;
 import dk.lima.graphics.gameRender.EntityRenderer;
+import dk.lima.graphics.gameRender.SpriteRenderer;
 import dk.lima.graphics.menuRender.*;
 import dk.lima.common.services.IGamePluginService;
 
@@ -19,7 +20,7 @@ module Graphics {
     uses IGraphicsService;
 
     provides IGraphicsService with
-            EntityRenderer,
+            SpriteRenderer,
             ScoreText,
             TimeText,
             StartMenu,

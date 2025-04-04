@@ -1,11 +1,10 @@
 package dk.lima.playersystem;
 
-import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.entitycomponents.ShapeCP;
+import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IGamePluginService;
@@ -41,9 +40,18 @@ public class PlayerPlugin implements IGamePluginService {
                 scale
         ));
 
-        playerModel.addComponent(new ShapeCP(
+        /*playerModel.addComponent(new ShapeCP(
                 polygonCoordinates,
                 new int[]{255, 0, 255}
+        ));
+
+         */
+
+        String[] pathsToSprites = {"player.png"};
+        playerModel.addComponent(new SpriteCP(
+                pathsToSprites,
+                pathsToSprites.length,
+                gameData.tileSize
         ));
 
         playerModel.addComponent(new WeaponCP(

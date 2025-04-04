@@ -6,16 +6,21 @@ import dk.lima.common.entity.IEntityComponent;
 
 import javafx.scene.image.Image;
 
+import java.util.Objects;
+
 public class SpriteCP implements IEntityComponent {
     public Image image;
 
-    private float posX, posY;
+    private int width, height;
 
     private String[] pathsToSprite;
 
-    public SpriteCP(int amount) {
-        setAmountOfSprites(amount);
-        getImage(pathsToSprite);
+    public SpriteCP(String[] spritePaths, int amountOfSprites, int scale) {
+        setAmountOfSprites(amountOfSprites);
+        for(int i = 0; i < pathsToSprite.length; i++) {
+            setPathsToSprite(spritePaths[i], i);
+        }
+        setSprite(pathsToSprite[0]);
     }
 
     public void setAmountOfSprites(int amount) {
@@ -27,23 +32,34 @@ public class SpriteCP implements IEntityComponent {
     }
 
 
-    private void getImage(String[] pathToSprite) {
-        image =new Image(getClass().getResourceAsStream(pathToSprite[0]));
+    public Image getImage() {
+        return image;
+    }
+
+    public void setSprite(String pathToSprite) {
+        try {
+            image =new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream(pathToSprite)));
+
+        } catch (NullPointerException e) {
+            System.out.println("Image not found");
+        }
+
     }
 
 
 
-    public void setPosX(float x) {
-        posX = x;
+
+    public void setWidth(int width) {
+        this.width = width;
     }
-    public void setPosY(float y) {
-        posY = y;
+    public void setHeight(int height) {
+        this.height = height;
     }
-    public float getPosX() {
-        return posX;
+    public int getWidth() {
+        return width;
     }
-    public float getPosY() {
-        return posY;
+    public int getHeight() {
+        return height;
     }
     
     @Override
