@@ -14,6 +14,7 @@ module Graphics {
     requires javafx.graphics;
     requires java.desktop;
     requires javafx.controls;
+    requires CommonEntityCP;
 
     uses IGamePluginService;
     uses IGraphicsService;
@@ -24,7 +25,8 @@ module Graphics {
             ScoreText,
             TimeText,
             StartMenu,
-            PauseMenu;
+            PauseMenu,
+            EndMenu;
 
 }
 
