@@ -11,7 +11,9 @@ public class GameData {
     private Duration duration = Duration.ofSeconds(0);
     private int score = 0;
     private Coordinate mousePosition = new Coordinate(0,0);
+    private int highscore = 0;
     private boolean isGamePaused;
+    private boolean timeScoring = false;
 
     public GameInputs getInputs() {
         return inputs;
@@ -54,8 +56,24 @@ public class GameData {
         isGameRunning = gameRunning;
     }
 
+    public synchronized boolean isTimeScoring() {
+        return timeScoring;
+    }
+
+    public synchronized void setTimeScoring(boolean timeScoring) {
+        this.timeScoring = timeScoring;
+    }
+
     public synchronized int getScore() {
         return score;
+    }
+
+    public int getHighscore() {
+        return highscore;
+    }
+
+    public void setHighscore(int highscore) {
+        this.highscore = highscore;
     }
 
     public synchronized void setScore(int score) {

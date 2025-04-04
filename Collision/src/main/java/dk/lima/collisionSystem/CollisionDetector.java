@@ -1,6 +1,7 @@
 package dk.lima.collisionSystem;
 
 import dk.lima.common.data.Coordinate;
+import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -46,6 +47,11 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
                 if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
+                    // Increase score if an enemy is shot
+                    if (!gameData.isTimeScoring() && ((e.getEntityType() == EEntityTypes.BULLET && e2.getEntityType() == EEntityTypes.ENEMY) || (e.getEntityType() == EEntityTypes.ENEMY && e2.getEntityType() == EEntityTypes.BULLET))) {
+                        gameData.setScore(gameData.getScore() + 1);
+                    }
+
                     world.removeEntity(e);
                     world.removeEntity(e2);
                 }

@@ -1,4 +1,5 @@
 import dk.lima.common.graphics.IGraphicsService;
+import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.ITimeTask;
 import dk.lima.graphics.HUD.*;
 import dk.lima.graphics.gameRender.EntityRenderer;
@@ -9,21 +10,26 @@ module Graphics {
     requires Common;
     requires CommonGraphics;
     requires CommonPlayer;
-    requires CommonEntityCP;
 
     requires javafx.graphics;
     requires java.desktop;
     requires javafx.controls;
+    requires CommonEntityCP;
 
     uses IGamePluginService;
     uses IGraphicsService;
+
 
     provides IGraphicsService with
             EntityRenderer,
             ScoreText,
             TimeText,
             StartMenu,
-            PauseMenu;
+            PauseMenu,
+            EndMenu;
+
 }
+
+
 
 

@@ -16,7 +16,7 @@ public class ClockTask implements ITimeTask {
         if (gameData.isGameRunning()) {
             gameData.addDuration(Duration.ofSeconds(1));
 
-            if (gameData.getDuration().toSeconds() % 10 == 0) {
+            if (gameData.getDuration().toSeconds() % 10 == 0 && gameData.isTimeScoring()) {
                 gameData.addScore(1);
             }
         }
