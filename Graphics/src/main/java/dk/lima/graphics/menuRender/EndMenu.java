@@ -1,16 +1,11 @@
 package dk.lima.graphics.menuRender;
 
-import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.graphics.IMenu;
 import dk.lima.common.graphics.MenuType;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.graphics.HUD.ScoreText;
 import javafx.scene.Node;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -18,10 +13,8 @@ import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 import javafx.scene.Cursor;
-import dk.lima.common.data.Entity;
 import dk.lima.common.player.Player;
 
-import java.awt.*;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.ServiceLoader;
@@ -31,8 +24,8 @@ import static java.util.stream.Collectors.toList;
 public class EndMenu implements IMenu {
     static Pane endMenuPane;
     private boolean shouldShow = false;
-    private Text highScore;
-    private Text currentScore;
+    private Text highscoreLabel;
+    private Text currentscoreLabel;
     @Override
     public MenuType getType() {
         return MenuType.END;
@@ -52,12 +45,19 @@ public class EndMenu implements IMenu {
         text.setFill(Color.WHITE);
         Button retryButton = new Button("Retry");
 
-        highScore = new Text("Your highscore:\n" + gameData.getHighscore());
-        highScore.setFont(new Font("Impact", 35));
-        highScore.minHeight(25);
-        highScore.setX((gameData.getDisplayWidth() - highScore.getLayoutBounds().getWidth()) / 2);
-        highScore.setY(400);
-        highScore.setFill(Color.WHITE);
+        currentscoreLabel = new Text("Your current score: " + gameData.getScore());
+        currentscoreLabel.setFont(new Font("Impact", 35));
+        currentscoreLabel.minHeight(25);
+        currentscoreLabel.setX((gameData.getDisplayWidth() - currentscoreLabel.getLayoutBounds().getWidth()) / 2);
+        currentscoreLabel.setY(320);
+        currentscoreLabel.setFill(Color.WHITE);
+
+        highscoreLabel = new Text("Your highscore:\n" + gameData.getHighscore());
+        highscoreLabel.setFont(new Font("Impact", 35));
+        highscoreLabel.minHeight(25);
+        highscoreLabel.setX((gameData.getDisplayWidth() - highscoreLabel.getLayoutBounds().getWidth()) / 2);
+        highscoreLabel.setY(400);
+        highscoreLabel.setFill(Color.WHITE);
 
         retryButton.setPrefWidth(250);
         retryButton.setPrefHeight(70);
@@ -109,7 +109,8 @@ public class EndMenu implements IMenu {
         });
 
         endMenuPane.getChildren().add(text);
-        endMenuPane.getChildren().add(highScore);
+        endMenuPane.getChildren().add(highscoreLabel);
+        endMenuPane.getChildren().add(currentscoreLabel);
         endMenuPane.getChildren().add(retryButton);
 
 
@@ -123,7 +124,7 @@ public class EndMenu implements IMenu {
         if (world.getEntities(Player.class).isEmpty()) {
             showComponent(true);
             endMenuPane.setVisible(true);
-            highScore.setText("Your highscore:\n" + gameData.getHighscore());
+            highscoreLabel.setText("Your highscore:\n" + gameData.getHighscore());
         }
     }
 
