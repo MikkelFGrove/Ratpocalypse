@@ -14,7 +14,7 @@ public class PathfindingComponent implements IEntityComponent {
     private int stepsTaken;
     private Coordinate[] path;
     private Entity entity;
-    private double maxScalingFactor = 24;
+    private double maxScalingFactor = 48;
     // Value specifying how long the player has to move from the calculated path to calculate a new path
     private double goalRadius = 0.65;
 
