@@ -39,7 +39,7 @@ public class PlayerPlugin implements IGamePluginService {
         playerModel.addComponent(new SpriteCP(
                 pathsToSprites,
                 pathsToSprites.length,
-                gameData.tileSize
+                3
         ));
 
         playerModel.addComponent(new WeaponCP(

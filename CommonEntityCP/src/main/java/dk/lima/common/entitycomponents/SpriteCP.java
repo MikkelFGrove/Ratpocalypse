@@ -26,6 +26,10 @@ public class SpriteCP implements IEntityComponent {
             setPathToSprite(spritePaths[i], i);
         }
         setSprite(pathsToSprite[0]);
+
+        this.scale = scale;
+        this.width = (int) image.getWidth() * scale;
+        this.height = (int) image.getHeight() * scale;
     }
 
     public void setAmountOfSprites(int amount) {

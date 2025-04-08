@@ -1,5 +1,6 @@
 package dk.lima.graphics.gameRender;
 
+import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -28,7 +29,7 @@ public class SpriteRenderer implements IGraphicsService {
             SpriteCP spriteCP = (SpriteCP) entity.getComponent(EntityComponentTypes.SPRITE);
             TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
             if(spriteCP != null) {
-                gc.drawImage(spriteCP.getImage(), transformCP.getCoord().getX()- transformCP.getSize(), transformCP.getCoord().getY()- transformCP.getSize(), gameData.tileSize, gameData.tileSize);
+                gc.drawImage(spriteCP.getImage(), transformCP.getCoord().getX()- transformCP.getSize() / 2, transformCP.getCoord().getY()- transformCP.getSize() / 2, spriteCP.getWidth(), spriteCP.getHeight());
             }
 
         }
@@ -43,12 +44,13 @@ public class SpriteRenderer implements IGraphicsService {
         for(Entity entity: world.getEntities()) {
             SpriteCP spriteCP = (SpriteCP) entity.getComponent(EntityComponentTypes.SPRITE);
             TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
+            Coordinate coord = transformCP.getCoord();
 
             if (spriteCP != null) {
                 if(entity instanceof Player) {
-                    gc.drawImage(spriteCP.getImage(), gameData.getDisplayWidth() /2d + spriteCP.getWidth(), gameData.getDisplayHeight() / 2d + spriteCP.getHeight(), gameData.tileSize, gameData.tileSize);
+                    gc.drawImage(spriteCP.getImage(), gameData.getDisplayWidth() /2d - spriteCP.getWidth() / 2d, gameData.getDisplayHeight() / 2d - spriteCP.getHeight() / 2d, spriteCP.getWidth(), spriteCP.getHeight());
                 } else {
-                    gc.drawImage(spriteCP.getImage(), transformCP.getCoord().getX() - spriteCP.getWidth() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX(), transformCP.getCoord().getY() - spriteCP.getHeight() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY(), gameData.tileSize, gameData.tileSize);
+                    gc.drawImage(spriteCP.getImage(), coord.getX() - spriteCP.getWidth() / 2d + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX(), coord.getY() - spriteCP.getHeight() / 2d + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY(), spriteCP.getWidth(), spriteCP.getHeight());
                 }
 
             }
