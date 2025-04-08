@@ -5,5 +5,6 @@ public enum EGameInputs {
     DOWN,
     LEFT,
     RIGHT,
+    PAUSE,
     ACTION
 }

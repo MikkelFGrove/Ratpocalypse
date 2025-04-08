@@ -1,56 +1,35 @@
 package dk.lima.TileManager;
 
 import dk.lima.common.data.GameData;
+import dk.lima.common.data.World;
 
+import dk.lima.common.graphics.IGraphicsService;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-public class TileManager {
-
+public class TileManager implements IGraphicsService {
     // Screen Settings
-    final int originalTileSize = 16; // 16x16 tile
-    final int scale = 3;
-
-    public final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
-    public final int maxScreenCol = 16; // screen length in tiles
-    public final int maxScreenRow = 12; //  Screen height in tiles
-
+    private final int originalTileSize = 16; // 16x16 tile
+    private final int scale = 3;
+    private final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
 
     // World settings
-    public final int maxWorldCol = 50;
-    public final int maxWorldRow = 50;
-
+    private final int maxWorldCol = 50;
+    private final int maxWorldRow = 50;
 
     // Needed for the tile management
-    private final Pane game;
-    private final GameData gameData;
-    private final Tile[] tiles;
-    private final int[][] mapTileNum;
-    private final Canvas canvas;
-    private final GraphicsContext gc;
+    private Tile[] tiles;
+    private int[][] mapTileNum;
+    private Canvas canvas;
+    private GraphicsContext gc;
 
-
-    public TileManager(Pane pane) {
-        this.game = pane;
-        gameData = new GameData();
-        tiles = new Tile[30];
-        mapTileNum = new int[maxWorldCol][maxWorldRow];
-
-        canvas = new Canvas(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        gc = canvas.getGraphicsContext2D();
-        game.getChildren().add(canvas);
-
-        getFileImage();
-        loadMap("/TileManager/Maps/worldMap01.txt");
-
-    }
 
     public void getFileImage() {
         tiles[0] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/smallPath03.png")));
@@ -67,11 +46,9 @@ public class TileManager {
         tiles[11] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/smallPath04.png")));
         tiles[12] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/wall.png")));
         tiles[13] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/grass.png")));
-        tiles[14] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/water.png")));
+        tiles[14] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/toxic_water.png")));
         tiles[15] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/tree01.png")));
         tiles[16] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/flowerField01.png")));
-
-
     }
 
     public void loadMap(String map) {
@@ -104,18 +81,78 @@ public class TileManager {
 
     }
 
-    public void draw() {
+    @Override
+    public Node createComponent(GameData gameData, World world) {
+        tiles = new Tile[30];
+        mapTileNum = new int[maxWorldCol][maxWorldRow];
+
+        canvas = new Canvas(gameData.getDisplayWidth(), gameData.getDisplayHeight());
+        gc = canvas.getGraphicsContext2D();
+        gc.setImageSmoothing(false);
+
+        getFileImage();
+        loadMap("/TileManager/Maps/worldMap01.txt");
+
+        return canvas;
+    }
+
+    @Override
+    public void updateComponent(GameData gameData, World world) {
         gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        for(int col = 0;  col < maxWorldCol; col++) {
-            for(int row = 0; row < maxWorldRow; row++) {
-                int tileNum = mapTileNum[col][row];
-                double x = col * tileSize;
-                double y = row * tileSize;
-                if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
-                    gc.drawImage(tiles[tileNum].img, x, y, tileSize, tileSize);
-                }
+
+        int[] startTile = calculateStartCoord(gameData, world);
+        int startCol = startTile[0];
+        int worldCol = startCol, worldRow = startTile[1];
+
+        int[] endTile = calculateEndCoord(gameData, world);
+        int endWorldCol = endTile[0], endWorldRow = endTile[1];
+
+        double playerCoordinateX = gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX();
+        double playerCoordinateY = gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY();
+
+        while(worldCol < endWorldCol && worldRow < endWorldRow) {
+            int tileNum = mapTileNum[worldCol][worldRow];
+            double x = worldCol * gameData.tileSize + playerCoordinateX;
+            double y = worldRow * gameData.tileSize + playerCoordinateY;
+            if(tileNum >= 0 && tileNum <= tiles.length && tiles[tileNum] != null) {
+                gc.drawImage(tiles[tileNum].img, x, y, gameData.tileSize, gameData.tileSize);
+            }
+            worldCol++;
+
+            if(worldCol == endWorldCol) {
+                worldCol = startCol;
+                worldRow++;
             }
         }
+    }
+
+    @Override
+    public void showComponent(Boolean shouldShow) {
+        canvas.setVisible(shouldShow);
+    }
+
+    private int[] calculateStartCoord(GameData gameData, World world) {
+        // Calculate the position of the tile in the top-left corner e.g. the first tile.
+        int worldCol = Math.floorDiv((int) (world.getPlayerPosition().getX() - gameData.getDisplayWidth() / 2d), tileSize);
+        int worldRow = Math.floorDiv((int) (world.getPlayerPosition().getY() - gameData.getDisplayHeight() / 2d), tileSize);
+
+        // If the end-tile is out of bounds, then clamp the values to avoid errors
+        worldCol = Math.clamp(worldCol, 0, maxWorldCol);
+        worldRow = Math.clamp(worldRow, 0, maxWorldRow);
+
+        return new int[]{worldCol, worldRow};
+    }
+
+    private int[] calculateEndCoord(GameData gameData, World world) {
+        // Calculate the position of the tile in the bottom-right corner e.g. the last tile.
+        int worldCol = Math.ceilDiv((int) (world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2d), tileSize);
+        int worldRow = Math.ceilDiv((int) (world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2d), tileSize);
+
+        // If the end-tile is out of bounds, then clamp the values to avoid errors
+        worldCol = Math.clamp(worldCol, 0, maxWorldCol);
+        worldRow = Math.clamp(worldRow, 0, maxWorldRow);
+
+        return new int[]{worldCol, worldRow};
     }
 }
 

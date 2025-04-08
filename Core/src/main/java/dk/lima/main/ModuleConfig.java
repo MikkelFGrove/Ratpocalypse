@@ -1,5 +1,6 @@
 package dk.lima.main;
 
+import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
@@ -25,5 +26,9 @@ public class ModuleConfig {
 
     public static Collection<? extends IInputSPI> getIInputService() {
         return ServiceLoader.load(IInputSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
+    public static Collection<? extends IGraphicsService> getGraphicComponents() {
+        return ServiceLoader.load(IGraphicsService.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

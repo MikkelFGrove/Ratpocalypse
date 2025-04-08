@@ -17,7 +17,8 @@
         <module>Input</module>
         <module>CommonBullet</module>
         <module>Bullet</module>
-        <module>Enemy</module>
+        <module>RangedRat</module>
+        <module>MeleeRat</module>
         <module>CommonEnemy</module>
         <module>Player</module>
         <module>CommonPlayer</module>
@@ -25,6 +26,14 @@
         <module>Weapon</module>
         <module>Collision</module>
         <module>TileManager</module>
+        <module>WaveSpawner</module>
+        <module>Timer</module>
+        <module>CommonGraphics</module>
+        <module>TaskSchedulerPlugin</module>
+        <module>Graphics</module>
+        <module>Persistence</module>
+        <module>PathfindingComponent</module>
+        <module>CommonEntityCP</module>
     </modules>
     <properties>
         <java>java</java>
@@ -98,7 +107,9 @@
                         I still wanted to do it for clarity, but for some reason that results
                         in "java.lang.module.FindException: Module monitor.observer.zero not found";
                         strange... -->
-                        <!-- <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8000</argument> -->
+
+                        <!-- <argument>-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=127.0.0.1:8001</argument> -->
+
                         <argument>--module=Core/dk.lima.main.Main</argument>
                         <argument>--add-modules javafx.graphics</argument>
                     </arguments>

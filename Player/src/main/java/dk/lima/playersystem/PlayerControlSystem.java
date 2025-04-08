@@ -1,9 +1,10 @@
 package dk.lima.playersystem;
 
-import dk.lima.common.data.EGameInputs;
-import dk.lima.common.data.Entity;
-import dk.lima.common.data.GameData;
-import dk.lima.common.data.World;
+import dk.lima.common.data.*;
+import dk.lima.common.entity.Entity;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.player.Player;
 
@@ -12,43 +13,37 @@ public class PlayerControlSystem implements IEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity player: world.getEntities(Player.class)) {
-            double angle = Math.toRadians(player.getRotation());
-            double changeX = Math.cos(angle);
-            double changeY = Math.sin(angle);
+            TransformCP transformCP = (TransformCP) player.getComponent(EntityComponentTypes.TRANSFORM);
+            WeaponCP weaponCP = (WeaponCP) player.getComponent(EntityComponentTypes.WEAPON);
 
-            double velocity = 1;
-            double rotationSpeed = 3;
+            double x = gameData.getMousePosition().getX() - gameData.getDisplayWidth() / 2d;
+            double y = gameData.getMousePosition().getY() - gameData.getDisplayHeight() / 2d;
+            double angle = Math.atan2(y, x);
+            transformCP.setRotation(Math.toDegrees(angle));
 
+            Coordinate playerCoord = transformCP.getCoord();
+            double velocity = 1.5;
+            //Checks what input is registered and then either move, rotate or fires a bullet based on that.
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
-                player.setX(player.getX() + changeX * velocity);
-                player.setY(player.getY() + changeY * velocity);
+                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
+                playerCoord.setY(playerCoord.getY() - velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                player.setX(player.getX() - changeX * velocity);
-                player.setY(player.getY() - changeY * velocity);
+                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
+                playerCoord.setY(playerCoord.getY() + velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
-                player.setRotation(player.getRotation() - rotationSpeed);
+                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
+                playerCoord.setX(playerCoord.getX() - velocity);
             }
             if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
-                player.setRotation(player.getRotation() + rotationSpeed);
+                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
+                playerCoord.setX(playerCoord.getX() + velocity);
             }
-            if (gameData.getInputs().isDown(EGameInputs.ACTION)) {
-                Player p = (Player) player;
-                p.getIWeaponSPI().shoot(player, gameData, world);
-            }
+            world.setPlayerPosition(playerCoord);
 
-            if (player.getX() < 0) {
-                player.setX(gameData.getDisplayWidth());
-            } else if (player.getX() > gameData.getDisplayWidth()) {
-                player.setX(0);
-            }
-
-            if (player.getY() < 0) {
-                player.setY(gameData.getDisplayHeight());
-            } else if (player.getY() > gameData.getDisplayHeight()) {
-                player.setY(0);
-            }
+            weaponCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
+            weaponCP.process(gameData, world);
         }
     }
 }

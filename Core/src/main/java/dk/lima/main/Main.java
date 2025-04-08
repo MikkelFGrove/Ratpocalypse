@@ -1,9 +1,10 @@
 package dk.lima.main;
 
-import dk.lima.TileManager.TileManager;
-import dk.lima.common.data.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.graphics.IGraphicsService;
+import dk.lima.common.graphics.IMenu;
+import dk.lima.common.input.IInputSPI;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.services.IPostEntityProcessingService;
@@ -11,20 +12,19 @@ import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 import javafx.stage.Stage;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Main extends Application {
 
     private final GameData gameData = new GameData();
     private final World world = new World();
-    private final Map<Entity, Polygon> polygons = new ConcurrentHashMap<>();
     private final Pane gameWindow = new Pane();
-    private final TileManager tileManager = new TileManager(gameWindow);
+    private List<IGraphicsService> graphicsServices;
+    private List <IMenu> menuComponents;
 
     public static void main(String[] args) {
         launch(Main.class);
@@ -33,25 +33,22 @@ public class Main extends Application {
     @Override
     public void start(Stage window) throws Exception {
         gameWindow.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-
         Scene scene = new Scene(gameWindow);
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyPressed(service.getInputHandlerPress(gameData));
-        });
-        ModuleConfig.getIInputService().stream().findFirst().ifPresent(service -> {
-            scene.setOnKeyReleased(service.getInputHandlerRelease(gameData));
-        });
+
+        for (IInputSPI inputSPI : ModuleConfig.getIInputService()) {
+            scene.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));
+        }
+
+        graphicsServices = new ArrayList<>(ModuleConfig.getGraphicComponents());
+        for (IGraphicsService graphicsComponent : graphicsServices) {
+            gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
+        }
 
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
             iGamePlugin.start(gameData, world);
         }
-        for (Entity entity : world.getEntities()) {
-            Polygon polygon = new Polygon(entity.getPolygonCoordinates());
-            polygon.setFill(Color.rgb(entity.getColor()[0] % 256, entity.getColor()[1] % 256, entity.getColor()[2] % 256));
-            polygons.put(entity, polygon);
-            gameWindow.getChildren().add(polygon);
-        }
+
         render();
         window.setScene(scene);
         window.setTitle("Ratpocalypse");
@@ -62,12 +59,12 @@ public class Main extends Application {
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                update();
-                draw();
-                tileManager.draw();
                 gameData.getInputs().update();
+                if (gameData.isGameRunning()){
+                    update();
+                }
+                updateGraphics();
             }
-
         }.start();
     }
 
@@ -80,27 +77,10 @@ public class Main extends Application {
         }
     }
 
-    private void draw() {
-        for (Entity polygonEntity : polygons.keySet()) {
-            if(!world.getEntities().contains(polygonEntity)){
-                Polygon removedPolygon = polygons.get(polygonEntity);
-                polygons.remove(polygonEntity);
-                gameWindow.getChildren().remove(removedPolygon);
-            }
+    private void updateGraphics() {
+        for (IGraphicsService graphicsService : graphicsServices) {
+            graphicsService.updateComponent(gameData, world);
         }
-
-        for (Entity entity : world.getEntities()) {
-            Polygon polygon = polygons.get(entity);
-            if (polygon == null) {
-                polygon = new Polygon(entity.getPolygonCoordinates());
-                polygons.put(entity, polygon);
-                gameWindow.getChildren().add(polygon);
-            }
-            polygon.setTranslateX(entity.getX());
-            polygon.setTranslateY(entity.getY());
-            polygon.setRotate(entity.getRotation());
-        }
-
     }
 }
 

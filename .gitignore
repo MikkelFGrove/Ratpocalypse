@@ -4,12 +4,16 @@ target/
 !**/src/test/**/target/
 libs
 mods-mvn
+scores.txt
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
+.idea/encodings.xml
 .idea/libraries/
+.idea/encodings.xml
+.idea/misc.xml
 *.iws
 *.iml
 *.ipr
@@ -38,3 +42,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+.idea/kotlin-statistics.xml

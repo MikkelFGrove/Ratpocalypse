@@ -1,20 +1,19 @@
 package dk.lima.common.data;
 
+import dk.lima.common.entity.Entity;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-/**
- *
- * @author jcs
- */
 public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
+    private Coordinate playerPosition = new Coordinate(0,0);
 
-    public String addEntity(Entity entity) {
+    synchronized public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
         return entity.getID();
     }
@@ -47,4 +46,11 @@ public class World {
         return entityMap.get(ID);
     }
 
+    public Coordinate getPlayerPosition() {
+        return playerPosition;
+    }
+
+    public void setPlayerPosition(Coordinate playerPosition) {
+        this.playerPosition = playerPosition;
+    }
 }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="MavenProjectsManager">
@@ -9,6 +8,10 @@
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/CommonEntityComponent/pom.xml" />
+        <option value="$PROJECT_DIR$/CommonPathfinding/pom.xml" />
+        <option value="$PROJECT_DIR$/CommonTimer/pom.xml" />
+        <option value="$PROJECT_DIR$/Pathfinding/pom.xml" />
         <option value="$PROJECT_DIR$/Test/pom.xml" />
       </set>
     </option>
