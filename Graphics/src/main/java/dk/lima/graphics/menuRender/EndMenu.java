@@ -6,7 +6,8 @@ import dk.lima.common.data.World;
 import dk.lima.common.graphics.IMenu;
 import dk.lima.common.graphics.MenuType;
 import dk.lima.common.services.IGamePluginService;
-import javafx.application.Platform;
+import dk.lima.graphics.menuRender.menuComponent.backToMenuButton;
+import dk.lima.graphics.menuRender.menuComponent.exitButton;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -99,7 +100,6 @@ public class EndMenu implements IMenu {
 
             gameData.setScore(0);
             gameData.setDuration(Duration.ZERO);
-            gameData.setCurrentWave(0);
             world.getEntities().clear();
             world.setPlayerPosition(new Coordinate(0,0));
 
@@ -112,74 +112,10 @@ public class EndMenu implements IMenu {
         });
 
         //Exit to menu button
-        Button backToMenuButton = new Button("Back To Menu!");
-        backToMenuButton.setPrefWidth(250);
-        backToMenuButton.setPrefHeight(70);
-        backToMenuButton.setStyle("-fx-background-color: #333333; -fx-border-color: #555555; -fx-border-width: 3px;");
-        backToMenuButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        backToMenuButton.setTextFill(Color.WHITE);
-
-        backToMenuButton.setOnMouseEntered(e -> {
-            backToMenuButton.setScaleX(1.03);
-            backToMenuButton.setScaleY(1.04);
-            backToMenuButton.setStyle("-fx-background-color: #444444; -fx-border-color: #666666; -fx-border-width: 3px;");
-            backToMenuButton.setCursor(Cursor.HAND);
-        });
-
-        backToMenuButton.setOnMouseExited(e -> {
-            backToMenuButton.setScaleX(1.0);
-            backToMenuButton.setScaleY(1.0);
-            backToMenuButton.setStyle("-fx-background-color: #333333; -fx-border-color: #555555; -fx-border-width: 3px;");
-        });
-
-
-        backToMenuButton.setOnAction(e -> {
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.stop(gameData, world);
-            }
-
-            gameData.setScore(0);
-            gameData.setDuration(Duration.ZERO);
-            gameData.setCurrentWave(0);
-            world.getEntities().clear();
-            world.setPlayerPosition(new Coordinate(0, 0));
-
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.start(gameData, world);
-            }
-
-            gameData.setGameRunning(false);
-            StartMenu startMenu = new StartMenu();
-            startMenu.showComponent(true);
-            endMenuPane.setVisible(false);
-        });
-
+        Button backToMenuButton = new backToMenuButton(endMenuPane,world, gameData, "Back To Menu!");
 
         // Exit Button
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefWidth(250);
-        exitButton.setPrefHeight(70);
-        exitButton.setStyle("-fx-background-color: #550000; -fx-border-color: #ff0000; -fx-border-width: 3px;");
-        exitButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        exitButton.setTextFill(Color.WHITE);
-
-        exitButton.setOnMouseEntered(e -> {
-            exitButton.setScaleX(1.03);
-            exitButton.setScaleY(1.04);
-            exitButton.setStyle("-fx-background-color: #770000; -fx-border-color: #ff5555; -fx-border-width: 3px;");
-            exitButton.setCursor(Cursor.HAND);
-        });
-
-        exitButton.setOnMouseExited(e -> {
-            exitButton.setScaleX(1.0);
-            exitButton.setScaleY(1.0);
-            exitButton.setStyle("-fx-background-color: #550000; -fx-border-color: #ff0000; -fx-border-width: 3px;");
-        });
-
-
-        exitButton.setOnAction(e -> {
-            Platform.exit();
-        });
+        Button exitButton = new exitButton(endMenuPane, world, gameData,"Exit");
 
         //Button allignment
         VBox buttonBox = new VBox(20);
