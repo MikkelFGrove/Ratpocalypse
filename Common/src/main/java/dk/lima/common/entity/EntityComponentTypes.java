@@ -5,5 +5,7 @@ public enum EntityComponentTypes {
     SHAPE,
     TRANSFORM,
     SPRITE,
-    WEAPON
+    WEAPON,
+    DAMAGE,
+    HEALTH
 }

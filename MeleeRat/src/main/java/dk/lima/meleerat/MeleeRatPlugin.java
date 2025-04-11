@@ -8,9 +8,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.ShapeCP;
-import dk.lima.common.entitycomponents.SpriteCP;
-import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entitycomponents.*;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 
@@ -70,6 +68,16 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                     transformCP.setSize(2 * scalingFactor);
                     transformCP.setEntity(enemy);
                     enemy.addComponent(transformCP);
+                }
+                case HEALTH -> {
+                    HealthCP healthCP = (HealthCP) component;
+                    healthCP.setHealth(50);
+                    enemy.addComponent(healthCP);
+                }
+                case DAMAGE -> {
+                    DamageCP damageCP = (DamageCP) component;
+                    damageCP.setAttackDamage(50);
+                    enemy.addComponent(damageCP);
                 }
             }
         }

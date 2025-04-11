@@ -8,10 +8,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.ShapeCP;
-import dk.lima.common.entitycomponents.SpriteCP;
-import dk.lima.common.entitycomponents.TransformCP;
-import dk.lima.common.entitycomponents.WeaponCP;
+import dk.lima.common.entitycomponents.*;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 
@@ -76,9 +73,13 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                     weaponCP.setEntity(enemy);
                     weaponCP.setWeaponSPI(getWeaponSPI().stream().findFirst().orElse(null));
                     weaponCP.setAttackChance(90);
-                    weaponCP.setAttackCooldown(100);
                     weaponCP.setShouldAttack(true);
                     enemy.addComponent(weaponCP);
+                }
+                case HEALTH -> {
+                    HealthCP healthCP = (HealthCP) component;
+                    healthCP.setHealth(50);
+                    enemy.addComponent(healthCP);
                 }
             }
         }
