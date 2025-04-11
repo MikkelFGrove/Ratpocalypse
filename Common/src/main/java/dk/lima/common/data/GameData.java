@@ -20,6 +20,7 @@ public class GameData {
     private int highscore = 0;
     private boolean isGamePaused;
     private boolean timeScoring = false;
+    private int currentWave = 0;
 
     public GameInputs getInputs() {
         return inputs;
@@ -88,6 +89,18 @@ public class GameData {
 
     public synchronized void addScore(int score) {
         this.score += score;
+    }
+
+    public int getCurrentWave() {
+        return currentWave;
+    }
+
+    public void setCurrentWave(int currentWave) {
+        this.currentWave = currentWave;
+    }
+
+    public void incrementWave() {
+        currentWave++;
     }
 
     public Coordinate getMousePosition() {

@@ -28,8 +28,8 @@ module Graphics {
             TimeText,
             StartMenu,
             PauseMenu,
-            EndMenu;
-
+            EndMenu,
+            WaveCounter;
 }
 
 
