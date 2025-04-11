@@ -153,6 +153,7 @@ public class PauseMenu implements IMenu {
 
             gameData.setScore(0);
             gameData.setDuration(Duration.ZERO);
+            gameData.setCurrentWave(0);
             world.getEntities().clear();
             world.setPlayerPosition(new Coordinate(0, 0));
 
