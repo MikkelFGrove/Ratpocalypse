@@ -13,21 +13,17 @@ public class WeaponCP implements IEntityComponent {
     private Entity entity;
     private IWeaponSPI weaponSPI;
     private int attackChance;
-    private int attackCooldown;
-    private long lastAttack;
     private boolean shouldAttack;
 
     public WeaponCP() {
     }
 
-    public WeaponCP(Entity entity, IWeaponSPI weaponSPI, int attackChance, int attackCooldown, boolean shouldAttack) {
+    public WeaponCP(Entity entity, IWeaponSPI weaponSPI, int attackChance, boolean shouldAttack) {
         this.entity = entity;
         this.weaponSPI = weaponSPI;
         this.attackChance = attackChance;
-        this.attackCooldown = attackCooldown;
         this.shouldAttack = shouldAttack;
     }
-
 
     @Override
     public EntityComponentTypes getType() {
@@ -43,17 +39,12 @@ public class WeaponCP implements IEntityComponent {
     public void process(GameData gameData, World world) {
         Random rand = new Random();
 
-        if (shouldAttack & isCooldownOver() & rand.nextInt(attackChance) == 0) {
-            this.lastAttack = System.currentTimeMillis();
+        if (shouldAttack & rand.nextInt(attackChance) == 0) {
 
             if (weaponSPI != null) {
                 weaponSPI.shoot(entity, gameData, world);
             }
         }
-    }
-
-    private boolean isCooldownOver() {
-        return (System.currentTimeMillis() - this.lastAttack > this.attackCooldown);
     }
 
     public boolean shouldAttack() {
@@ -62,14 +53,6 @@ public class WeaponCP implements IEntityComponent {
 
     public void setShouldAttack(boolean shouldAttack) {
         this.shouldAttack = shouldAttack;
-    }
-
-    public int getAttackCooldown() {
-        return attackCooldown;
-    }
-
-    public void setAttackCooldown(int attackCooldown) {
-        this.attackCooldown = attackCooldown;
     }
 
     public int getAttackChance() {

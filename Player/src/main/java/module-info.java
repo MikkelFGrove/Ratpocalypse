@@ -1,3 +1,4 @@
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
@@ -14,4 +15,5 @@ module Player {
     provides IEntityProcessingService with PlayerControlSystem;
 
     uses IWeaponSPI;
+    uses IEntityComponent;
 }
