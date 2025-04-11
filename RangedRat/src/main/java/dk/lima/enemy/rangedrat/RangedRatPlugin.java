@@ -23,12 +23,7 @@ import static java.util.stream.Collectors.toList;
 
 public class RangedRatPlugin implements IGamePluginService, IEnemy {
     @Override
-    public void start(GameData gameData, World world) {
-        for (int i = 0; i < 3; i++) {
-            Entity enemy = createEnemy(gameData, world);
-            world.addEntity(enemy);
-        }
-    }
+    public void start(GameData gameData, World world) {}
 
     @Override
     public void stop(GameData gameData, World world) {

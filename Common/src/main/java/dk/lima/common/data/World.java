@@ -42,6 +42,16 @@ public class World {
         return r;
     }
 
+    public List<Entity> getEntities(EEntityTypes entityType) {
+        List<Entity> r = new ArrayList<>();
+        for (Entity e : getEntities()) {
+            if (e.getEntityType().equals(entityType)) {
+                r.add(e);
+            }
+        }
+        return r;
+    }
+
     public Entity getEntity(String ID) {
         return entityMap.get(ID);
     }
