@@ -5,8 +5,9 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.entity.IEntityComponent;
+import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.HealthCP;
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
@@ -65,9 +66,14 @@ public class PlayerPlugin implements IGamePluginService {
                     healthCP.setHealth(100);
                     playerModel.addComponent(healthCP);
                 }
+                case COLLISION -> {
+                    System.out.println("added collision to player");
+                    playerModel.addComponent(new CollisionCP(
+                            playerModel
+                    ));
+                }
             }
         }
-
         return playerModel;
     }
 

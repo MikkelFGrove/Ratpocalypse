@@ -82,6 +82,11 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                     damageCP.setAttackDamage(0.25);
                     enemy.addComponent(damageCP);
                 }
+
+                case COLLISION -> {
+                    CollisionCP collisionCP = new CollisionCP(enemy);
+                    enemy.addComponent(collisionCP);
+                }
             }
         }
         return enemy;
