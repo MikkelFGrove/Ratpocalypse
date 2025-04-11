@@ -51,9 +51,11 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     if (!gameData.isTimeScoring() && ((e.getEntityType() == EEntityTypes.BULLET && e2.getEntityType() == EEntityTypes.ENEMY) || (e.getEntityType() == EEntityTypes.ENEMY && e2.getEntityType() == EEntityTypes.BULLET))) {
                         gameData.setScore(gameData.getScore() + 1);
                     }
+                    if (e.getEntityType() != EEntityTypes.COMPANION && e2.getEntityType() != EEntityTypes.COMPANION) {
+                        world.removeEntity(e);
+                        world.removeEntity(e2);
+                    }
 
-                    world.removeEntity(e);
-                    world.removeEntity(e2);
                 }
             }
         }

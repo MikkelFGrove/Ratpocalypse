@@ -35,6 +35,7 @@
         <module>PathfindingComponent</module>
         <module>CommonEntityCP</module>
         <module>CommonPathfinding</module>
+        <module>Companion</module>
     </modules>
     <properties>
         <java>java</java>
