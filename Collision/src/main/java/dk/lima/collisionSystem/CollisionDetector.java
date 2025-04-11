@@ -51,7 +51,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                     if (!gameData.isTimeScoring() && ((e.getEntityType() == EEntityTypes.BULLET && e2.getEntityType() == EEntityTypes.ENEMY) || (e.getEntityType() == EEntityTypes.ENEMY && e2.getEntityType() == EEntityTypes.BULLET))) {
                         gameData.setScore(gameData.getScore() + 1);
                     }
-
+                    //here we should call the collision component on the entitites instead
                     world.removeEntity(e);
                     world.removeEntity(e2);
                 }
