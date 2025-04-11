@@ -6,5 +6,6 @@ public enum EGameInputs {
     LEFT,
     RIGHT,
     PAUSE,
-    ACTION
+    ACTION,
+    DEBUG
 }

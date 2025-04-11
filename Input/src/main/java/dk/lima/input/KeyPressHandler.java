@@ -28,6 +28,7 @@ public class KeyPressHandler implements IInputSPI {
                         case RIGHT, KeyCode.D -> gameData.getInputs().setInput(EGameInputs.RIGHT, true);
                         case SPACE -> gameData.getInputs().setInput(EGameInputs.ACTION, true);
                         case ESCAPE -> gameData.getInputs().setInput(EGameInputs.PAUSE, true);
+                        case KeyCode.B -> gameData.getInputs().setInput(EGameInputs.DEBUG, true);
                     }
                 }
             }

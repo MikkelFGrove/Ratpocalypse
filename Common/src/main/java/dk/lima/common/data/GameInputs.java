@@ -26,6 +26,6 @@ public class GameInputs {
     }
 
     public boolean isPressed(EGameInputs key) {
-        return keys.get(key) & !pkeys.get(key);
+        return keys.getOrDefault(key, false) & pkeys.getOrDefault(key, false);
     }
 }

@@ -30,7 +30,7 @@ public class PlayerPlugin implements IGamePluginService {
         Player playerModel = new Player();
         playerModel.setEntityType(EEntityTypes.PLAYER);
 
-        double scale = 7.5;
+        double scale = 12;
         String[] pathsToSprites = {"player.png"};
         
         for (IEntityComponent component : getEntityComponents()) {
