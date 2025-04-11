@@ -14,7 +14,6 @@ public class ShapeCP implements IEntityComponent {
     public ShapeCP() {
     }
 
-    // Nice comment :-) Plz merge
     public ShapeCP(double[] polygonCoordinates, int[] color) {
         this.polygonCoordinates = polygonCoordinates;
         this.color = color;
