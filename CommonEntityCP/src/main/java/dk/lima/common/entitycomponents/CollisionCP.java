@@ -30,14 +30,16 @@ public class CollisionCP implements IEntityComponent {
 
     @Override
     public void process(GameData gameData, World world) {
-        if (collisionDetected) {
-            if (!gameData.isTimeScoring() && ((entity.getEntityType() == EEntityTypes.BULLET && target.getEntityType() == EEntityTypes.ENEMY)
-                    || (entity.getEntityType() == EEntityTypes.ENEMY && target.getEntityType() == EEntityTypes.BULLET))) {
-                gameData.setScore(gameData.getScore() + 1);
+        if (world.getEntity(entity.getID()) != null && world.getEntity(target.getID()) != null) {
+            if (collisionDetected) {
+                if (!gameData.isTimeScoring() && ((entity.getEntityType() == EEntityTypes.BULLET && target.getEntityType() == EEntityTypes.ENEMY)
+                        || (entity.getEntityType() == EEntityTypes.ENEMY && target.getEntityType() == EEntityTypes.BULLET))) {
+                    gameData.setScore(gameData.getScore() + 1);
+                }
+                world.removeEntity(entity);
+                world.removeEntity(target);
+                clearCollision();
             }
-            world.removeEntity(entity);
-            world.removeEntity(target);
-            clearCollision();
         }
     }
 
