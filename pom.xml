@@ -38,6 +38,7 @@
         <module>CommonObstacle</module>
         <module>WorldGenerator</module>
         <module>Companion</module>
+        <module>CollisionComponent</module>
     </modules>
     <properties>
         <java>java</java>
