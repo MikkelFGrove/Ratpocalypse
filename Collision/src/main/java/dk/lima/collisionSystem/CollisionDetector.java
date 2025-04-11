@@ -18,7 +18,6 @@ public class CollisionDetector implements IPostEntityProcessingService {
     @Override
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
-
             TransformCP eTransformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
             if (eTransformCP == null) {
                 continue;
