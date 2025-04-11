@@ -6,6 +6,8 @@ import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -40,6 +42,8 @@ class CollisionDetectorTest {
     @Test
     public void testBulletEntityCollisionRemovesBoth() {
         Bullet bullet = new Bullet();
+        bullet.setEntityType(EEntityTypes.BULLET);
+        bullet.addComponent(new CollisionCP(bullet));
         bullet.addComponent(new TransformCP(
                 new Coordinate(0,0),
                 0,
@@ -47,6 +51,7 @@ class CollisionDetectorTest {
         ));
 
         Entity entity = new Entity();
+        entity.addComponent(new CollisionCP(entity));
         entity.addComponent(new TransformCP(
                 new Coordinate(0,0),
                 0,
@@ -60,6 +65,7 @@ class CollisionDetectorTest {
         assertTrue(world.getEntities().contains(bullet));
 
         collisionDetector.process(gameData, world);
+        bullet.getComponent(EntityComponentTypes.COLLISION).process(gameData, world);
 
         // Check that both the bullet and entity is removed
         assertFalse(world.getEntities().contains(entity));
@@ -69,6 +75,7 @@ class CollisionDetectorTest {
     @Test
     public void testKillsIncreaseScore() {
         Bullet bullet = new Bullet();
+        bullet.addComponent(new CollisionCP(bullet));
         bullet.addComponent(new TransformCP(
                 new Coordinate(0,0),
                 0,
@@ -77,6 +84,7 @@ class CollisionDetectorTest {
         bullet.setEntityType(EEntityTypes.BULLET);
 
         Entity entity = new Entity();
+        entity.addComponent(new CollisionCP(entity));
         entity.addComponent(new TransformCP(
                 new Coordinate(0,0),
                 0,
@@ -90,6 +98,9 @@ class CollisionDetectorTest {
         assertEquals(0, gameData.getScore());
 
         collisionDetector.process(gameData, world);
+        entity.getComponent(EntityComponentTypes.COLLISION).process(gameData, world);
+        bullet.getComponent(EntityComponentTypes.COLLISION).process(gameData, world);
+
 
         assertEquals(1, gameData.getScore());
     }
@@ -102,9 +113,12 @@ class CollisionDetectorTest {
                 0,
                 1
         ));
+
+        player.addComponent(new CollisionCP(player));
         player.setEntityType(EEntityTypes.PLAYER);
 
         Entity enemy = new Entity();
+        enemy.addComponent(new CollisionCP(enemy));
         enemy.addComponent(new TransformCP(
                 new Coordinate(0,0),
                 0,
@@ -118,6 +132,7 @@ class CollisionDetectorTest {
         assertEquals(0, gameData.getScore());
 
         collisionDetector.process(gameData, world);
+        player.getComponent(EntityComponentTypes.COLLISION).process(gameData, world);
 
         assertEquals(0, gameData.getScore());
     }

@@ -4,6 +4,8 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.IEntityComponent;
+import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
@@ -29,27 +31,40 @@ public class PlayerPlugin implements IGamePluginService {
 
         double scale = 7.5;
 
-        playerModel.addComponent(new TransformCP(
-                world.getPlayerPosition(),
-                0,
-                scale
-        ));
-
-        String[] pathsToSprites = {"player.png"};
-        playerModel.addComponent(new SpriteCP(
-                pathsToSprites,
-                pathsToSprites.length,
-                3
-        ));
-
-        playerModel.addComponent(new WeaponCP(
-                playerModel,
-                getWeaponSPI().stream().findFirst().orElse(null),
-                1,
-                100,
-                false
-        ));
-
+        for (IEntityComponent component : getEntityComponents()) {
+            switch (component.getType()) {
+                case SPRITE -> {
+                    String[] pathsToSprites = {"player.png"};
+                    playerModel.addComponent(new SpriteCP(
+                            pathsToSprites,
+                            pathsToSprites.length,
+                            3
+                    ));
+                }
+                case WEAPON -> {
+                    playerModel.addComponent(new WeaponCP(
+                            playerModel,
+                            getWeaponSPI().stream().findFirst().orElse(null),
+                            1,
+                            100,
+                            false
+                    ));
+                }
+                case TRANSFORM -> {
+                    playerModel.addComponent(new TransformCP(
+                            world.getPlayerPosition(),
+                            0,
+                            scale
+                    ));
+                }
+                case COLLISION -> {
+                    System.out.println("added collision to player");
+                    playerModel.addComponent(new CollisionCP(
+                            playerModel
+                    ));
+                }
+            }
+        }
         return playerModel;
     }
 
@@ -62,5 +77,8 @@ public class PlayerPlugin implements IGamePluginService {
 
     private Collection<? extends IWeaponSPI> getWeaponSPI() {
         return ServiceLoader.load(IWeaponSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+    public static Collection<? extends IEntityComponent> getEntityComponents() {
+        return ServiceLoader.load(IEntityComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 }

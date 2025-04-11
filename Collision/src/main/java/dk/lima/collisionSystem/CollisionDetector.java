@@ -6,6 +6,7 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IPostEntityProcessingService;
 
@@ -47,13 +48,9 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
                 if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
-                    // Increase score if an enemy is shot
-                    if (!gameData.isTimeScoring() && ((e.getEntityType() == EEntityTypes.BULLET && e2.getEntityType() == EEntityTypes.ENEMY) || (e.getEntityType() == EEntityTypes.ENEMY && e2.getEntityType() == EEntityTypes.BULLET))) {
-                        gameData.setScore(gameData.getScore() + 1);
-                    }
-                    //here we should call the collision component on the entitites instead
-                    world.removeEntity(e);
-                    world.removeEntity(e2);
+                   if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
+                       ((CollisionCP) e.getComponent(EntityComponentTypes.COLLISION)).collison(e2);
+                   }
                 }
             }
         }

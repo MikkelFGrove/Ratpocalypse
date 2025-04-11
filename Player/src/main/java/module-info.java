@@ -14,4 +14,5 @@ module Player {
     provides IEntityProcessingService with PlayerControlSystem;
 
     uses IWeaponSPI;
+    uses dk.lima.common.entity.IEntityComponent;
 }

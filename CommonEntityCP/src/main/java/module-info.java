@@ -11,7 +11,7 @@ module CommonEntityCP {
 
     exports dk.lima.common.entitycomponents;
 
-    provides IEntityComponent with ShapeCP, TransformCP, WeaponCP, SpriteCP;
+    provides IEntityComponent with ShapeCP, TransformCP, WeaponCP, SpriteCP, CollisionCP;
 }
 
 

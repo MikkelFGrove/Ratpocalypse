@@ -34,7 +34,6 @@
         <module>Persistence</module>
         <module>PathfindingComponent</module>
         <module>CommonEntityCP</module>
-        <module>CollisionComponent</module>
     </modules>
     <properties>
         <java>java</java>

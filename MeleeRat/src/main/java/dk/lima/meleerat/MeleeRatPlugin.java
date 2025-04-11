@@ -8,6 +8,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
+import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
@@ -70,6 +71,9 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                     transformCP.setSize(2 * scalingFactor);
                     transformCP.setEntity(enemy);
                     enemy.addComponent(transformCP);
+                }
+                case COLLISION -> {
+                    enemy.addComponent(new CollisionCP(enemy));
                 }
             }
         }
