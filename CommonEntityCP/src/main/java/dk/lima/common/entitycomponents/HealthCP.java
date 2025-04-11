@@ -8,6 +8,7 @@ import dk.lima.common.entity.IEntityComponent;
 
 public class HealthCP implements IEntityComponent {
     private Entity entity;
+    private double maxHealth;
     private double health;
 
     @Override
@@ -41,5 +42,13 @@ public class HealthCP implements IEntityComponent {
 
     public void subtractHealth(double damage) {
         health -= damage;
+    }
+
+    public double getMaxHealth() {
+        return maxHealth;
+    }
+
+    public void setMaxHealth(double maxHealth) {
+        this.maxHealth = maxHealth;
     }
 }

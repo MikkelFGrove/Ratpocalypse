@@ -42,7 +42,7 @@ public class DebugRenderer implements IGraphicsService {
             pressed = false;
         }
 
-        if (!shouldShow) {
+        if (shouldShow) {
             for(Entity entity: world.getEntities()) {
                 TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
                 Coordinate entityCoord = transformCP.getCoord();

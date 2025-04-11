@@ -40,18 +40,20 @@ public class HealthRenderer implements IGraphicsService {
             Coordinate playerCoord = world.getPlayerPosition();
 
             if (healthCP != null) {
+                double healthRatio = healthCP.getHealth() / healthCP.getMaxHealth();
+
                 if(entity instanceof Player) {
                     gc.setFill(Color.GRAY);
                     gc.fillRect(gameData.getDisplayWidth() /2d  - healthSize / 2d, gameData.getDisplayHeight() /2d  - 2 * transformCP.getSize(), healthSize, 5);
 
                     gc.setFill(Color.GREEN);
-                    gc.fillRect(gameData.getDisplayWidth() /2d  - healthSize / 2d, gameData.getDisplayHeight() /2d  - 2 * transformCP.getSize(), healthSize - 5, 5);
+                    gc.fillRect(gameData.getDisplayWidth() /2d  - healthSize / 2d, gameData.getDisplayHeight() /2d  - 2 * transformCP.getSize(), healthSize * healthRatio, 5);
                 } else {
                     gc.setFill(Color.GRAY);
                     gc.fillRect(entityCoord.getX()- transformCP.getSize() / 2 - playerCoord.getX() + gameData.getDisplayWidth() / 2d - healthSize / 2d, entityCoord.getY() - 2 * transformCP.getSize() - playerCoord.getY() + gameData.getDisplayHeight() / 2d, healthSize, 5);
 
                     gc.setFill(Color.GREEN);
-                    gc.fillRect(entityCoord.getX()- transformCP.getSize() / 2 - playerCoord.getX() + gameData.getDisplayWidth() / 2d  - healthSize / 2d, entityCoord.getY() - 2 * transformCP.getSize() - playerCoord.getY() + gameData.getDisplayHeight() / 2d, healthSize - 5, 5);
+                    gc.fillRect(entityCoord.getX()- transformCP.getSize() / 2 - playerCoord.getX() + gameData.getDisplayWidth() / 2d  - healthSize / 2d, entityCoord.getY() - 2 * transformCP.getSize() - playerCoord.getY() + gameData.getDisplayHeight() / 2d, healthSize * healthRatio, 5);
                 }
             }
         }

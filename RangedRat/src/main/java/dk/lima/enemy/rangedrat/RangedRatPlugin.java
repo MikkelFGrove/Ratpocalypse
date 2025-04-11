@@ -78,7 +78,8 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case HEALTH -> {
                     HealthCP healthCP = (HealthCP) component;
-                    healthCP.setHealth(50);
+                    healthCP.setMaxHealth(50);
+                    healthCP.setHealth(12.5);
                     enemy.addComponent(healthCP);
                 }
             }
