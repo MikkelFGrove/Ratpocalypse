@@ -47,6 +47,9 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
+        enemy.addComponent(new RangedRatCollisionHandler());
+        enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
+
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case PATHFINDING -> {
@@ -76,11 +79,6 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                     weaponCP.setAttackCooldown(100);
                     weaponCP.setShouldAttack(true);
                     enemy.addComponent(weaponCP);
-                }
-
-                case COLLISION -> {
-                    CollisionCP collisionCP = new CollisionCP(enemy);
-                    enemy.addComponent(collisionCP);
                 }
             }
         }

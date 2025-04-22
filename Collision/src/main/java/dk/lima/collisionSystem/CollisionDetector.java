@@ -1,13 +1,12 @@
 package dk.lima.collisionSystem;
 
 import dk.lima.common.data.Coordinate;
-import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.EntityComponentTypes;
-import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entitycomponents.ICollisionHandler;
 import dk.lima.common.services.IPostEntityProcessingService;
 
 public class CollisionDetector implements IPostEntityProcessingService {
@@ -48,7 +47,10 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
                 if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
                    if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
-                       ((CollisionCP) e.getComponent(EntityComponentTypes.COLLISION)).collison(e2);
+                       ((ICollisionHandler) e.getComponent(EntityComponentTypes.COLLISION)).onCollide(e2, world);
+                   }
+                   if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
+                       ((ICollisionHandler) e2.getComponent(EntityComponentTypes.COLLISION)).onCollide(e, world);
                    }
                 }
             }

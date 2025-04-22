@@ -4,8 +4,8 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
@@ -31,6 +31,9 @@ public class PlayerPlugin implements IGamePluginService {
 
         double scale = 7.5;
 
+        playerModel.addComponent(new PlayerCollisionHandler());
+        playerModel.getComponent(EntityComponentTypes.COLLISION).setEntity(playerModel);
+
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case SPRITE -> {
@@ -55,12 +58,6 @@ public class PlayerPlugin implements IGamePluginService {
                             world.getPlayerPosition(),
                             0,
                             scale
-                    ));
-                }
-                case COLLISION -> {
-                    System.out.println("added collision to player");
-                    playerModel.addComponent(new CollisionCP(
-                            playerModel
                     ));
                 }
             }

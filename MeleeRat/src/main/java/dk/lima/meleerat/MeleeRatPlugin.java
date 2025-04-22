@@ -8,7 +8,6 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
@@ -50,6 +49,9 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
+        enemy.addComponent(new MeleeRatCollisionHandler());
+        enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
+
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case PATHFINDING -> {
@@ -71,9 +73,6 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                     transformCP.setSize(2 * scalingFactor);
                     transformCP.setEntity(enemy);
                     enemy.addComponent(transformCP);
-                }
-                case COLLISION -> {
-                    enemy.addComponent(new CollisionCP(enemy));
                 }
             }
         }
