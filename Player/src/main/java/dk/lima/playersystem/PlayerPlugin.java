@@ -5,6 +5,7 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entity.IEntityComponent;
@@ -34,6 +35,8 @@ public class PlayerPlugin implements IGamePluginService {
         double scale = 12;
         String[] pathsToSprites = {"player.png"};
         
+        playerModel.getComponent(EntityComponentTypes.COLLISION).setEntity(playerModel);
+        playerModel.addComponent(new PlayerCollisionHandler());
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case SPRITE -> {
@@ -65,12 +68,6 @@ public class PlayerPlugin implements IGamePluginService {
                     healthCP.setMaxHealth(100);
                     healthCP.setHealth(100);
                     playerModel.addComponent(healthCP);
-                }
-                case COLLISION -> {
-                    System.out.println("added collision to player");
-                    playerModel.addComponent(new CollisionCP(
-                            playerModel
-                    ));
                 }
             }
         }
