@@ -99,8 +99,6 @@ class CollisionDetectorTest {
 
         collisionDetector.process(gameData, world);
         entity.getComponent(EntityComponentTypes.COLLISION).process(gameData, world);
-        bullet.getComponent(EntityComponentTypes.COLLISION).process(gameData, world);
-
 
         assertEquals(1, gameData.getScore());
     }
