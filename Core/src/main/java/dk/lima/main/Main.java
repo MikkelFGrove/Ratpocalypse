@@ -39,14 +39,14 @@ public class Main extends Application {
             scene.addEventHandler(inputSPI.getInputEvent(), inputSPI.getInputHandler(gameData));
         }
 
-        graphicsServices = new ArrayList<>(ModuleConfig.getGraphicComponents());
-        for (IGraphicsService graphicsComponent : graphicsServices) {
-            gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
-        }
-
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : ModuleConfig.getPluginServices()) {
             iGamePlugin.start(gameData, world);
+        }
+
+        graphicsServices = new ArrayList<>(ModuleConfig.getGraphicComponents());
+        for (IGraphicsService graphicsComponent : graphicsServices) {
+            gameWindow.getChildren().add(graphicsComponent.createComponent(gameData, world));
         }
 
         render();

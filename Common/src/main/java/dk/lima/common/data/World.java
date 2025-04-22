@@ -12,6 +12,7 @@ public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
     private Coordinate playerPosition = new Coordinate(0,0);
+    private int[][] tileMap;
 
     synchronized public String addEntity(Entity entity) {
         entityMap.put(entity.getID(), entity);
@@ -62,5 +63,13 @@ public class World {
 
     public void setPlayerPosition(Coordinate playerPosition) {
         this.playerPosition = playerPosition;
+    }
+
+    public int[][] getTileMap() {
+        return tileMap;
+    }
+
+    public void setTileMap(int[][] tileMap) {
+        this.tileMap = tileMap;
     }
 }

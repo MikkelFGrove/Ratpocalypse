@@ -3,6 +3,7 @@ package dk.lima.TileManager;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 
+import dk.lima.common.entity.Entity;
 import dk.lima.common.graphics.IGraphicsService;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
@@ -13,13 +14,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TileManager implements IGraphicsService {
-    // Screen Settings
-    private final int originalTileSize = 16; // 16x16 tile
-    private final int scale = 3;
-    private final int tileSize = originalTileSize * scale; // This is the actual size of the tile displayed
-
     // World settings
     private final int maxWorldCol = 50;
     private final int maxWorldRow = 50;
@@ -29,7 +27,6 @@ public class TileManager implements IGraphicsService {
     private int[][] mapTileNum;
     private Canvas canvas;
     private GraphicsContext gc;
-
 
     public void getFileImage() {
         tiles[0] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/smallPath03.png")));
@@ -51,36 +48,6 @@ public class TileManager implements IGraphicsService {
         tiles[16] = new Tile(new Image(getClass().getResourceAsStream("/TileManager/Tiles/flowerField01.png")));
     }
 
-    public void loadMap(String map) {
-        try(InputStream inputStream = getClass().getResourceAsStream(map);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream))) {
-
-            int col = 0;
-            int row = 0;
-
-            while (col < maxWorldCol && row < maxWorldRow) {
-                String line = bufferedReader.readLine();
-                while (col < maxWorldCol) {
-                    String[] numbers = line.split(",");
-
-                    int num = Integer.parseInt(numbers[col]);
-
-                    mapTileNum[col][row] = num-1;
-                    col++;
-                }
-
-                if(col == maxWorldCol) {
-                    col = 0;
-                    row++;
-                }
-            }
-            bufferedReader.close();
-        } catch (IOException e) {
-            System.out.println("Map not found");
-        }
-
-    }
-
     @Override
     public Node createComponent(GameData gameData, World world) {
         tiles = new Tile[30];
@@ -91,7 +58,7 @@ public class TileManager implements IGraphicsService {
         gc.setImageSmoothing(false);
 
         getFileImage();
-        loadMap("/TileManager/Maps/worldMap01.txt");
+        mapTileNum = world.getTileMap();
 
         return canvas;
     }
@@ -133,8 +100,8 @@ public class TileManager implements IGraphicsService {
 
     private int[] calculateStartCoord(GameData gameData, World world) {
         // Calculate the position of the tile in the top-left corner e.g. the first tile.
-        int worldCol = Math.floorDiv((int) (world.getPlayerPosition().getX() - gameData.getDisplayWidth() / 2d), tileSize);
-        int worldRow = Math.floorDiv((int) (world.getPlayerPosition().getY() - gameData.getDisplayHeight() / 2d), tileSize);
+        int worldCol = Math.floorDiv((int) (world.getPlayerPosition().getX() - gameData.getDisplayWidth() / 2d), gameData.tileSize);
+        int worldRow = Math.floorDiv((int) (world.getPlayerPosition().getY() - gameData.getDisplayHeight() / 2d), gameData.tileSize);
 
         // If the end-tile is out of bounds, then clamp the values to avoid errors
         worldCol = Math.clamp(worldCol, 0, maxWorldCol);
@@ -145,8 +112,8 @@ public class TileManager implements IGraphicsService {
 
     private int[] calculateEndCoord(GameData gameData, World world) {
         // Calculate the position of the tile in the bottom-right corner e.g. the last tile.
-        int worldCol = Math.ceilDiv((int) (world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2d), tileSize);
-        int worldRow = Math.ceilDiv((int) (world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2d), tileSize);
+        int worldCol = Math.ceilDiv((int) (world.getPlayerPosition().getX() + gameData.getDisplayWidth() / 2d), gameData.tileSize);
+        int worldRow = Math.ceilDiv((int) (world.getPlayerPosition().getY() + gameData.getDisplayHeight() / 2d), gameData.tileSize);
 
         // If the end-tile is out of bounds, then clamp the values to avoid errors
         worldCol = Math.clamp(worldCol, 0, maxWorldCol);
