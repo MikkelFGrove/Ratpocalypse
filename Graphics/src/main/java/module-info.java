@@ -30,6 +30,7 @@ module Graphics {
             DebugRenderer,
             ScoreText,
             TimeText,
+            HealthBar,
             StartMenu,
             PauseMenu,
             EndMenu;
