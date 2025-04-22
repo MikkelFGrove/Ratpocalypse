@@ -11,7 +11,10 @@ import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IPostEntityProcessingService;
 
+import java.util.List;
+
 public class CollisionDetector implements IPostEntityProcessingService {
+    private final List<EEntityTypes> invincibleTypes = List.of(EEntityTypes.COMPANION, EEntityTypes.HAZARD, EEntityTypes.OBSTACLE);
 
     public CollisionDetector() {
     }
@@ -31,7 +34,17 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 if (e.getID().equals(e2.getID())){
                     continue;
                 }
-                
+
+                // If E1 is invincible and E2 is a bullet, skip collision
+                if (invincibleTypes.contains(e.getEntityType()) && e2.getEntityType() == EEntityTypes.BULLET) {
+                    continue;
+                }
+
+                // If E2 is invincible and E1 is a bullet, skip collision
+                if (invincibleTypes.contains(e2.getEntityType()) && e.getEntityType() == EEntityTypes.BULLET) {
+                    continue;
+                }
+
                 //If entities are of the same type, they will  not kill each other by collision
                 if (e.getEntityType() != null && e2.getEntityType() != null && e.getEntityType().equals(e2.getEntityType())) {
                     continue;
@@ -55,9 +68,9 @@ public class CollisionDetector implements IPostEntityProcessingService {
                         gameData.setScore(gameData.getScore() + 1);
                     }
 
-                    if (e.getComponent(EntityComponentTypes.HEALTH) == null & e.getEntityType() != EEntityTypes.COMPANION) {
+                    if (e.getComponent(EntityComponentTypes.HEALTH) == null && !invincibleTypes.contains(e.getEntityType())) {
                         world.removeEntity(e);
-                    } else if (e2.getComponent(EntityComponentTypes.HEALTH) == null & e2.getEntityType() != EEntityTypes.COMPANION) {
+                    } else if (e2.getComponent(EntityComponentTypes.HEALTH) == null && !invincibleTypes.contains(e2.getEntityType())) {
                         world.removeEntity(e2);
                     }
 

@@ -5,5 +5,6 @@ public enum EEntityTypes {
     PLAYER,
     BULLET,
     COMPANION,
-    OBSTACLE
+    OBSTACLE,
+    HAZARD
 }

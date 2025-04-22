@@ -5,9 +5,12 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.entity.IEntityComponent;
+import dk.lima.common.entitycomponents.DamageCP;
+import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.SpriteCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IGamePluginService;
+import dk.lima.obstacle.Hazard;
 import dk.lima.obstacle.Obstacle;
 
 import java.io.BufferedReader;
@@ -24,7 +27,7 @@ public class WorldGenerator implements IGamePluginService {
     private final int maxWorldCol = 50;
     private final int maxWorldRow = 50;
 
-    public Entity createObstacle(GameData gameData, Coordinate coordinate) {
+    private Entity createObstacle(GameData gameData, Coordinate coordinate) {
         Entity obstacle = new Obstacle();
 
         String[] pathsToSprites = {"barrel.png"};
@@ -42,13 +45,45 @@ public class WorldGenerator implements IGamePluginService {
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
                     transformCP.setCoord(coordinate);
-                    transformCP.setSize(gameData.tileSize);
+                    transformCP.setSize(gameData.tileSize / 2d);
                     obstacle.addComponent(transformCP);
                 }
             }
         }
 
         return obstacle;
+    }
+
+    private Entity createHazard(GameData gameData, Coordinate coordinate) {
+        Entity hazard = new Hazard();
+
+        String[] pathsToSprites = {"lava.png"};
+
+        for (IEntityComponent component : getEntityComponents()) {
+            switch (component.getType()) {
+                case SPRITE -> {
+                    SpriteCP spriteCP = (SpriteCP) component;
+                    spriteCP.setAmountOfSprites(pathsToSprites.length);
+                    spriteCP.setPathsToSprite(pathsToSprites);
+                    spriteCP.setHeight(gameData.tileSize);
+                    spriteCP.setWidth(gameData.tileSize);
+                    hazard.addComponent(spriteCP);
+                }
+                case TRANSFORM -> {
+                    TransformCP transformCP = (TransformCP) component;
+                    transformCP.setCoord(coordinate);
+                    transformCP.setSize(gameData.tileSize / 2d);
+                    hazard.addComponent(transformCP);
+                }
+                case DAMAGE -> {
+                    DamageCP damageCP = (DamageCP) component;
+                    damageCP.setAttackDamage(0.1);
+                    hazard.addComponent(damageCP);
+                }
+            }
+        }
+
+        return hazard;
     }
 
     @Override
@@ -58,9 +93,14 @@ public class WorldGenerator implements IGamePluginService {
 
         for (int col = 0; col < tileMap.length; col++) {
             for (int row = 0; row < tileMap[col].length; row++) {
-                if (tileMap[col][row] == 12) {
-                    Entity obstacle = createObstacle(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
-                    world.addEntity(obstacle);
+                Entity entity = switch (tileMap[col][row]) {
+                    case 12 -> createObstacle(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
+                    case 14 -> createHazard(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
+                    default -> null;
+                };
+
+                if (entity != null) {
+                    world.addEntity(entity);
                 }
             }
         }
