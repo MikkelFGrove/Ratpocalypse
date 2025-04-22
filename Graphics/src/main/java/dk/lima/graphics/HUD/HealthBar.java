@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 public class HealthBar implements IGraphicsService {
     private Canvas healthCanvas;
     private GraphicsContext gc;
-    private final Coordinate drawPosition = new Coordinate(20, 50);
+    private final Coordinate drawPosition = new Coordinate(8, 75);
     private final double healthBarHeight = 15;
     private final double healthBarWidth = 200;
 
@@ -30,7 +30,7 @@ public class HealthBar implements IGraphicsService {
         gc.setFill(Color.GREY);
         gc.fillRect(drawPosition.getX(), drawPosition.getY(), healthBarWidth, healthBarHeight);
 
-        gc.setFill(Color.GREEN);
+        gc.setFill(Color.RED);
         gc.fillRect(drawPosition.getX(), drawPosition.getY(), healthBarWidth, healthBarHeight);
 
         return healthCanvas;
@@ -48,7 +48,7 @@ public class HealthBar implements IGraphicsService {
                 HealthCP healthCP = (HealthCP) entity.getComponent(EntityComponentTypes.HEALTH);
                 double healthRatio = healthCP.getHealth() / healthCP.getMaxHealth();
 
-                gc.setFill(Color.GREEN);
+                gc.setFill(Color.RED);
                 gc.fillRect(drawPosition.getX(), drawPosition.getY(), healthBarWidth * healthRatio, healthBarHeight);
             }
         }

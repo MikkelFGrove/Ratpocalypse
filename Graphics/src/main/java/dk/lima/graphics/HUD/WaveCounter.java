@@ -16,7 +16,7 @@ public class WaveCounter implements IGraphicsService {
 
     @Override
     public Node createComponent(GameData gameData, World world) {
-        waveText = new Text(6, 66, "Wave: 0");
+        waveText = new Text(8, 66, "Wave: 0");
         waveText.setFont(new Font("Arial", 18));
         waveText.setFill(Color.BLACK);
         return waveText;
