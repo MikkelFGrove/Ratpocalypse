@@ -60,6 +60,7 @@ public class PlayerPlugin implements IGamePluginService {
                 }
                 case HEALTH -> {
                     HealthCP healthCP = (HealthCP) component;
+                    healthCP.setEntity(playerModel);
                     healthCP.setMaxHealth(100);
                     healthCP.setHealth(100);
                     playerModel.addComponent(healthCP);

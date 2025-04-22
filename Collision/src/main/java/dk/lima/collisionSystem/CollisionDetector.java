@@ -6,6 +6,8 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.DamageCP;
+import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IPostEntityProcessingService;
 
@@ -52,8 +54,23 @@ public class CollisionDetector implements IPostEntityProcessingService {
                         gameData.setScore(gameData.getScore() + 1);
                     }
 
-                    world.removeEntity(e);
-                    world.removeEntity(e2);
+                    if (e.getComponent(EntityComponentTypes.HEALTH) == null) {
+                        world.removeEntity(e);
+                    } else if (e2.getComponent(EntityComponentTypes.HEALTH) == null) {
+                        world.removeEntity(e2);
+                    }
+
+                    if ((e.getComponent(EntityComponentTypes.HEALTH) != null) & (e2.getComponent(EntityComponentTypes.DAMAGE) != null)) {
+                        HealthCP healthCP = (HealthCP) e.getComponent(EntityComponentTypes.HEALTH);
+                        DamageCP damageCP2 = (DamageCP) e2.getComponent(EntityComponentTypes.DAMAGE);
+                        healthCP.subtractHealth(damageCP2.getAttackDamage());
+                    }
+
+                    if ((e2.getComponent(EntityComponentTypes.HEALTH) != null) & (e.getComponent(EntityComponentTypes.DAMAGE) != null)) {
+                        HealthCP healthCP2 = (HealthCP) e2.getComponent(EntityComponentTypes.HEALTH);
+                        DamageCP damageCP = (DamageCP) e.getComponent(EntityComponentTypes.DAMAGE);
+                        healthCP2.subtractHealth(damageCP.getAttackDamage());
+                    }
                 }
             }
         }

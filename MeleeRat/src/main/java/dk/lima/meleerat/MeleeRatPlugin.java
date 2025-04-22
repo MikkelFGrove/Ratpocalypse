@@ -71,6 +71,7 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case HEALTH -> {
                     HealthCP healthCP = (HealthCP) component;
+                    healthCP.setEntity(enemy);
                     healthCP.setMaxHealth(50);
                     healthCP.setHealth(50);
                     enemy.addComponent(healthCP);
