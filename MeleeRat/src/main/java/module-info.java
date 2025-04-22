@@ -9,6 +9,7 @@ module MeleeRat {
     requires CommonEntityCP;
     requires CommonEnemy;
     requires CommonWeapon;
+    requires CommonPathfinding;
 
     provides IGamePluginService with MeleeRatPlugin;
     provides IEntityProcessingService with MeleeRatProcessor;

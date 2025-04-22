@@ -9,8 +9,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>dk.sdu.cbse</groupId>
-    <artifactId>RangedRat</artifactId>
+    <artifactId>Companion</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -26,13 +25,7 @@
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
-            <artifactId>CommonEnemy</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>dk.lima</groupId>
-            <artifactId>CommonWeapon</artifactId>
+            <artifactId>Common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
@@ -40,11 +33,19 @@
             <groupId>dk.lima</groupId>
             <artifactId>CommonEntityCP</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
-            <artifactId>CommonPathfinding</artifactId>
+            <artifactId>CommonEntityCP</artifactId>
             <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>dk.sdu.cbse</groupId>
+            <artifactId>MeleeRat</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -62,7 +62,7 @@ public class StartMenu implements IMenu {
         //</editor-fold>
 
         //<editor-fold desc="Mouse Text">
-        Text mouseText = new Text("Use mouse to aim\nUse spacebar or mb1 to shoot");
+        Text mouseText = new Text("Use mouse to aim\nShoot (Spacebar or Left Mouse Button)");
         mouseText.setFont(new Font("Arial", 25));
         mouseText.setTextAlignment(TextAlignment.CENTER);
         mouseText.setFill(Color.WHITE);
@@ -70,6 +70,7 @@ public class StartMenu implements IMenu {
         mouseText.setX((gameData.getDisplayWidth() - mouseText.getLayoutBounds().getWidth()) / 2);
         mouseText.setY((gameData.getDisplayHeight() - mouseText.getLayoutBounds().getHeight()) / 2 + 30);
         //</editor-fold>
+
         //<editor-fold desc="Help Button">
         Button helpButton = new Button("HELP ME!");
         int helpButtonWidth = 120;

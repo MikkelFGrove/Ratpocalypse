@@ -8,6 +8,7 @@ module RangedRat {
     requires Common;
     requires CommonEnemy;
     requires CommonWeapon;
+    requires CommonPathfinding;
     requires CommonEntityCP;
     provides IGamePluginService with RangedRatPlugin;
     provides IEntityProcessingService with RangedRatProcessor;
