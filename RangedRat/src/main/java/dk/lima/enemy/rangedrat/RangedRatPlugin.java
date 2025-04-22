@@ -34,7 +34,6 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
         RangedRat enemy = new RangedRat();
         enemy.setEntityType(EEntityTypes.ENEMY);
         Random rnd = new Random();
-        int scalingFactor = 6;
 
         String[] pathsToSprites = {"soldier_rat.png"};
 
@@ -60,7 +59,7 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                     TransformCP transformCP = (TransformCP) component;
                     transformCP.setCoord(new Coordinate(x, y));
                     transformCP.setRotation(rnd.nextInt(90));
-                    transformCP.setSize(2 * scalingFactor);
+                    transformCP.setSize(15);
                     enemy.addComponent(transformCP);
                 }
                 case WEAPON -> {
@@ -73,8 +72,15 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case HEALTH -> {
                     HealthCP healthCP = (HealthCP) component;
+                    healthCP.setEntity(enemy);
+                    healthCP.setMaxHealth(50);
                     healthCP.setHealth(50);
                     enemy.addComponent(healthCP);
+                }
+                case DAMAGE -> {
+                    DamageCP damageCP = (DamageCP) component;
+                    damageCP.setAttackDamage(0.25);
+                    enemy.addComponent(damageCP);
                 }
             }
         }
