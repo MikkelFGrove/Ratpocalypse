@@ -78,7 +78,7 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case DAMAGE -> {
                     DamageCP damageCP = (DamageCP) component;
-                    damageCP.setAttackDamage(50);
+                    damageCP.setAttackDamage(1);
                     enemy.addComponent(damageCP);
                 }
             }
