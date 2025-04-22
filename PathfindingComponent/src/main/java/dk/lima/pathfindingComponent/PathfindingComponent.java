@@ -19,6 +19,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     // Value specifying how long the player has to move from the calculated path to calculate a new path
     private double goalRadius = 0.65;
     private Coordinate target;
+    private double length = 1;
 
     public PathfindingComponent() {
     }
@@ -41,6 +42,11 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         this.target = target;
     }
 
+    @Override
+    public void setLength(double length) {
+        this.length = length;
+    }
+
     public void process(GameData gameData, World world) {
         if (target == null){
             return;
@@ -60,7 +66,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
             nextStep = path[stepsTaken];
         }
 
-        Coordinate calculatedStep = calculateStraightLineStep(coord, nextStep, 1);
+        Coordinate calculatedStep = calculateStraightLineStep(coord, nextStep, length);
 
         // We use the coordinates of the player to angle the enemy
         double yDiff = target.getY() - coord.getY();
@@ -69,7 +75,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         //double xDiff = calculatedStep.getX() - coord.getX();
         double angle = Math.toDegrees(Math.atan2(yDiff, xDiff));
 
-        if (calculatedStep.equals(nextStep)) {
+        if (calculatedStep.approxEquals(nextStep)) {
             stepsTaken++;
         }
 
@@ -78,7 +84,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     }
 
     private Coordinate calculateStraightLineStep(Coordinate start, Coordinate goal, double length) {
-        if (start.equals(goal)) {
+        if (start.approxEquals(goal)) {
             return start;
         }
 
@@ -103,7 +109,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
                 continue; // Skip if already visited
             }
             visited.add(currentNode.getCoordinates());
-            if (currentNode.getCoordinates().equals(goal)) {
+            if (currentNode.getCoordinates().approxEquals(goal)) {
                 // Return the next steps coordinates.
                 List<Node> path = currentNode.getPath(); // already reversed (start to goal)
                 Coordinate[] coordinates = new Coordinate[path.size()];

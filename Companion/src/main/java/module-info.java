@@ -6,6 +6,7 @@ import dk.lima.companion.CompanionProcessor;
 module Companion {
     requires Common;
     requires CommonEntityCP;
+    requires CommonPathfinding;
 
     provides IGamePluginService with CompanionPlugin;
     provides IEntityProcessingService with CompanionProcessor;
