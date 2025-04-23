@@ -23,6 +23,10 @@ public class CollisionDetector implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (Entity e : world.getEntities()) {
 
+            if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
+                continue;
+            }
+
             TransformCP eTransformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
             if (eTransformCP == null) {
                 continue;
@@ -36,12 +40,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
 
                 // If E1 is invincible and E2 is a bullet, skip collision
-                if (invincibleTypes.contains(e.getEntityType()) && e2.getEntityType() == EEntityTypes.BULLET) {
+                if (e2.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e.getEntityType())) {
                     continue;
                 }
 
                 // If E2 is invincible and E1 is a bullet, skip collision
-                if (invincibleTypes.contains(e2.getEntityType()) && e.getEntityType() == EEntityTypes.BULLET) {
+                if (e.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e2.getEntityType())) {
                     continue;
                 }
 
