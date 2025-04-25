@@ -19,7 +19,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     // Value specifying how long the player has to move from the calculated path to calculate a new path
     private double goalRadius = 0.65;
     private Coordinate target;
-    private double length = 1.35;
+    private double length = 1.75;
 
     public PathfindingComponent() {
     }
