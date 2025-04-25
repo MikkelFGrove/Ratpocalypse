@@ -5,9 +5,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.graphics.IMenu;
 import dk.lima.common.input.IInputSPI;
-import dk.lima.common.services.IEntityProcessingService;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.common.services.IPostEntityProcessingService;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -16,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class Main extends Application {
@@ -23,6 +24,7 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Pane gameWindow = new Pane();
+    private static ScheduledExecutorService physicsExecutor;
     private List<IGraphicsService> graphicsServices;
     private List <IMenu> menuComponents;
 
@@ -49,11 +51,23 @@ public class Main extends Application {
             iGamePlugin.start(gameData, world);
         }
 
-        render();
+        physicsExecutor = Executors.newSingleThreadScheduledExecutor(r -> {
+            Thread t = Executors.defaultThreadFactory().newThread(r);
+            t.setDaemon(true);
+            return t;
+        });
+
+        startGame();
         window.setResizable(false);
         window.setScene(scene);
         window.setTitle("Ratpocalypse");
         window.show();
+    }
+
+    private void startGame() {
+        // Tickrate : 100Hz or 100 updates per frame
+        physicsExecutor.scheduleAtFixedRate(new PhysicsTask(gameData, world), 0, 10, TimeUnit.MILLISECONDS);
+        render();
     }
 
     private void render() {
@@ -61,21 +75,9 @@ public class Main extends Application {
             @Override
             public void handle(long now) {
                 gameData.getInputs().update();
-                if (gameData.isGameRunning()){
-                    update();
-                }
                 updateGraphics();
             }
         }.start();
-    }
-
-    private void update() {
-        for (IEntityProcessingService entityProcessorService : ModuleConfig.getEntityProcessingServices()) {
-            entityProcessorService.process(gameData, world);
-        }
-        for (IPostEntityProcessingService postEntityProcessorService : ModuleConfig.getPostEntityProcessingServices()) {
-            postEntityProcessorService.process(gameData, world);
-        }
     }
 
     private void updateGraphics() {
