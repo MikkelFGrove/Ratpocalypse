@@ -24,7 +24,7 @@ public class Main extends Application {
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Pane gameWindow = new Pane();
-    private static ScheduledExecutorService physicsExecutor;
+    private ScheduledExecutorService physicsExecutor;
     private List<IGraphicsService> graphicsServices;
     private List <IMenu> menuComponents;
 
