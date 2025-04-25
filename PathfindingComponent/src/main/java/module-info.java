@@ -4,5 +4,6 @@ import dk.lima.common.entity.IEntityComponent;
 module PathfindingComponent {
     requires Common;
     requires CommonEntityCP;
+    requires CommonPathfinding;
     provides IEntityComponent with PathfindingComponent;
 }

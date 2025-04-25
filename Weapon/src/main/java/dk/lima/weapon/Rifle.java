@@ -14,8 +14,9 @@ import java.util.ServiceLoader;
 import static java.util.stream.Collectors.toList;
 
 public class Rifle implements IWeaponSPI{
-    final double fireRate = 100;
+    private final double fireRate = 100;
     private long lastShot = 0;
+    private final double attackDamage = 20;
 
     private Collection<? extends IBulletSPI> getBulletSpi() {
         return ServiceLoader.load(IBulletSPI.class).stream().map(ServiceLoader.Provider::get).collect(toList());
@@ -30,7 +31,7 @@ public class Rifle implements IWeaponSPI{
             double rotation = transformCP.getRotation();
             double radius = transformCP.getSize();
             Coordinate coord = transformCP.getCoord();
-            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(coord.getX(),coord.getY(),rotation,radius));});
+            getBulletSpi().stream().findFirst().ifPresent(bulletSpi -> {world.addEntity(bulletSpi.createBullet(coord.getX(),coord.getY(),rotation,radius,attackDamage));});
             lastShot = System.currentTimeMillis();
         }
     }

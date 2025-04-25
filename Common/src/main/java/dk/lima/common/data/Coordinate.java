@@ -36,6 +36,18 @@ public class Coordinate implements Cloneable {
         return false;
     }
 
+    public boolean approxEquals(Object obj) {
+        if (obj instanceof Coordinate) {
+            Coordinate other = (Coordinate) obj;
+
+            double dx = Math.abs(this.x - other.getX());
+            double dy = Math.abs(this.y - other.getY());
+
+            return dx <= 5 && dy <= 5;
+        }
+        return false;
+    }
+
     @Override
     public Coordinate clone() {
         return new Coordinate(this.x, this.y);

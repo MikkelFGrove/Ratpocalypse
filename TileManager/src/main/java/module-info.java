@@ -5,6 +5,5 @@ module TileManager {
     requires Common;
     requires CommonGraphics;
     requires javafx.graphics;
-
     provides IGraphicsService with TileManager;
 }

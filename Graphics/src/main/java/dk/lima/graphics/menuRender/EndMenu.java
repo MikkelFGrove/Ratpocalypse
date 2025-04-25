@@ -6,7 +6,9 @@ import dk.lima.common.data.World;
 import dk.lima.common.graphics.IMenu;
 import dk.lima.common.graphics.MenuType;
 import dk.lima.common.services.IGamePluginService;
-import javafx.application.Platform;
+import dk.lima.graphics.menuRender.menuComponent.backToMenuButton;
+import dk.lima.graphics.menuRender.menuComponent.exitButton;
+import dk.lima.graphics.menuRender.menuComponent.retryButton;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -49,7 +51,6 @@ public class EndMenu implements IMenu {
         text.setX((gameData.getDisplayWidth() - text.getLayoutBounds().getWidth()) / 2);
         text.setY(150);
         text.setFill(Color.WHITE);
-        Button retryButton = new Button("Try Again");
 
         currentscoreLabel = new Text("Your current score: " + gameData.getScore());
         currentscoreLabel.setFont(new Font("Impact", 35));
@@ -66,118 +67,13 @@ public class EndMenu implements IMenu {
         highscoreLabel.setFill(Color.WHITE);
 
         //Reset Button
-        retryButton.setPrefWidth(250);
-        retryButton.setPrefHeight(70);
-        retryButton.setStyle("-fx-background-color: #AA5500; -fx-border-color: #FFAA00; -fx-border-width: 3px;");
-        retryButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        retryButton.setTextFill(Color.WHITE);
-
-        retryButton.setOnMouseEntered( e-> {
-            retryButton.setScaleX(1.03);
-            retryButton.setScaleY(1.04);
-            retryButton.setStyle("-fx-background-color: #CC7700; -fx-border-color: #FFDD55; -fx-border-width: 3px;");
-            retryButton.setCursor(Cursor.HAND);
-        });
-
-        retryButton.setOnMouseExited(e -> {
-            retryButton.setScaleX(1.0);
-            retryButton.setScaleY(1.0);
-            retryButton.setStyle("-fx-background-color: #AA5500; -fx-border-color: #FFAA00; -fx-border-width: 3px;");
-        });
-
-        retryButton.widthProperty().addListener((obs, oldVal, newVal) ->
-                retryButton.setLayoutX((gameData.getDisplayWidth() - newVal.doubleValue()) / 2)
-        );
-        retryButton.heightProperty().addListener((obs, oldVal, newVal) ->
-                retryButton.setLayoutY((gameData.getDisplayHeight() - newVal.doubleValue()) / 2 + 250)
-        );
-
-        retryButton.setOnAction(e -> {
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.stop(gameData, world);
-            }
-
-            gameData.setScore(0);
-            gameData.setDuration(Duration.ZERO);
-            world.getEntities().clear();
-            world.setPlayerPosition(new Coordinate(0,0));
-
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.start(gameData, world);
-            }
-
-            gameData.setGameRunning(true);
-            endMenuPane.setVisible(false);
-        });
+        Button retryButton = new retryButton(endMenuPane, world, gameData, "Try again!");
 
         //Exit to menu button
-        Button backToMenuButton = new Button("Back To Menu!");
-        backToMenuButton.setPrefWidth(250);
-        backToMenuButton.setPrefHeight(70);
-        backToMenuButton.setStyle("-fx-background-color: #333333; -fx-border-color: #555555; -fx-border-width: 3px;");
-        backToMenuButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        backToMenuButton.setTextFill(Color.WHITE);
-
-        backToMenuButton.setOnMouseEntered(e -> {
-            backToMenuButton.setScaleX(1.03);
-            backToMenuButton.setScaleY(1.04);
-            backToMenuButton.setStyle("-fx-background-color: #444444; -fx-border-color: #666666; -fx-border-width: 3px;");
-            backToMenuButton.setCursor(Cursor.HAND);
-        });
-
-        backToMenuButton.setOnMouseExited(e -> {
-            backToMenuButton.setScaleX(1.0);
-            backToMenuButton.setScaleY(1.0);
-            backToMenuButton.setStyle("-fx-background-color: #333333; -fx-border-color: #555555; -fx-border-width: 3px;");
-        });
-
-
-        backToMenuButton.setOnAction(e -> {
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.stop(gameData, world);
-            }
-
-            gameData.setScore(0);
-            gameData.setDuration(Duration.ZERO);
-            world.getEntities().clear();
-            world.setPlayerPosition(new Coordinate(0, 0));
-
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.start(gameData, world);
-            }
-
-            gameData.setGameRunning(false);
-            StartMenu startMenu = new StartMenu();
-            startMenu.showComponent(true);
-            endMenuPane.setVisible(false);
-        });
-
+        Button backToMenuButton = new backToMenuButton(endMenuPane,world, gameData, "Back To Menu!");
 
         // Exit Button
-        Button exitButton = new Button("Exit");
-        exitButton.setPrefWidth(250);
-        exitButton.setPrefHeight(70);
-        exitButton.setStyle("-fx-background-color: #550000; -fx-border-color: #ff0000; -fx-border-width: 3px;");
-        exitButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        exitButton.setTextFill(Color.WHITE);
-
-        exitButton.setOnMouseEntered(e -> {
-            exitButton.setScaleX(1.03);
-            exitButton.setScaleY(1.04);
-            exitButton.setStyle("-fx-background-color: #770000; -fx-border-color: #ff5555; -fx-border-width: 3px;");
-            exitButton.setCursor(Cursor.HAND);
-        });
-
-        exitButton.setOnMouseExited(e -> {
-            exitButton.setScaleX(1.0);
-            exitButton.setScaleY(1.0);
-            exitButton.setStyle("-fx-background-color: #550000; -fx-border-color: #ff0000; -fx-border-width: 3px;");
-        });
-
-
-        exitButton.setOnAction(e -> {
-            Platform.exit();
-        });
+        Button exitButton = new exitButton(endMenuPane, world, gameData,"Exit");
 
         //Button allignment
         VBox buttonBox = new VBox(20);

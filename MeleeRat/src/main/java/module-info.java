@@ -7,6 +7,7 @@ import dk.lima.meleerat.MeleeRatProcessor;
 module MeleeRat {
     requires Common;
     requires CommonEntityCP;
+    requires CommonPathfinding;
     requires CommonEnemy;
     requires CommonWeapon;
 

@@ -8,9 +8,7 @@ import dk.lima.common.data.World;
 import dk.lima.common.enemy.IEnemy;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.ShapeCP;
-import dk.lima.common.entitycomponents.SpriteCP;
-import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entitycomponents.*;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 
@@ -22,12 +20,7 @@ import static java.util.stream.Collectors.toList;
 
 public class MeleeRatPlugin implements IGamePluginService, IEnemy {
     @Override
-    public void start(GameData gameData, World world) {
-        for (int i = 0; i < 3; i++) {
-            Entity enemy = createEnemy(gameData, world);
-            world.addEntity(enemy);
-        }
-    }
+    public void start(GameData gameData, World world) {}
 
     @Override
     public void stop(GameData gameData, World world) {
@@ -70,6 +63,18 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                     transformCP.setSize(2 * scalingFactor);
                     transformCP.setEntity(enemy);
                     enemy.addComponent(transformCP);
+                }
+                case HEALTH -> {
+                    HealthCP healthCP = (HealthCP) component;
+                    healthCP.setEntity(enemy);
+                    healthCP.setMaxHealth(50);
+                    healthCP.setHealth(50);
+                    enemy.addComponent(healthCP);
+                }
+                case DAMAGE -> {
+                    DamageCP damageCP = (DamageCP) component;
+                    damageCP.setAttackDamage(0.5);
+                    enemy.addComponent(damageCP);
                 }
             }
         }

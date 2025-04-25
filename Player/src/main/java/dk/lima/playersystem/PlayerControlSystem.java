@@ -3,6 +3,7 @@ package dk.lima.playersystem;
 import dk.lima.common.data.*;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IEntityProcessingService;
@@ -44,6 +45,9 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
             weaponCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
             weaponCP.process(gameData, world);
+
+            HealthCP healthCP = (HealthCP) player.getComponent(EntityComponentTypes.HEALTH);
+            healthCP.process(gameData, world);
         }
     }
 }

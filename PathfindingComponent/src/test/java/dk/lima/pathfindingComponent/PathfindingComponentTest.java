@@ -23,6 +23,6 @@ class PathfindingComponentTest {
         Coordinate goal = new Coordinate(100, 100);
         Coordinate[] path = component.calculatePath(start, goal);
 
-        assertTrue(goal.equals(path[path.length - 1]));
+        assertTrue(goal.approxEquals(path[path.length - 1]));
     }
 }

@@ -5,6 +5,8 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entitycomponents.DamageCP;
+import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IGamePluginService;
@@ -25,7 +27,7 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
     }
 
     @Override
-    public Bullet createBullet(double x, double y, double rotation, double radius) {
+    public Bullet createBullet(double x, double y, double rotation, double radius, double attackDamage) {
         Bullet bullet = new Bullet();
         bullet.setEntityType(EEntityTypes.BULLET);
         double size = 1.5;
@@ -46,6 +48,10 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
                 new int[]{0,0,0}
 
         ));
+
+        DamageCP damageCP = new DamageCP();
+        damageCP.setAttackDamage(attackDamage);
+        bullet.addComponent(damageCP);
 
         return bullet;
     }
