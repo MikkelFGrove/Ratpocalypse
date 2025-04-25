@@ -9,6 +9,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 
 public class WaveCounter implements IGraphicsService {
@@ -16,8 +17,9 @@ public class WaveCounter implements IGraphicsService {
 
     @Override
     public Node createComponent(GameData gameData, World world) {
-        waveText = new Text(400, 22, "Wave: 0");
+        waveText = new Text(gameData.getDisplayWidth() / 2d - 45, 22, "Wave: 0");
         waveText.setFont(new Font("Arial", 25));
+        waveText.setTextAlignment(TextAlignment.CENTER);
         waveText.setFill(Color.BLACK);
         return waveText;
     }
