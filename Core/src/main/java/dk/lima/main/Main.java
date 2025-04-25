@@ -65,8 +65,14 @@ public class Main extends Application {
     }
 
     private void startGame() {
-        // Tickrate : 100Hz or 100 updates per frame
-        physicsExecutor.scheduleAtFixedRate(new PhysicsTask(gameData, world), 0, 10, TimeUnit.MILLISECONDS);
+        // Tickrate : 100Hz or 100 updates per frame. 10 milliseconds
+        // physicsExecutor.scheduleAtFixedRate(new PhysicsTask(gameData, world), 0, 10, TimeUnit.MILLISECONDS);
+        // Tickrate: 60Hz or 60 updates per frame. ~16,67 milliseconds
+        physicsExecutor.scheduleAtFixedRate(new PhysicsTask(gameData, world), 0, 16666, TimeUnit.MICROSECONDS);
+        //Tickrate: 90Hz or 90 updates per frame. ~11,11 milliseconds
+        //physicsExecutor.scheduleAtFixedRate(new PhysicsTask(gameData, world), 0, 11111, TimeUnit.MICROSECONDS);
+        //Tickrate: 180Hz or 180 updates per frame. ~5,56 milliseconds
+        //physicsExecutor.scheduleAtFixedRate(new PhysicsTask(gameData, world), 0, 5555, TimeUnit.MICROSECONDS);
         render();
     }
 
