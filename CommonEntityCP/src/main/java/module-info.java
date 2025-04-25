@@ -17,7 +17,6 @@ module CommonEntityCP {
             WeaponCP,
             SpriteCP,
             HealthCP,
-            CollisionCP,
             DamageCP;
 }
 

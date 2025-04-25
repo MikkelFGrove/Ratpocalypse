@@ -7,7 +7,6 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.DamageCP;
 import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entity.EntityComponentTypes;

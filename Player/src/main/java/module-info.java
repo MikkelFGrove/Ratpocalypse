@@ -16,5 +16,5 @@ module Player {
 
     uses IWeaponSPI;
     uses IEntityComponent;
-    uses dk.lima.common.entity.IEntityComponent;
+
 }

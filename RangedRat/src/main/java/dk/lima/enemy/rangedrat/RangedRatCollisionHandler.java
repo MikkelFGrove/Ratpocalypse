@@ -4,6 +4,8 @@ import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.DamageCP;
+import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.ICollisionHandler;
 
 public class RangedRatCollisionHandler implements ICollisionHandler {
@@ -26,6 +28,10 @@ public class RangedRatCollisionHandler implements ICollisionHandler {
 
     @Override
     public void onCollide(Entity other, World world) {
-        world.removeEntity(entity);
+        if ((entity.getComponent(EntityComponentTypes.HEALTH) != null) & (other.getComponent(EntityComponentTypes.DAMAGE) != null)) {
+            HealthCP healthCP = (HealthCP) entity.getComponent(EntityComponentTypes.HEALTH);
+            DamageCP damageCP2 = (DamageCP) other.getComponent(EntityComponentTypes.DAMAGE);
+            healthCP.subtractHealth(damageCP2.getAttackDamage());
+        }
     }
 }

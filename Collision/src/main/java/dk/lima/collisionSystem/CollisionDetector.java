@@ -1,13 +1,13 @@
 package dk.lima.collisionSystem;
 
 import dk.lima.common.data.Coordinate;
+import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.DamageCP;
 import dk.lima.common.entitycomponents.HealthCP;
-import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.ICollisionHandler;
 import dk.lima.common.services.IPostEntityProcessingService;
@@ -68,9 +68,17 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
                 if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
+                    System.out.println("e" + e);
+                    System.out.println("e2" + e2);
+                    System.out.println("e get collision: " + e.getComponent(EntityComponentTypes.COLLISION));
                    if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
+                       System.out.println("Collision Detected");
                        ((ICollisionHandler) e.getComponent(EntityComponentTypes.COLLISION)).onCollide(e2, world);
+                       System.out.println("Collision Handled");
                    }
+                    if (e2.getComponent(EntityComponentTypes.COLLISION) != null) {
+                        ((ICollisionHandler) e2.getComponent(EntityComponentTypes.COLLISION)).onCollide(e, world);
+                    }
                     // Increase score if an enemy is shot
                     if (!gameData.isTimeScoring() && ((e.getEntityType() == EEntityTypes.BULLET && e2.getEntityType() == EEntityTypes.ENEMY) || (e.getEntityType() == EEntityTypes.ENEMY && e2.getEntityType() == EEntityTypes.BULLET))) {
                         gameData.setScore(gameData.getScore() + 1);
@@ -93,9 +101,7 @@ public class CollisionDetector implements IPostEntityProcessingService {
                         DamageCP damageCP = (DamageCP) e.getComponent(EntityComponentTypes.DAMAGE);
                         healthCP2.subtractHealth(damageCP.getAttackDamage());
                     }
-                   if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
-                       ((ICollisionHandler) e2.getComponent(EntityComponentTypes.COLLISION)).onCollide(e, world);
-                   }
+
                 }
             }
         }

@@ -67,9 +67,6 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                     transformCP.setEntity(enemy);
                     enemy.addComponent(transformCP);
                 }
-                case COLLISION -> {
-                    enemy.addComponent(new CollisionCP(enemy));
-                }
                 case HEALTH -> {
                     HealthCP healthCP = (HealthCP) component;
                     healthCP.setEntity(enemy);
