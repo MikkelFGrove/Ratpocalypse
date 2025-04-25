@@ -111,11 +111,11 @@ public class WorldGenerator implements IGamePluginService {
 
     }
 
-    public static Collection<? extends IEntityComponent> getEntityComponents() {
+    private static Collection<? extends IEntityComponent> getEntityComponents() {
         return ServiceLoader.load(IEntityComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
     }
 
-    public int[][] loadMap(String map) {
+    private int[][] loadMap(String map) {
         int[][] tileMap = new int[maxWorldCol][maxWorldRow];
 
         try (InputStream inputStream = getClass().getResourceAsStream(map);
