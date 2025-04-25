@@ -36,7 +36,6 @@ public class PlayerPlugin implements IGamePluginService {
         String[] pathsToSprites = {"player.png"};
         
         playerModel.getComponent(EntityComponentTypes.COLLISION).setEntity(playerModel);
-        playerModel.addComponent(new PlayerCollisionHandler());
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case SPRITE -> {
@@ -71,6 +70,7 @@ public class PlayerPlugin implements IGamePluginService {
                 }
             }
         }
+        playerModel.addComponent(new PlayerCollisionHandler());
         return playerModel;
     }
 

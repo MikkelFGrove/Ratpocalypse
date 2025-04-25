@@ -10,6 +10,8 @@ import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.CollisionCP;
 import dk.lima.common.entitycomponents.DamageCP;
 import dk.lima.common.entitycomponents.HealthCP;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.ShapeCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.services.IGamePluginService;
