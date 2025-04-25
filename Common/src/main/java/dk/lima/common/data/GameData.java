@@ -22,7 +22,7 @@ public class GameData {
     private boolean timeScoring = false;
     private int currentWave = 0;
 
-    public GameInputs getInputs() {
+    public synchronized GameInputs getInputs() {
         return inputs;
     }
 
@@ -75,11 +75,11 @@ public class GameData {
         return score;
     }
 
-    public int getHighscore() {
+    public synchronized int getHighscore() {
         return highscore;
     }
 
-    public void setHighscore(int highscore) {
+    public synchronized void setHighscore(int highscore) {
         this.highscore = highscore;
     }
 
@@ -91,23 +91,23 @@ public class GameData {
         this.score += score;
     }
 
-    public int getCurrentWave() {
+    public synchronized int getCurrentWave() {
         return currentWave;
     }
 
-    public void setCurrentWave(int currentWave) {
+    public synchronized void setCurrentWave(int currentWave) {
         this.currentWave = currentWave;
     }
 
-    public void incrementWave() {
+    public synchronized void incrementWave() {
         currentWave++;
     }
 
-    public Coordinate getMousePosition() {
+    public synchronized Coordinate getMousePosition() {
         return mousePosition;
     }
 
-    public void setMousePosition(Coordinate mousePosition) {
+    public synchronized void setMousePosition(Coordinate mousePosition) {
         this.mousePosition = mousePosition;
     }
 }

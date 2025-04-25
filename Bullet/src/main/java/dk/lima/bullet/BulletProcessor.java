@@ -18,12 +18,13 @@ public class BulletProcessor implements IEntityProcessingService {
 
             double changeX = Math.cos(Math.toRadians(transformCP.getRotation()));
             double changeY = Math.sin(Math.toRadians(transformCP.getRotation()));
+            double velocity = 3.75;
 
-            transformCP.setCoord(new Coordinate(coord.getX() + changeX * 3, coord.getY() + changeY * 3));
+            transformCP.setCoord(new Coordinate(coord.getX() + changeX * velocity, coord.getY() + changeY * velocity));
 
-            if((coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) > gameData.getDisplayWidth() ||
-                    (coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) > gameData.getDisplayHeight() ||
-                    (coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) < 0 ||
+            if((coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) > gameData.getDisplayWidth() |
+                    (coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) > gameData.getDisplayHeight() |
+                    (coord.getX() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) < 0 |
                     (coord.getY() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) < 0) {
                 world.removeEntity(bullet);
             }
