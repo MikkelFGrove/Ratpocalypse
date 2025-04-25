@@ -9,6 +9,7 @@ import dk.lima.common.graphics.MenuType;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.graphics.menuRender.menuComponent.backToMenuButton;
 import dk.lima.graphics.menuRender.menuComponent.exitButton;
+import dk.lima.graphics.menuRender.menuComponent.retryButton;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -78,46 +79,8 @@ public class PauseMenu implements IMenu {
         });
 
         // Reset Button
-        Button resetButton = new Button("Reset");
-        resetButton.setPrefWidth(250);
-        resetButton.setPrefHeight(70);
-        resetButton.setStyle("-fx-background-color: #AA5500; -fx-border-color: #FFAA00; -fx-border-width: 3px;");
-        resetButton.setFont(Font.font("Impact", FontWeight.EXTRA_BOLD, 24));
-        resetButton.setTextFill(Color.WHITE);
+        Button resetButton = new retryButton(pauseMenuPane,world, gameData, ((gameData.getDisplayWidth() - 250) / 2),(resumeButton.getLayoutY() + 90) ,"Reset");
 
-        resetButton.setOnMouseEntered(e -> {
-            resetButton.setScaleX(1.03);
-            resetButton.setScaleY(1.04);
-            resetButton.setStyle("-fx-background-color: #CC7700; -fx-border-color: #FFDD55; -fx-border-width: 3px;");
-            resetButton.setCursor(Cursor.HAND);
-        });
-
-        resetButton.setOnMouseExited(e -> {
-            resetButton.setScaleX(1.0);
-            resetButton.setScaleY(1.0);
-            resetButton.setStyle("-fx-background-color: #AA5500; -fx-border-color: #FFAA00; -fx-border-width: 3px;");
-        });
-
-        resetButton.setLayoutX((gameData.getDisplayWidth() - resetButton.getPrefWidth()) / 2);
-        resetButton.setLayoutY(resumeButton.getLayoutY() + 90);
-
-        resetButton.setOnAction(e -> {
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.stop(gameData, world);
-            }
-
-            gameData.setScore(0);
-            gameData.setDuration(Duration.ZERO);
-            world.getEntities().clear();
-            world.setPlayerPosition(new Coordinate(0, 0));
-
-            for (IGamePluginService plugin : getPluginServices()) {
-                plugin.start(gameData, world);
-            }
-
-            gameData.setGameRunning(true);
-            pauseMenuPane.setVisible(false);
-        });
 
         Button backToMenuButton = new backToMenuButton(pauseMenuPane,
                 world,
