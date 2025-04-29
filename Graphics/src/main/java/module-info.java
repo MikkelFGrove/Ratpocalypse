@@ -1,13 +1,8 @@
 import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.common.services.ITimeTask;
 import dk.lima.graphics.HUD.*;
-import dk.lima.graphics.gameRender.DebugRenderer;
-import dk.lima.graphics.gameRender.EntityRenderer;
-import dk.lima.graphics.gameRender.HealthRenderer;
-import dk.lima.graphics.gameRender.SpriteRenderer;
+import dk.lima.graphics.gameRender.*;
 import dk.lima.graphics.menuRender.*;
-import dk.lima.common.services.IGamePluginService;
 
 module Graphics {
     requires Common;
@@ -24,17 +19,17 @@ module Graphics {
 
 
     provides IGraphicsService with
-            EntityRenderer,
+            ShapeRenderer,
             SpriteRenderer,
             HealthRenderer,
             DebugRenderer,
             ScoreText,
             TimeText,
             HealthBar,
+            WaveCounter,
             StartMenu,
             PauseMenu,
-            EndMenu,
-            WaveCounter;
+            EndMenu;
 }
 
 

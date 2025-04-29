@@ -17,7 +17,7 @@ import javafx.scene.shape.Polygon;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class EntityRenderer implements IGraphicsService {
+public class ShapeRenderer implements IGraphicsService {
     private Pane entityPane;
     private Map<Entity, Polygon> polygons;
 
