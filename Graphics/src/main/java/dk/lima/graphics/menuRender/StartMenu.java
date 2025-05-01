@@ -33,14 +33,14 @@ public class StartMenu implements IMenu {
     public Node createComponent(GameData gameData, World world) {
         startMenuPane = new Pane();
         startMenuPane.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        Image background = new Image("/SplashArtStartScreen.png", gameData.getDisplayWidth() , gameData.getDisplayHeight(), false, false, true);
+        Image background = new Image("/StartScreen_v5.png", gameData.getDisplayWidth() , gameData.getDisplayHeight(), false, false, true);
         //<editor-fold desc="Title Text">
-        Text titleText = new Text("Ratpocalypse");
-        titleText.setFont(new Font("Impact", 120));
-        titleText.setFill(Color.WHITE);
-        titleText.minHeight(200);
-        titleText.setX((gameData.getDisplayWidth() - titleText.getLayoutBounds().getWidth()) / 2);
-        titleText.setY((gameData.getDisplayHeight() - titleText.getLayoutBounds().getHeight()) / 2 - 100);
+        //Text titleText = new Text("Ratpocalypse");
+        //titleText.setFont(new Font("Impact", 120));
+        //titleText.setFill(Color.WHITE);
+        //titleText.minHeight(200);
+        //titleText.setX((gameData.getDisplayWidth() - titleText.getLayoutBounds().getWidth()) / 2);
+        //titleText.setY((gameData.getDisplayHeight() - titleText.getLayoutBounds().getHeight()) / 2 - 100);
         //</editor-fold>
 
         //<editor-fold desc="Help Title">
@@ -182,7 +182,7 @@ public class StartMenu implements IMenu {
 
         backButton.setOnAction(e -> {
             startMenuPane.getChildren().clear();
-            startMenuPane.getChildren().add(titleText);
+            //startMenuPane.getChildren().add(titleText);
             startMenuPane.getChildren().add(startButton);
             startMenuPane.getChildren().add(helpButton);
         });
@@ -203,7 +203,7 @@ public class StartMenu implements IMenu {
 
         startMenuPane.setBackground(new Background(new BackgroundImage(background, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
-        startMenuPane.getChildren().add(titleText);
+        //startMenuPane.getChildren().add(titleText);
         startMenuPane.getChildren().add(startButton);
         startMenuPane.getChildren().add(helpButton);
         return startMenuPane;
