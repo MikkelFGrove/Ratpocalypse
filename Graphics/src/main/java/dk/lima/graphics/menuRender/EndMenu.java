@@ -11,6 +11,7 @@ import dk.lima.graphics.menuRender.menuComponent.exitButton;
 import dk.lima.graphics.menuRender.menuComponent.retryButton;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
@@ -45,14 +46,22 @@ public class EndMenu implements IMenu {
         Image background = new Image("/EndScreen_v2.png", gameData.getDisplayWidth() , gameData.getDisplayHeight(), false, false, true);
         endMenuPane.setBackground(new Background(new BackgroundImage(background, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(4.0);
+        dropShadow.setOffsetY(4.0);
+        dropShadow.setColor(Color.BLACK);
+
         Text text = new Text("You were defeated!");
         text.setFont(new Font("Impact", 50));
+        text.setEffect(dropShadow);
         text.minHeight(25);
         text.setX((gameData.getDisplayWidth() - text.getLayoutBounds().getWidth()) / 2);
-        text.setY(150);
-        text.setFill(Color.WHITE);
+        text.setY(225);
+        text.setFill(Color.RED);
 
         currentscoreLabel = new Text("Your current score: " + gameData.getScore());
+        currentscoreLabel.setEffect(dropShadow);
         currentscoreLabel.setFont(new Font("Impact", 35));
         currentscoreLabel.minHeight(25);
         currentscoreLabel.setX((gameData.getDisplayWidth() - currentscoreLabel.getLayoutBounds().getWidth()) / 2);
@@ -60,6 +69,7 @@ public class EndMenu implements IMenu {
         currentscoreLabel.setFill(Color.WHITE);
 
         highscoreLabel = new Text("Your highscore: " + gameData.getHighscore());
+        highscoreLabel.setEffect(dropShadow);
         highscoreLabel.setFont(new Font("Impact", 35));
         highscoreLabel.minHeight(25);
         highscoreLabel.setX((gameData.getDisplayWidth() - highscoreLabel.getLayoutBounds().getWidth()) / 2);
@@ -78,13 +88,13 @@ public class EndMenu implements IMenu {
         //Button allignment
         VBox buttonBox = new VBox(20);
         buttonBox.setLayoutX((gameData.getDisplayWidth() - retryButton.getPrefWidth()) / 2);
-        buttonBox.setLayoutY(gameData.getDisplayHeight() / 2 + 100);
+        buttonBox.setLayoutY(gameData.getDisplayHeight() / 2d - 5);
         buttonBox.getChildren().addAll(retryButton, backToMenuButton, exitButton);
         VBox scoreBox = new VBox(20);
 
         //Text label allignment
         scoreBox.setPrefWidth(gameData.getDisplayWidth());
-        scoreBox.setLayoutY(280);
+        scoreBox.setLayoutY(260);
         scoreBox.setAlignment(Pos.CENTER);
         scoreBox.getChildren().addAll(currentscoreLabel, highscoreLabel);
 
