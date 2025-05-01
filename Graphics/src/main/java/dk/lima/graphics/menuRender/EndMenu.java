@@ -42,7 +42,7 @@ public class EndMenu implements IMenu {
     public Node createComponent(GameData gameData, World world) {
         endMenuPane = new Pane();
         endMenuPane.setPrefSize(gameData.getDisplayWidth(), gameData.getDisplayHeight());
-        Image background = new Image("/EndScreen.png", gameData.getDisplayWidth() , gameData.getDisplayHeight(), false, false, true);
+        Image background = new Image("/EndScreen_v2.png", gameData.getDisplayWidth() , gameData.getDisplayHeight(), false, false, true);
         endMenuPane.setBackground(new Background(new BackgroundImage(background, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
 
         Text text = new Text("You were defeated!");
