@@ -6,4 +6,6 @@ module PathfindingComponent {
     requires CommonEntityCP;
     requires CommonPathfinding;
     provides IEntityComponent with PathfindingComponent;
+
+    exports dk.lima.pathfindingComponent;
 }

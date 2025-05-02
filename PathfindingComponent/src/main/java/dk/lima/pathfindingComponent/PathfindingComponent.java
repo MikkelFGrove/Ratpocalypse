@@ -33,6 +33,14 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         return EntityComponentTypes.PATHFINDING;
     }
 
+    public Coordinate[] getPath() {
+        return path;
+    }
+
+    public int getStepsTaken() {
+        return stepsTaken;
+    }
+
     public void setEntity(Entity entity) {
         this.entity = entity;
     }
