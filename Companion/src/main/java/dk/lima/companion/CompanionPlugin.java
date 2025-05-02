@@ -34,7 +34,7 @@ public class CompanionPlugin implements IGamePluginService {
         companion.setEntityType(EEntityTypes.COMPANION);
         int scalingFactor = 6;
 
-        String[] pathsToSprites = {"wizard_rat.png"};
+        String[] pathsToSprites = {"turtle.png"};
         double x = world.getPlayerPosition().getX() + 30;
         double y = world.getPlayerPosition().getY() + 30;
 

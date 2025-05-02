@@ -42,7 +42,7 @@ public class HealthBar implements IGraphicsService {
         gc.setFill(Color.RED);
         gc.fillRect(drawPosition.getX() + 26, drawPosition.getY() + 3, healthBarWidth, healthBarHeight);
 
-        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("heart_24.png")),
+        Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("heart_24_v2.png")),
                 20, 20, false, false);
 
         gc.drawImage(image, drawPosition.getX(), drawPosition.getY());
@@ -50,7 +50,6 @@ public class HealthBar implements IGraphicsService {
         gc.setStroke(Color.BLACK);
         gc.setLineWidth(3);
         gc.strokeRect(drawPosition.getX() + 26, drawPosition.getY() + 3, healthBarWidth, healthBarHeight);
-
 
         healthText = new Text(drawPosition.getX() + 100, drawPosition.getY() + 15, "0/0");
         healthText.setFont(new Font("Arial", 14));
@@ -77,11 +76,8 @@ public class HealthBar implements IGraphicsService {
                 gc.setFill(Color.RED);
                 gc.fillRect(drawPosition.getX() + 26, drawPosition.getY() + 3, healthBarWidth * healthRatio, healthBarHeight);
 
-
-                String healthString = (int) healthCP.getHealth() + "/" + (int) healthCP.getMaxHealth();
+                String healthString = String.format("%.0f/%.0f",healthCP.getHealth(),healthCP.getMaxHealth());
                 healthText.setText(healthString);
-                healthText.setFont(new Font("Arial", 14));
-                healthText.setFill(Color.WHITE);
             }
         }
 

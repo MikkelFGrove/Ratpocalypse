@@ -46,8 +46,12 @@ public class HealthRenderer implements IGraphicsService {
                     gc.setFill(Color.GRAY);
                     gc.fillRect(entityCoord.getX() - playerCoord.getX() + gameData.getDisplayWidth() / 2d - healthSize / 2d, entityCoord.getY() - 2 * transformCP.getSize() - playerCoord.getY() + gameData.getDisplayHeight() / 2d, healthSize, 5);
 
-                    gc.setFill(Color.GREEN);
+                    gc.setFill(Color.RED);
                     gc.fillRect(entityCoord.getX() - playerCoord.getX() + gameData.getDisplayWidth() / 2d  - healthSize / 2d, entityCoord.getY() - 2 * transformCP.getSize() - playerCoord.getY() + gameData.getDisplayHeight() / 2d, healthSize * healthRatio, 5);
+
+                    gc.setStroke(Color.BLACK);
+                    gc.setLineWidth(0.25);
+                    gc.strokeRect(entityCoord.getX() - playerCoord.getX() + gameData.getDisplayWidth() / 2d - healthSize / 2d, entityCoord.getY() - 2 * transformCP.getSize() - playerCoord.getY() + gameData.getDisplayHeight() / 2d, healthSize, 5);
                 }
             }
         }
