@@ -23,7 +23,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
             transformCP.setRotation(Math.toDegrees(angle));
 
             Coordinate playerCoord = transformCP.getCoord();
-            double velocity = 1.5;
+            double velocity = 2.5;
             //Checks what input is registered and then either move, rotate or fires a bullet based on that.
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.

@@ -21,7 +21,7 @@ public class TimeText implements IGraphicsService {
     public Node createComponent(GameData gameData, World world) {
         timePane = new Pane();
         try {
-            Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("basic_clock.png")),
+            Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("basic_clock_40_v3.png")),
                     20, 20, false, false);
             ImageView imageView = new ImageView(image);
             imageView.setX(8);

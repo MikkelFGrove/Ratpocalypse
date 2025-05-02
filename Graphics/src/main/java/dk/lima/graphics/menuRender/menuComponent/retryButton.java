@@ -60,6 +60,7 @@ public class retryButton extends Button {
 
             gameData.setCurrentWave(0);
             gameData.setScore(0);
+            gameData.setCurrentWave(0);
             gameData.setDuration(Duration.ZERO);
             world.getEntities().clear();
             world.setPlayerPosition(new Coordinate(0, 0));
