@@ -42,6 +42,9 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
+        enemy.addComponent(new MeleeRatCollisionHandler());
+        enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
+
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case PATHFINDING -> {

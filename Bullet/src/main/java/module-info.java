@@ -5,6 +5,7 @@ import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.bullet.IBulletSPI;
 
 module Bullet {
+    uses dk.lima.common.entity.IEntityComponent;
     requires CommonBullet;
     requires CommonEntityCP;
     requires Common;

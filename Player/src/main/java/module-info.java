@@ -16,4 +16,5 @@ module Player {
 
     uses IWeaponSPI;
     uses IEntityComponent;
+
 }

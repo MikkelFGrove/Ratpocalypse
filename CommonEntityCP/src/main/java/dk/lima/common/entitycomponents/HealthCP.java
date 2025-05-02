@@ -1,5 +1,6 @@
 package dk.lima.common.entitycomponents;
 
+import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
@@ -24,6 +25,9 @@ public class HealthCP implements IEntityComponent {
     @Override
     public void process(GameData gameData, World world) {
         if (isDead()) {
+            if (entity.getEntityType() == EEntityTypes.ENEMY) {
+                gameData.addScore(1);
+            }
             world.removeEntity(entity);
         }
     }
