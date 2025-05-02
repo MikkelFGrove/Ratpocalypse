@@ -40,6 +40,7 @@ public class WorldGenerator implements IGamePluginService {
                     spriteCP.setPathsToSprite(pathsToSprites);
                     spriteCP.setHeight(gameData.tileSize);
                     spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setLayer(0);
                     obstacle.addComponent(spriteCP);
                 }
                 case TRANSFORM -> {

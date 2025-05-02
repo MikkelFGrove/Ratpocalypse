@@ -57,6 +57,7 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                     spriteCP.setWidth(gameData.tileSize);
                     spriteCP.setAmountOfSprites(pathsToSprites.length);
                     spriteCP.setPathsToSprite(pathsToSprites);
+                    spriteCP.setLayer(1);
                     enemy.addComponent(spriteCP);
                 }
                 case TRANSFORM -> {

@@ -12,6 +12,7 @@ import java.util.Objects;
 
 public class SpriteCP implements IEntityComponent {
     private Image image;
+    private int layer = 0;
     private int scale = 1;
     private int width, height;
 
@@ -84,6 +85,14 @@ public class SpriteCP implements IEntityComponent {
         return height;
     }
 
+    public void setLayer(int layer) {
+        this.layer = layer;
+    }
+
+    public int getLayer() {
+        return layer;
+    }
+
     @Override
     public EntityComponentTypes getType() {
         return EntityComponentTypes.SPRITE;
@@ -95,6 +104,5 @@ public class SpriteCP implements IEntityComponent {
 
     @Override
     public void process(GameData gameData, World world) {
-
     }
 }
