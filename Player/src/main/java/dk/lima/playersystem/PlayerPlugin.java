@@ -35,7 +35,6 @@ public class PlayerPlugin implements IGamePluginService {
         String[] pathsToSprites = {"player.png"};
 
         playerModel.addComponent(new PlayerCollisionHandler());
-        System.out.println("entity " + playerModel);
         playerModel.getComponent(EntityComponentTypes.COLLISION).setEntity(playerModel);
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
@@ -71,7 +70,6 @@ public class PlayerPlugin implements IGamePluginService {
                 }
             }
         }
-        playerModel.addComponent(new PlayerCollisionHandler());
         return playerModel;
     }
 

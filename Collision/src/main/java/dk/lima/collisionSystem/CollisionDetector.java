@@ -68,13 +68,8 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
                 if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
-                    System.out.println("e" + e);
-                    System.out.println("e2" + e2);
-                    System.out.println("e get collision: " + e.getComponent(EntityComponentTypes.COLLISION));
                    if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
-                       System.out.println("Collision Detected");
                        ((ICollisionHandler) e.getComponent(EntityComponentTypes.COLLISION)).onCollide(e2, world);
-                       System.out.println("Collision Handled");
                    }
                     if (e2.getComponent(EntityComponentTypes.COLLISION) != null) {
                         ((ICollisionHandler) e2.getComponent(EntityComponentTypes.COLLISION)).onCollide(e, world);

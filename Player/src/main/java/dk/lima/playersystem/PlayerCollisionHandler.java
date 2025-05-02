@@ -12,8 +12,6 @@ public class PlayerCollisionHandler implements ICollisionHandler {
     Entity entity;
     @Override
     public void onCollide(Entity other, World world) {
-        System.out.println("colliding");
-        System.out.println(entity);
         if ((entity.getComponent(EntityComponentTypes.HEALTH) != null) & (other.getComponent(EntityComponentTypes.DAMAGE) != null)) {
             HealthCP healthCP = (HealthCP) entity.getComponent(EntityComponentTypes.HEALTH);
             DamageCP damageCP2 = (DamageCP) other.getComponent(EntityComponentTypes.DAMAGE);
