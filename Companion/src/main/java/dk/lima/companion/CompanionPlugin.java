@@ -46,6 +46,7 @@ public class CompanionPlugin implements IGamePluginService {
                     spriteCP.setWidth(gameData.tileSize);
                     spriteCP.setAmountOfSprites(pathsToSprites.length);
                     spriteCP.setPathsToSprite(pathsToSprites);
+                    spriteCP.setLayer(1);
                     companion.addComponent(spriteCP);
                 }
                 case PATHFINDING -> {

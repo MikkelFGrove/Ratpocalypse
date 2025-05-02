@@ -56,6 +56,7 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                     spriteCP.setPathsToSprite(pathsToSprites);
                     spriteCP.setHeight(gameData.tileSize);
                     spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setLayer(1);
                     enemy.addComponent(spriteCP);
                 }
                 case TRANSFORM -> {
