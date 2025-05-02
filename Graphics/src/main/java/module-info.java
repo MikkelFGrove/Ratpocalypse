@@ -8,6 +8,7 @@ module Graphics {
     requires Common;
     requires CommonGraphics;
     requires CommonPlayer;
+    requires PathfindingComponent;
 
     requires javafx.graphics;
     requires java.desktop;
