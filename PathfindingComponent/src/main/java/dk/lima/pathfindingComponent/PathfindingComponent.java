@@ -106,13 +106,12 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     }
 
     public Coordinate[] calculatePath(Coordinate start, Coordinate goal) {
-        List<Node> fringe = new ArrayList<>();
+        PriorityQueue<Node> fringe = new PriorityQueue<>();
         Set<Coordinate> visited = new HashSet<>();
         Node initialNode = new Node(start);
         fringe.add(initialNode);
         while (!fringe.isEmpty()) {
-            Node currentNode = fringe.getFirst();
-            fringe.removeFirst();
+            Node currentNode = fringe.remove();
             if (visited.contains(currentNode.getCoordinates())) {
                 continue; // Skip if already visited
             }
@@ -140,10 +139,10 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
                 child.setHeuristicCost(heuristic(child.getCoordinates(), goal));
                 fringe.add(child);
             }
-            fringe.sort(null);
-            if (fringe.size() > 5) {
-                fringe.subList(5, fringe.size()).clear();
-            }
+            //fringe.sort(null);
+            /*if (fringe.size() > 25) {
+                fringe.subList(25, fringe.size()).clear();
+            }*/
         }
 
         return new Coordinate[]{start};
