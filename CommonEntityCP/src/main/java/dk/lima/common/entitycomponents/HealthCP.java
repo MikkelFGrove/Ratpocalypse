@@ -32,7 +32,7 @@ public class HealthCP implements IEntityComponent {
         }
     }
 
-    private boolean isDead() {
+    public boolean isDead() {
         return health <= 0;
     }
 
