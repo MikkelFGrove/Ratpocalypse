@@ -15,7 +15,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     private int stepsTaken;
     private Coordinate[] path;
     private Entity entity;
-    private double maxScalingFactor = 48;
+    private double maxStepSize = 48;
     // Value specifying how long the player has to move from the calculated path to calculate a new path
     private double goalRadius = 0.65;
     private Coordinate target;
@@ -129,8 +129,8 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
             Node[] children;
 
             double dist = heuristic(goal, currentNode.getCoordinates());
-            if (dist >= maxScalingFactor) {
-                children = expandNode(currentNode, maxScalingFactor);
+            if (dist >= maxStepSize) {
+                children = expandNode(currentNode, maxStepSize);
             } else {
                 children = expandNode(currentNode, dist);
             }
