@@ -77,6 +77,10 @@ public class HealthBar implements IGraphicsService {
                 gc.fillRect(drawPosition.getX() + 26, drawPosition.getY() + 3, healthBarWidth * healthRatio, healthBarHeight);
 
                 String healthString = String.format("%.0f/%.0f",healthCP.getHealth(),healthCP.getMaxHealth());
+                if (healthCP.isDead()) {
+                    healthString = String.format("0/%.0f",healthCP.getMaxHealth());
+                }
+
                 healthText.setText(healthString);
             }
         }
