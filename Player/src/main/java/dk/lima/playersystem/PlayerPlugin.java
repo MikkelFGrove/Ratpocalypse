@@ -1,6 +1,5 @@
 package dk.lima.playersystem;
 
-import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
@@ -68,6 +67,7 @@ public class PlayerPlugin implements IGamePluginService {
                 }
                 case MOVEMENT -> {
                     MovementCP movementCP = (MovementCP) component;
+                    movementCP.setEntity(playerModel);
                     playerModel.addComponent(movementCP);
                 }
             }
