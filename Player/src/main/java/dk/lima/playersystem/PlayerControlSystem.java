@@ -42,8 +42,7 @@ public class PlayerControlSystem implements IEntityProcessingService {
                 playerCoord.setX(playerCoord.getX() + velocity);
             }
             world.setPlayerPosition(playerCoord);
-
-            weaponCP.setShouldAttack(gameData.getInputs().isDown(EGameInputs.ACTION));
+            
             weaponCP.process(gameData, world);
 
             HealthCP healthCP = (HealthCP) player.getComponent(EntityComponentTypes.HEALTH);
