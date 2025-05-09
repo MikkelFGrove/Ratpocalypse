@@ -6,11 +6,8 @@ import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.EntityComponentTypes;
-import dk.lima.common.entitycomponents.HealthCP;
+import dk.lima.common.entitycomponents.*;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.SpriteCP;
-import dk.lima.common.entitycomponents.TransformCP;
-import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.common.player.Player;
@@ -68,6 +65,10 @@ public class PlayerPlugin implements IGamePluginService {
                     healthCP.setMaxHealth(100);
                     healthCP.setHealth(100);
                     playerModel.addComponent(healthCP);
+                }
+                case MOVEMENT -> {
+                    MovementCP movementCP = (MovementCP) component;
+                    playerModel.addComponent(movementCP);
                 }
             }
         }

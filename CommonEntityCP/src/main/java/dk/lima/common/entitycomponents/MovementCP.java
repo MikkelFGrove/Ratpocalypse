@@ -10,20 +10,21 @@ import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.player.Player;
 
 public class MovementCP implements IEntityComponent {
+
+    Entity entity;
     @Override
     public EntityComponentTypes getType() {
-        return null;
+        return EntityComponentTypes.MOVEMENT;
     }
 
     @Override
     public void setEntity(Entity entity) {
-
+        this.entity = entity;
     }
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity player: world.getEntities(Player.class)) {
-            TransformCP transformCP = (TransformCP) player.getComponent(EntityComponentTypes.TRANSFORM);
+            TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
 
             double x = gameData.getMousePosition().getX() - gameData.getDisplayWidth() / 2d;
             double y = gameData.getMousePosition().getY() - gameData.getDisplayHeight() / 2d;
@@ -50,6 +51,5 @@ public class MovementCP implements IEntityComponent {
                 playerCoord.setX(playerCoord.getX() + velocity);
             }
             world.setPlayerPosition(playerCoord);
-        }
     }
 }

@@ -26,6 +26,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
             healthCP.process(gameData, world);
 
             MovementCP movementCP = (MovementCP) player.getComponent(EntityComponentTypes.MOVEMENT);
+            movementCP.setEntity(player);
+            movementCP.process(gameData, world);
         }
     }
 }
