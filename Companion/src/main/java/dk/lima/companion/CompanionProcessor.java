@@ -20,30 +20,24 @@ public class CompanionProcessor implements IEntityProcessingService {
     public void process(GameData gameData, World world) {
         for (Entity companion : world.getEntities(Companion.class)) {
             for (IEntityComponent component : companion.getComponents()) {
-                if (component instanceof IPathfinding) {
-                    Coordinate companionCoord = new Coordinate(0, 0);
-                    for(IEntityComponent transformComponent : companion.getComponents()){
-                        if(transformComponent.getType() == EntityComponentTypes.TRANSFORM){
-                            companionCoord = ((TransformCP) transformComponent).getCoord();
-                        }
-                    }
+                if (component instanceof IPathfinding pathfindingComponent) {
+                    TransformCP transformCP = (TransformCP) companion.getComponent(EntityComponentTypes.TRANSFORM);
+                    Coordinate companionCoord = transformCP.getCoord();
 
                     int radiusAroundPlayer = 100;
                     Coordinate playerCoord = world.getPlayerPosition();
 
                     double distance = Math.sqrt(
                             Math.pow(companionCoord.getX() - playerCoord.getX(), 2) +
-                                    Math.pow(companionCoord.getY() - playerCoord.getY(), 2)
+                            Math.pow(companionCoord.getY() - playerCoord.getY(), 2)
                     );
 
                     if (distance > radiusAroundPlayer) {
-                        Coordinate coordinate = calculateStraightLineStep(playerCoord, companionCoord, radiusAroundPlayer);
-                        ((IPathfinding) component).setLength(distance / 120);
-                        ((IPathfinding) component).setTarget(coordinate);
+                        pathfindingComponent.setLength(distance / 100);
+                        pathfindingComponent.setTarget(world.getPlayerPosition());
                     } else {
                         if (timeSinceLastUpdate == null ||
-                                gameData.getDuration().minus(timeSinceLastUpdate).compareTo(Duration.ofSeconds(2)) >= 0) {
-
+                            gameData.getDuration().minus(timeSinceLastUpdate).compareTo(Duration.ofSeconds(3)) >= 0) {
 
                             timeSinceLastUpdate = gameData.getDuration();
 
@@ -57,8 +51,9 @@ public class CompanionProcessor implements IEntityProcessingService {
                                     playerCoord.getX() + offsetX,
                                     playerCoord.getY() + offsetY
                             );
-                            ((IPathfinding) component).setLength(0.5);
-                            ((IPathfinding) component).setTarget(randomCoord);
+
+                            pathfindingComponent.setLength(0.75);
+                            pathfindingComponent.setTarget(randomCoord);
                         }
                     }
                 }
