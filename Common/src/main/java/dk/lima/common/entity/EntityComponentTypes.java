@@ -9,5 +9,6 @@ public enum EntityComponentTypes {
     COLLISION,
     DAMAGE,
     HEALTH,
-    BULLET
+    BULLET,
+    MOVEMENT
 }

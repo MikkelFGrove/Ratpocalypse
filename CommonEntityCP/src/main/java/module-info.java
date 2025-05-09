@@ -7,6 +7,7 @@ module CommonEntityCP {
     requires CommonWeapon;
     requires CommonBullet;
     requires javafx.graphics;
+    requires CommonPlayer;
 
     uses IWeaponSPI;
 
@@ -19,7 +20,9 @@ module CommonEntityCP {
             SpriteCP,
             HealthCP,
             DamageCP,
-            BulletCP;
+            BulletCP,
+            MovementCP,
+            DamageCP;
 }
 
 
