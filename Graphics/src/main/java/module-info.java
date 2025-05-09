@@ -20,8 +20,8 @@ module Graphics {
 
 
     provides IGraphicsService with
-            ShapeRenderer,
             SpriteRenderer,
+            ShapeRenderer,
             HealthRenderer,
             DebugRenderer,
             ScoreText,

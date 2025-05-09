@@ -44,6 +44,7 @@ public class PlayerPlugin implements IGamePluginService {
                     spriteCP.setPathsToSprite(pathsToSprites);
                     spriteCP.setHeight(gameData.tileSize);
                     spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setLayer(2);
                     playerModel.addComponent(spriteCP);
                 }
                 case TRANSFORM -> {
