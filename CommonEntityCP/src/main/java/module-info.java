@@ -21,8 +21,7 @@ module CommonEntityCP {
             HealthCP,
             DamageCP,
             BulletCP,
-            MovementCP,
-            DamageCP;
+            MovementCP;
 }
 
 
