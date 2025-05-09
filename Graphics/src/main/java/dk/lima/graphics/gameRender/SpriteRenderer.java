@@ -46,9 +46,17 @@ public class SpriteRenderer implements IGraphicsService {
         TreeMap<Integer, ArrayList<Entity>> layerMap = new TreeMap<>();
         for(Entity entity: world.getEntities()) {
             SpriteCP spriteCP = (SpriteCP) entity.getComponent(EntityComponentTypes.SPRITE);
+            TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
+            Coordinate coord = transformCP.getCoord();
+
             if(spriteCP != null) {
-                layerMap.putIfAbsent(spriteCP.getLayer(), new ArrayList<Entity>());
-                layerMap.get(spriteCP.getLayer()).add(entity);
+                if(!((coord.getX() - transformCP.getSize() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) > gameData.getDisplayWidth() |
+                    (coord.getY() - transformCP.getSize() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) > gameData.getDisplayHeight() |
+                    (coord.getX() + transformCP.getSize() + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX()) < 0 |
+                    (coord.getY() + transformCP.getSize() + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY()) < 0)) {
+                    layerMap.putIfAbsent(spriteCP.getLayer(), new ArrayList<>());
+                    layerMap.get(spriteCP.getLayer()).add(entity);
+                }
             }
         }
 
