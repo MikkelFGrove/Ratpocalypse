@@ -6,6 +6,7 @@ module CommonEntityCP {
     requires Common;
     requires CommonWeapon;
     requires javafx.graphics;
+    requires CommonPlayer;
 
     uses IWeaponSPI;
 
