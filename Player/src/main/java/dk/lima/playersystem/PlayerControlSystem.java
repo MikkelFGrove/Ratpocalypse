@@ -4,6 +4,7 @@ import dk.lima.common.data.*;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.HealthCP;
+import dk.lima.common.entitycomponents.MovementCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IEntityProcessingService;
@@ -23,6 +24,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
 
             HealthCP healthCP = (HealthCP) player.getComponent(EntityComponentTypes.HEALTH);
             healthCP.process(gameData, world);
+
+            MovementCP movementCP = (MovementCP) player.getComponent(EntityComponentTypes.MOVEMENT);
         }
     }
 }
