@@ -15,7 +15,8 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     private int stepsTaken;
     private Coordinate[] path;
     private Entity entity;
-    private double maxScalingFactor = 48;
+    private double maxStepSize = 48;
+    private int[][] map;
     // Value specifying how long the player has to move from the calculated path to calculate a new path
     private double goalRadius = 0.65;
     private Coordinate target;
@@ -60,12 +61,15 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
             return;
         }
 
+        map = world.getTileMap();
+        maxStepSize = gameData.tileSize;
+
         TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
         Coordinate coord = transformCP.getCoord();
         Coordinate nextStep = transformCP.getCoord().clone();
 
         // Calculate new path if path is empty or if player has moved a certain distance from current goal
-        if (path == null || heuristic(path[path.length - 1], target) > goalRadius * heuristic(coord, target)) {
+        if (path == null || (heuristic(path[path.length - 1], target) > goalRadius * heuristic(coord, target) && coordinateIsValid(target))) {
             path = calculatePath(coord, target);
             stepsTaken = 0;
         }
@@ -106,17 +110,11 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
     }
 
     public Coordinate[] calculatePath(Coordinate start, Coordinate goal) {
-        List<Node> fringe = new ArrayList<>();
-        Set<Coordinate> visited = new HashSet<>();
+        TreeSet<Node> fringe = new TreeSet<>();
         Node initialNode = new Node(start);
         fringe.add(initialNode);
         while (!fringe.isEmpty()) {
-            Node currentNode = fringe.getFirst();
-            fringe.removeFirst();
-            if (visited.contains(currentNode.getCoordinates())) {
-                continue; // Skip if already visited
-            }
-            visited.add(currentNode.getCoordinates());
+            Node currentNode = fringe.removeFirst();
             if (currentNode.getCoordinates().approxEquals(goal)) {
                 // Return the next steps coordinates.
                 List<Node> path = currentNode.getPath(); // already reversed (start to goal)
@@ -127,11 +125,11 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
                 return coordinates;
             }
 
-            Node[] children;
+            List<Node> children;
 
             double dist = heuristic(goal, currentNode.getCoordinates());
-            if (dist >= maxScalingFactor) {
-                children = expandNode(currentNode, maxScalingFactor);
+            if (dist >= maxStepSize) {
+                children = expandNode(currentNode, maxStepSize);
             } else {
                 children = expandNode(currentNode, dist);
             }
@@ -139,10 +137,6 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
             for (Node child : children) {
                 child.setHeuristicCost(heuristic(child.getCoordinates(), goal));
                 fringe.add(child);
-            }
-            fringe.sort(null);
-            if (fringe.size() > 5) {
-                fringe.subList(5, fringe.size()).clear();
             }
         }
 
@@ -154,16 +148,29 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         return Math.sqrt(Math.pow((goal.getX() - start.getX()), 2) + Math.pow((goal.getY() - start.getY()), 2));
     }
 
-    private Node[] expandNode(Node parentState, double scalingFactor){
-        Node[] successorStates = new Node[8];
-        successorStates[0] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1* scalingFactor, parentState.getCoordinates().getY()), 1);
-        successorStates[1] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX() + 1*scalingFactor, parentState.getCoordinates().getY()), 1);
-        successorStates[2] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX(), parentState.getCoordinates().getY()+1*scalingFactor), 1);
-        successorStates[3] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX(), parentState.getCoordinates().getY()-1*scalingFactor), 1);
-        successorStates[4] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX() +1*scalingFactor, parentState.getCoordinates().getY()+1*scalingFactor), Math.sqrt(2 * Math.pow(scalingFactor, 2)));
-        successorStates[5] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()+1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), Math.sqrt(2 * Math.pow(scalingFactor, 2)));
-        successorStates[6] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor,parentState.getCoordinates().getY()+1*scalingFactor), Math.sqrt(2 * Math.pow(scalingFactor, 2)));
-        successorStates[7] = new Node(parentState, new Coordinate(parentState.getCoordinates().getX()-1*scalingFactor, parentState.getCoordinates().getY()-1*scalingFactor), Math.sqrt(2 * Math.pow(scalingFactor, 2)));
+    private List<Node> expandNode(Node parentState, double scalingFactor){
+        List<Node> successorStates = new ArrayList<>();
+        for (int i = -1; i < 2; i++) {
+            for (int j = -1; j < 2; j++) {
+                Coordinate coordinate = new Coordinate(parentState.getCoordinates().getX() + i * scalingFactor, parentState.getCoordinates().getY() + j * scalingFactor);
+                if ((i == j && i == 0) || !coordinateIsValid(coordinate)) {
+                    continue;
+                }
+                Node successorState = new Node(parentState, coordinate, Math.sqrt(Math.pow(i * scalingFactor, 2) + Math.pow(j * scalingFactor, 2)));
+                if (!successorState.equals(parentState)) successorStates.add(successorState);
+            }
+        }
         return successorStates;
+    }
+
+    private boolean coordinateIsValid(Coordinate coordinate) {
+        if (map == null) return true;
+
+        int x = (int) Math.floor((coordinate.getX())  / maxStepSize);
+        int y = (int) Math.floor((coordinate.getY()) / maxStepSize);
+
+        if ((x < 0 || y < 0) || (x >= map.length || y >= map[x].length)) return true;
+
+        return map[x][y] != 12;
     }
 }
