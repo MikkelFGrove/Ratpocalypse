@@ -62,4 +62,10 @@ public class Node implements Comparable<Node>{
     public int compareTo(Node o) {
         return Double.compare(totalCost + heuristicCost, o.totalCost + o.getHeuristicCost());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Node)) return false;
+        return ((Node) obj).coordinates.equals(coordinates);
+    }
 }
