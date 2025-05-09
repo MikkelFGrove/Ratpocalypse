@@ -1,5 +1,6 @@
 package dk.lima.bullet;
 
+import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
@@ -25,6 +26,8 @@ public class BulletCollisionHandler implements ICollisionHandler {
 
     @Override
     public void onCollide(Entity other, World world) {
-        world.removeEntity(entity);
+        if (other.getEntityType() != EEntityTypes.HAZARD){
+            world.removeEntity(entity);
+        }
     }
 }
