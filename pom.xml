@@ -33,6 +33,8 @@
         <module>Graphics</module>
         <module>Persistence</module>
         <module>PathfindingComponent</module>
+        <module>FlockComponent</module>
+        <module>FlockRat</module>
         <module>CommonEntityCP</module>
         <module>CommonPathfinding</module>
         <module>CommonObstacle</module>
