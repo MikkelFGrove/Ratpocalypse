@@ -63,7 +63,7 @@ public class retryButton extends Button {
             gameData.setCurrentWave(0);
             gameData.setDuration(Duration.ZERO);
             world.getEntities().clear();
-            world.setPlayerPosition(new Coordinate(0, 0));
+            world.setPlayerPosition(new Coordinate(400, 400));
 
 
             for (IGamePluginService plugin : getPluginServices()) {
