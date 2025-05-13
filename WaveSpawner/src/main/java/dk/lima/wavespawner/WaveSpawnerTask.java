@@ -25,11 +25,11 @@ public class WaveSpawnerTask implements ITimeTask {
         IEnemy MeleeRat = allEnemies.get(1);
         IEnemy FlockRat = allEnemies.get(2);
 
-        manualWaves.add(List.of(FlockRat));
-        manualWaves.add(List.of(FlockRat, FlockRat));
-        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat));
-        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, FlockRat));
-        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, FlockRat, FlockRat));
+        manualWaves.add(List.of(MeleeRat));
+        manualWaves.add(List.of(MeleeRat, RangedRat));
+        manualWaves.add(List.of(MeleeRat, MeleeRat, RangedRat));
+        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, RangedRat));
+        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, RangedRat, RangedRat));
     }
 
     @Override
