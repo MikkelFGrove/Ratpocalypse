@@ -9,6 +9,7 @@ import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.DamageCP;
 import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entitycomponents.ICollisionHandler;
 import dk.lima.common.services.IPostEntityProcessingService;
 
 import java.util.List;
@@ -21,11 +22,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
     @Override
     public void process(GameData gameData, World world) {
-        for (Entity e : world.getEntities()) {
 
-            if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
+
+        for (Entity e : world.getEntities()) {
+            /*if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
                 continue;
-            }
+            }*/
 
             TransformCP eTransformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
             if (eTransformCP == null) {
@@ -40,14 +42,14 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
 
                 // If E1 is invincible and E2 is a bullet, skip collision
-                if (e2.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e.getEntityType())) {
+                /*if (e2.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e.getEntityType())) {
                     continue;
                 }
 
                 // If E2 is invincible and E1 is a bullet, skip collision
                 if (e.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e2.getEntityType())) {
                     continue;
-                }
+                }*/
 
                 //If entities are of the same type, they will  not kill each other by collision
                 if (e.getEntityType() != null && e2.getEntityType() != null && e.getEntityType().equals(e2.getEntityType())) {
@@ -67,28 +69,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 double distance = Math.sqrt(xDistance * xDistance + yDistance * yDistance);
 
                 if (distance < (eTransformCP.getSize() + e2TransformCP.getSize())) {
-                    // Increase score if an enemy is shot
-                    if (!gameData.isTimeScoring() && ((e.getEntityType() == EEntityTypes.BULLET && e2.getEntityType() == EEntityTypes.ENEMY) || (e.getEntityType() == EEntityTypes.ENEMY && e2.getEntityType() == EEntityTypes.BULLET))) {
-                        gameData.setScore(gameData.getScore() + 1);
-                    }
-
-                    if (e.getComponent(EntityComponentTypes.HEALTH) == null && !invincibleTypes.contains(e.getEntityType())) {
-                        world.removeEntity(e);
-                    } else if (e2.getComponent(EntityComponentTypes.HEALTH) == null && !invincibleTypes.contains(e2.getEntityType())) {
-                        world.removeEntity(e2);
-                    }
-
-                    if ((e.getComponent(EntityComponentTypes.HEALTH) != null) & (e2.getComponent(EntityComponentTypes.DAMAGE) != null)) {
-                        HealthCP healthCP = (HealthCP) e.getComponent(EntityComponentTypes.HEALTH);
-                        DamageCP damageCP2 = (DamageCP) e2.getComponent(EntityComponentTypes.DAMAGE);
-                        healthCP.subtractHealth(damageCP2.getAttackDamage());
-                    }
-
-                    if ((e2.getComponent(EntityComponentTypes.HEALTH) != null) & (e.getComponent(EntityComponentTypes.DAMAGE) != null)) {
-                        HealthCP healthCP2 = (HealthCP) e2.getComponent(EntityComponentTypes.HEALTH);
-                        DamageCP damageCP = (DamageCP) e.getComponent(EntityComponentTypes.DAMAGE);
-                        healthCP2.subtractHealth(damageCP.getAttackDamage());
-                    }
+                   if (e.getComponent(EntityComponentTypes.COLLISION) != null) {
+                       ((ICollisionHandler) e.getComponent(EntityComponentTypes.COLLISION)).onCollide(e2, world);
+                   }
+                   if (e2.getComponent(EntityComponentTypes.COLLISION) != null) {
+                        ((ICollisionHandler) e2.getComponent(EntityComponentTypes.COLLISION)).onCollide(e, world);
+                   }
                 }
             }
         }

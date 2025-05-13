@@ -1,5 +1,7 @@
 package dk.lima.common.entitycomponents;
 
+import dk.lima.common.data.EEntityTypes;
+import dk.lima.common.data.EGameInputs;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
@@ -38,6 +40,13 @@ public class WeaponCP implements IEntityComponent {
     @Override
     public void process(GameData gameData, World world) {
         Random rand = new Random();
+
+        if(entity.getEntityType() == EEntityTypes.PLAYER){
+            if(gameData.getInputs().isDown(EGameInputs.ACTION)){
+                weaponSPI.shoot(entity, gameData, world);
+            }
+
+        }
 
         if (shouldAttack & rand.nextInt(attackChance) == 0) {
 

@@ -6,6 +6,10 @@ public enum EntityComponentTypes {
     TRANSFORM,
     SPRITE,
     WEAPON,
+    COLLISION,
     DAMAGE,
-    HEALTH
+    HEALTH,
+    BULLET,
+    MOVEMENT,
+    FLOCK
 }

@@ -21,7 +21,7 @@ public class ScoreText implements IGraphicsService {
     public Node createComponent(GameData gameData, World world) {
         scorePane = new Pane();
         try {
-            Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("dead_rat.png")),
+            Image image = new Image(Objects.requireNonNull(getClass().getClassLoader().getResourceAsStream("dead_rat_20.png")),
                     20, 20, false, false);
             ImageView imageView = new ImageView(image);
             imageView.setX(8);

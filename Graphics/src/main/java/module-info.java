@@ -1,18 +1,14 @@
 import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.common.services.ITimeTask;
 import dk.lima.graphics.HUD.*;
-import dk.lima.graphics.gameRender.DebugRenderer;
-import dk.lima.graphics.gameRender.EntityRenderer;
-import dk.lima.graphics.gameRender.HealthRenderer;
-import dk.lima.graphics.gameRender.SpriteRenderer;
+import dk.lima.graphics.gameRender.*;
 import dk.lima.graphics.menuRender.*;
-import dk.lima.common.services.IGamePluginService;
 
 module Graphics {
     requires Common;
     requires CommonGraphics;
     requires CommonPlayer;
+    requires PathfindingComponent;
 
     requires javafx.graphics;
     requires java.desktop;
@@ -24,17 +20,17 @@ module Graphics {
 
 
     provides IGraphicsService with
-            EntityRenderer,
             SpriteRenderer,
+            ShapeRenderer,
             HealthRenderer,
             DebugRenderer,
             ScoreText,
             TimeText,
             HealthBar,
+            WaveCounter,
             StartMenu,
             PauseMenu,
-            EndMenu,
-            WaveCounter;
+            EndMenu;
 }
 
 

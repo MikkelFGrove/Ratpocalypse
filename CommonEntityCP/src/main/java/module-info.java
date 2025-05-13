@@ -5,7 +5,9 @@ import dk.lima.common.entitycomponents.*;
 module CommonEntityCP {
     requires Common;
     requires CommonWeapon;
+    requires CommonBullet;
     requires javafx.graphics;
+    requires CommonPlayer;
 
     uses IWeaponSPI;
 
@@ -17,7 +19,9 @@ module CommonEntityCP {
             WeaponCP,
             SpriteCP,
             HealthCP,
-            DamageCP;
+            DamageCP,
+            BulletCP,
+            MovementCP;
 }
 
 

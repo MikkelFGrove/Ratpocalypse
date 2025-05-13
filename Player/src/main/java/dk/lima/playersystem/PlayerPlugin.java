@@ -1,15 +1,12 @@
 package dk.lima.playersystem;
 
-import dk.lima.common.data.Coordinate;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entitycomponents.*;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.entitycomponents.HealthCP;
-import dk.lima.common.entitycomponents.SpriteCP;
-import dk.lima.common.entitycomponents.TransformCP;
-import dk.lima.common.entitycomponents.WeaponCP;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.weapon.IWeaponSPI;
 import dk.lima.common.player.Player;
@@ -32,7 +29,9 @@ public class PlayerPlugin implements IGamePluginService {
 
         double scale = 12;
         String[] pathsToSprites = {"player.png"};
-        
+
+        playerModel.addComponent(new PlayerCollisionHandler());
+        playerModel.getComponent(EntityComponentTypes.COLLISION).setEntity(playerModel);
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
                 case SPRITE -> {
@@ -41,6 +40,7 @@ public class PlayerPlugin implements IGamePluginService {
                     spriteCP.setPathsToSprite(pathsToSprites);
                     spriteCP.setHeight(gameData.tileSize);
                     spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setLayer(2);
                     playerModel.addComponent(spriteCP);
                 }
                 case TRANSFORM -> {
@@ -65,9 +65,13 @@ public class PlayerPlugin implements IGamePluginService {
                     healthCP.setHealth(100);
                     playerModel.addComponent(healthCP);
                 }
+                case MOVEMENT -> {
+                    MovementCP movementCP = (MovementCP) component;
+                    movementCP.setEntity(playerModel);
+                    playerModel.addComponent(movementCP);
+                }
             }
         }
-
         return playerModel;
     }
 

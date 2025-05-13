@@ -5,13 +5,20 @@ import dk.lima.common.entity.Entity;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.entitycomponents.DamageCP;
-import dk.lima.common.entitycomponents.HealthCP;
-import dk.lima.common.entitycomponents.ShapeCP;
-import dk.lima.common.entitycomponents.TransformCP;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entity.IEntityComponent;
+import dk.lima.common.entitycomponents.*;
+import dk.lima.common.entity.EntityComponentTypes;
+import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.common.bullet.Bullet;
 import dk.lima.common.bullet.IBulletSPI;
+
+import java.util.Collection;
+import java.util.ServiceLoader;
+
+import static dk.lima.common.entity.EntityComponentTypes.BULLET;
+import static java.util.stream.Collectors.toList;
 
 public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
     @Override
@@ -37,17 +44,32 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
         double bulletX = x + changeX * (radius + size);
         double bulletY = y + changeY * (radius + size);
 
-        bullet.addComponent(new TransformCP(
-                new Coordinate(bulletX, bulletY),
-                rotation,
-                size
-        ));
+        bullet.addComponent(new BulletCollisionHandler());
+        bullet.getComponent(EntityComponentTypes.COLLISION).setEntity(bullet);
 
-        bullet.addComponent(new ShapeCP(
-                new double[]{size, size, -size, size, -size, -size, size, -size},
-                new int[]{0,0,0}
+        for (IEntityComponent component : getEntityComponents()) {
+            switch (component.getType()) {
+                case TRANSFORM -> {
+                    bullet.addComponent(new TransformCP(
+                            new Coordinate(bulletX, bulletY),
+                            rotation,
+                            size
+                    ));
+                }
+                case SHAPE -> {
+                    bullet.addComponent(new ShapeCP(
+                            new double[]{size, size, -size, size, -size, -size, size, -size},
+                            new int[]{0,0,0}
 
-        ));
+                    ));
+                }
+                case BULLET -> {
+                    BulletCP entity = new BulletCP();
+                    entity.setEntity(bullet);
+                    bullet.addComponent(entity);
+                }
+            }
+        }
 
         DamageCP damageCP = new DamageCP();
         damageCP.setAttackDamage(attackDamage);
@@ -55,4 +77,8 @@ public class BulletGamePlugin implements IGamePluginService, IBulletSPI {
 
         return bullet;
     }
+    public static Collection<? extends IEntityComponent> getEntityComponents() {
+        return ServiceLoader.load(IEntityComponent.class).stream().map(ServiceLoader.Provider::get).collect(toList());
+    }
+
 }
