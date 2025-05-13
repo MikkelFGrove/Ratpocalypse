@@ -52,4 +52,9 @@ public class Coordinate implements Cloneable {
     public Coordinate clone() {
         return new Coordinate(this.x, this.y);
     }
+
+    @Override
+    public String toString() {
+        return "Coordinate [x=" + x + ", y=" + y + "]";
+    }
 }
