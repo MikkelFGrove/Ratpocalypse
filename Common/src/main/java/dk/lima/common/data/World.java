@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class World {
 
     private final Map<String, Entity> entityMap = new ConcurrentHashMap<>();
-    private Coordinate playerPosition = new Coordinate(0,0);
+    private Coordinate playerPosition = new Coordinate(400,400);
     private int[][] tileMap = new int[0][0];
 
     synchronized public String addEntity(Entity entity) {
