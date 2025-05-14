@@ -68,4 +68,15 @@ public class World {
     public void setTileMap(int[][] tileMap) {
         this.tileMap = tileMap;
     }
+
+    public boolean coordinateIsValid(Coordinate coordinate) {
+        if (tileMap == null) return true;
+
+        int x = (int) Math.floor((coordinate.getX())  / 48);
+        int y = (int) Math.floor((coordinate.getY()) / 48);
+
+        if ((x < 0 || y < 0) || (x >= tileMap.length || y >= tileMap[x].length)) return true;
+
+        return tileMap[x][y] != 12;
+    }
 }

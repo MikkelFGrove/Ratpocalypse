@@ -41,6 +41,16 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
+        Coordinate spawn = new Coordinate(x, y);
+
+        while (!world.coordinateIsValid(spawn)) {
+            angle = rnd.nextDouble(0, 2 * Math.PI);
+            x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
+            y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
+
+            spawn = new Coordinate(x, y);
+        }
+
         enemy.addComponent(new RangedRatCollisionHandler());
         enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
 
