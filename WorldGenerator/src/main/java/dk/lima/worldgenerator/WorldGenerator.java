@@ -30,19 +30,8 @@ public class WorldGenerator implements IGamePluginService {
     private Entity createObstacle(GameData gameData, Coordinate coordinate) {
         Entity obstacle = new Obstacle();
 
-        String[] pathsToSprites = {"barrel.png"};
-
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
-                case SPRITE -> {
-                    SpriteCP spriteCP = (SpriteCP) component;
-                    spriteCP.setAmountOfSprites(pathsToSprites.length);
-                    spriteCP.setPathsToSprite(pathsToSprites);
-                    spriteCP.setHeight(gameData.tileSize);
-                    spriteCP.setWidth(gameData.tileSize);
-                    spriteCP.setLayer(0);
-                    obstacle.addComponent(spriteCP);
-                }
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
                     transformCP.setCoord(coordinate);
@@ -58,18 +47,8 @@ public class WorldGenerator implements IGamePluginService {
     private Entity createHazard(GameData gameData, Coordinate coordinate) {
         Entity hazard = new Hazard();
 
-        String[] pathsToSprites = {"lava.png"};
-
         for (IEntityComponent component : getEntityComponents()) {
             switch (component.getType()) {
-                case SPRITE -> {
-                    SpriteCP spriteCP = (SpriteCP) component;
-                    spriteCP.setAmountOfSprites(pathsToSprites.length);
-                    spriteCP.setPathsToSprite(pathsToSprites);
-                    spriteCP.setHeight(gameData.tileSize);
-                    spriteCP.setWidth(gameData.tileSize);
-                    hazard.addComponent(spriteCP);
-                }
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
                     transformCP.setCoord(coordinate);
