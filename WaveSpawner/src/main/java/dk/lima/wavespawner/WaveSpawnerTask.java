@@ -1,4 +1,5 @@
 package dk.lima.wavespawner;
+import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -77,18 +78,34 @@ public class WaveSpawnerTask implements ITimeTask {
             if (wave <= manualWaves.size()) {
                 List<IEnemy> enemiesToSpawn = manualWaves.get(wave - 1);
                 for (IEnemy enemy : enemiesToSpawn) {
-                    Entity entity = enemy.createEnemy(gameData, world);
-                    world.addEntity(entity);
+                    spawnEntity(enemy);
                 }
             } else {
                 //After manual waves, spawn automatically
                 for (int i = 0; i < wave; i++) {
                     int randNum = rand.nextInt(enemies.size());
-                    Entity enemy = enemies.get(randNum).createEnemy(gameData, world);
-                    world.addEntity(enemy);
+                    spawnEntity(enemies.get(randNum));
                 }
             }
         }
+    }
+
+    private void spawnEntity(IEnemy entity){
+        Random rnd = new Random();
+        double angle = rnd.nextDouble(0, 2 * Math.PI);
+        double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
+        double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
+        Coordinate coordinate = new Coordinate(x,y);
+        while (!world.isCoordinateInObstacle(coordinate)) {
+            angle = rnd.nextDouble(0, 2 * Math.PI);
+            x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
+            y = (Math.sin(angle) * gameData.getDisplayHeight() / 2);
+            coordinate = new Coordinate(x,y);
+        }
+
+        Entity enemy = entity.createEnemy(gameData, coordinate);
+
+        world.addEntity(enemy);
     }
 
     private Collection<? extends IEnemy> getEnemies() {

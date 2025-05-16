@@ -30,27 +30,13 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
     }
 
     @Override
-    public Entity createEnemy(GameData gameData, World world) {
+    public Entity createEnemy(GameData gameData, Coordinate coordinate) {
         MeleeRat enemy = new MeleeRat();
         enemy.setEntityType(EEntityTypes.ENEMY);
         Random rnd = new Random();
         int scalingFactor = 6;
 
         String[] pathsToSprites = {"black_rat.png"};
-
-        double angle = rnd.nextDouble(0, 2 * Math.PI);
-        double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
-        double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
-
-        Coordinate spawn = new Coordinate(x, y);
-
-        while (!world.coordinateIsValid(spawn)) {
-            angle = rnd.nextDouble(0, 2 * Math.PI);
-            x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
-            y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
-
-            spawn = new Coordinate(x, y);
-        }
 
         enemy.addComponent(new MeleeRatCollisionHandler());
         enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
@@ -72,7 +58,7 @@ public class MeleeRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
-                    transformCP.setCoord(new Coordinate(x, y));
+                    transformCP.setCoord(coordinate);
                     transformCP.setRotation(rnd.nextInt(90));
                     transformCP.setSize(2 * scalingFactor);
                     transformCP.setEntity(enemy);
