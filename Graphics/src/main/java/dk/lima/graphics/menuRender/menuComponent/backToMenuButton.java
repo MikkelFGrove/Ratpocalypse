@@ -63,6 +63,7 @@ public class backToMenuButton extends Button {
             }
 
             gameData.setScore(0);
+            gameData.setCurrentWave(0);
             gameData.setDuration(Duration.ZERO);
             world.getEntities().clear();
             world.setPlayerPosition(new Coordinate(1200, 1200));
