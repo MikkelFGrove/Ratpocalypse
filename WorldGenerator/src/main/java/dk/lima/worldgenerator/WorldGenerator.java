@@ -74,7 +74,7 @@ public class WorldGenerator implements IGamePluginService {
         for (int col = 0; col < tileMap.length; col++) {
             for (int row = 0; row < tileMap[col].length; row++) {
                 Entity entity = switch (tileMap[col][row]) {
-                    case 12 -> createObstacle(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
+                    case 2 -> createObstacle(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
                     case 14 -> createHazard(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
                     default -> null;
                 };
