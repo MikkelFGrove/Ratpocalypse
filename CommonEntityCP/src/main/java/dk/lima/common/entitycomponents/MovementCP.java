@@ -36,19 +36,35 @@ public class MovementCP implements IEntityComponent {
             //Checks what input is registered and then either move, rotate or fires a bullet based on that.
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setY(playerCoord.getY() - velocity);
+                double playerX = playerCoord.getX();
+                double playerY = playerCoord.getY() - velocity - transformCP.getSize() ;
+                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                    playerCoord.setY(playerCoord.getY() - velocity);
+                }
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setY(playerCoord.getY() + velocity);
+                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world
+                double playerX = playerCoord.getX() ;
+                double playerY = playerCoord.getY() + velocity + transformCP.getSize() ;
+                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                    playerCoord.setY(playerCoord.getY() + velocity);
+                }
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setX(playerCoord.getX() - velocity);
+                double playerX = playerCoord.getX() - velocity - transformCP.getSize() ;
+                double playerY = playerCoord.getY();
+                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                    playerCoord.setX(playerCoord.getX() - velocity);
+                }
             }
             if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setX(playerCoord.getX() + velocity);
+                double playerX = playerCoord.getX() + velocity + transformCP.getSize() ;
+                double playerY = playerCoord.getY();
+                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                    playerCoord.setX(playerCoord.getX() + velocity);
+                }
             }
             world.setPlayerPosition(playerCoord);
     }
