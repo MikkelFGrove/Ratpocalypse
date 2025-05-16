@@ -3,7 +3,6 @@ package dk.lima.main;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
 import dk.lima.common.graphics.IGraphicsService;
-import dk.lima.common.graphics.IMenu;
 import dk.lima.common.input.IInputSPI;
 import dk.lima.common.services.IGamePluginService;
 import javafx.animation.AnimationTimer;
@@ -20,13 +19,11 @@ import java.util.concurrent.TimeUnit;
 
 
 public class Main extends Application {
-
     private final GameData gameData = new GameData();
     private final World world = new World();
     private final Pane gameWindow = new Pane();
     private ScheduledExecutorService physicsExecutor;
     private List<IGraphicsService> graphicsServices;
-    private List <IMenu> menuComponents;
 
     public static void main(String[] args) {
         launch(Main.class);

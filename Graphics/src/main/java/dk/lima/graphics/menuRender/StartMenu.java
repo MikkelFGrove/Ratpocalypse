@@ -2,15 +2,12 @@ package dk.lima.graphics.menuRender;
 
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.graphics.IMenu;
-import dk.lima.common.graphics.MenuType;
-import javafx.geometry.Pos;
+import dk.lima.common.graphics.IGraphicsService;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -19,15 +16,8 @@ import javafx.scene.text.TextAlignment;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
 
-import javax.swing.*;
-import java.awt.*;
-
-public class StartMenu implements IMenu {
+public class StartMenu implements IGraphicsService {
     static Pane startMenuPane;
-    @Override
-    public MenuType getType() {
-        return MenuType.START;
-    }
 
     @Override
     public Node createComponent(GameData gameData, World world) {
