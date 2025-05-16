@@ -69,7 +69,7 @@ public class World {
         this.tileMap = tileMap;
     }
 
-    public boolean isCoordinateInObstacle(Coordinate coordinate) {
+    public boolean isCoordinateTraversable(Coordinate coordinate) {
         if (tileMap == null) return true;
 
         int x = (int) Math.floor((coordinate.getX())  / 48);

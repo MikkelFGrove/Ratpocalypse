@@ -38,8 +38,8 @@ public class PlayerPlugin implements IGamePluginService {
                     SpriteCP spriteCP = (SpriteCP) component;
                     spriteCP.setAmountOfSprites(pathsToSprites.length);
                     spriteCP.setPathsToSprite(pathsToSprites);
-                    spriteCP.setHeight(gameData.tileSize);
-                    spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setHeight(gameData.getTileSize());
+                    spriteCP.setWidth(gameData.getTileSize());
                     spriteCP.setLayer(2);
                     playerModel.addComponent(spriteCP);
                 }

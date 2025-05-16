@@ -7,7 +7,6 @@ import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.player.Player;
 
 public class MovementCP implements IEntityComponent {
 
@@ -38,7 +37,7 @@ public class MovementCP implements IEntityComponent {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
                 double playerX = playerCoord.getX();
                 double playerY = playerCoord.getY() - velocity - transformCP.getSize() ;
-                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
                     playerCoord.setY(playerCoord.getY() - velocity);
                 }
             }
@@ -46,7 +45,7 @@ public class MovementCP implements IEntityComponent {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world
                 double playerX = playerCoord.getX() ;
                 double playerY = playerCoord.getY() + velocity + transformCP.getSize() ;
-                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
                     playerCoord.setY(playerCoord.getY() + velocity);
                 }
             }
@@ -54,7 +53,7 @@ public class MovementCP implements IEntityComponent {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
                 double playerX = playerCoord.getX() - velocity - transformCP.getSize() ;
                 double playerY = playerCoord.getY();
-                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
                     playerCoord.setX(playerCoord.getX() - velocity);
                 }
             }
@@ -62,7 +61,7 @@ public class MovementCP implements IEntityComponent {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
                 double playerX = playerCoord.getX() + velocity + transformCP.getSize() ;
                 double playerY = playerCoord.getY();
-                if (world.isCoordinateInObstacle(new Coordinate(playerX, playerY))) {
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
                     playerCoord.setX(playerCoord.getX() + velocity);
                 }
             }

@@ -24,6 +24,7 @@ import static java.util.stream.Collectors.toList;
 
 public class WorldGenerator implements IGamePluginService {
     // World settings
+    private final String mapUrl = "/WorldGenerator/Maps/TheFinalMap.txt";
     private final int maxWorldCol = 75;
     private final int maxWorldRow = 75;
 
@@ -35,7 +36,7 @@ public class WorldGenerator implements IGamePluginService {
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
                     transformCP.setCoord(coordinate);
-                    transformCP.setSize(gameData.tileSize / 2d);
+                    transformCP.setSize(gameData.getTileSize() / 2d);
                     obstacle.addComponent(transformCP);
                 }
             }
@@ -52,7 +53,7 @@ public class WorldGenerator implements IGamePluginService {
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
                     transformCP.setCoord(coordinate);
-                    transformCP.setSize(gameData.tileSize / 2d);
+                    transformCP.setSize(gameData.getTileSize() / 2d);
                     hazard.addComponent(transformCP);
                 }
                 case DAMAGE -> {
@@ -68,14 +69,15 @@ public class WorldGenerator implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        int[][] tileMap = loadMap("/WorldGenerator/Maps/TheFinalMap.txt");
+        int[][] tileMap = loadMap(mapUrl);
         world.setTileMap(tileMap);
 
         for (int col = 0; col < tileMap.length; col++) {
             for (int row = 0; row < tileMap[col].length; row++) {
+                Coordinate coord = new Coordinate(col * gameData.getTileSize() + (gameData.getTileSize() / 2d), row * gameData.getTileSize() + (gameData.getTileSize() / 2d));
                 Entity entity = switch (tileMap[col][row]) {
-                    case 18 -> createObstacle(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
-                    case 16 -> createHazard(gameData, new Coordinate(col * gameData.tileSize + (gameData.tileSize / 2d), row * gameData.tileSize + (gameData.tileSize / 2d)));
+                    case 18 -> createObstacle(gameData, coord);
+                    case 16 -> createHazard(gameData, coord);
                     default -> null;
                 };
 
@@ -111,7 +113,7 @@ public class WorldGenerator implements IGamePluginService {
 
                     int num = Integer.parseInt(numbers[col]);
 
-                    tileMap[col][row] = num-1;
+                    tileMap[col][row] = num - 1;
                     col++;
                 }
 
