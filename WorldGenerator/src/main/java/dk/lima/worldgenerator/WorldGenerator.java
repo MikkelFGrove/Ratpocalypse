@@ -24,8 +24,8 @@ import static java.util.stream.Collectors.toList;
 
 public class WorldGenerator implements IGamePluginService {
     // World settings
-    private final int maxWorldCol = 50;
-    private final int maxWorldRow = 50;
+    private final int maxWorldCol = 75;
+    private final int maxWorldRow = 75;
 
     private Entity createObstacle(GameData gameData, Coordinate coordinate) {
         Entity obstacle = new Obstacle();
@@ -68,7 +68,7 @@ public class WorldGenerator implements IGamePluginService {
 
     @Override
     public void start(GameData gameData, World world) {
-        int[][] tileMap = loadMap("/WorldGenerator/Maps/worldMap01.txt");
+        int[][] tileMap = loadMap("/WorldGenerator/Maps/TheFinalMap.txt");
         world.setTileMap(tileMap);
 
         for (int col = 0; col < tileMap.length; col++) {

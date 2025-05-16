@@ -19,8 +19,8 @@ import java.util.List;
 
 public class TileManager implements IGraphicsService {
     // World settings
-    private final int maxWorldCol = 50;
-    private final int maxWorldRow = 50;
+    private final int maxWorldCol = 75;
+    private final int maxWorldRow = 75;
 
     // Needed for the tile management
     private Tile[] tiles;
