@@ -1,4 +1,4 @@
-package dk.lima.flockComponent;
+package dk.lima.flockRat;
 
 import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.EEntityTypes;

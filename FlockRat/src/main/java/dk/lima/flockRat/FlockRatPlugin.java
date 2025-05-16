@@ -10,7 +10,6 @@ import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.*;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.flockComponent.FlockCP;
 
 import java.util.Collection;
 import java.util.Random;
