@@ -171,6 +171,6 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
 
         if ((x < 0 || y < 0) || (x >= map.length || y >= map[x].length)) return true;
 
-        return map[x][y] != 12;
+        return map[x][y] != 18;
     }
 }
