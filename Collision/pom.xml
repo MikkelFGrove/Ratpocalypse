@@ -30,13 +30,11 @@
             <groupId>dk.lima</groupId>
             <artifactId>CommonBullet</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
             <artifactId>Bullet</artifactId>
             <version>1.0-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>dk.lima</groupId>
@@ -49,6 +47,11 @@
             <artifactId>Player</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>dk.lima</groupId>
+            <artifactId>CommonObstacle</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

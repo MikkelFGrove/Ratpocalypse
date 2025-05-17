@@ -12,6 +12,7 @@ import dk.lima.common.entitycomponents.DamageCP;
 import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.player.Player;
+import dk.lima.obstacle.Obstacle;
 import dk.lima.playersystem.PlayerCollisionHandler;
 import dk.lima.playersystem.PlayerPlugin;
 import org.junit.jupiter.api.AfterEach;
@@ -67,6 +68,31 @@ class CollisionDetectorTest {
 
         // Check that the bullet is removed
         assertFalse(world.getEntities().contains(bullet));
+    }
+
+    @Test
+    public void testObstacleBulletCollisionRemovesBullet() {
+        BulletGamePlugin bulletGamePlugin = new BulletGamePlugin();
+        Bullet bullet = bulletGamePlugin.createBullet(0,0,0,1,1);
+        TransformCP transformCP = (TransformCP) bullet.getComponent(EntityComponentTypes.TRANSFORM);
+        transformCP.setCoord(new Coordinate(0, 0));
+
+        Obstacle obstacle = new Obstacle();
+        obstacle.addComponent(new TransformCP(new Coordinate(0, 0), 0, 1));
+
+        assertTrue(world.getEntities(Obstacle.class).isEmpty());
+        assertTrue(world.getEntities(Bullet.class).isEmpty());
+
+        world.addEntity(obstacle);
+        world.addEntity(bullet);
+
+        assertFalse(world.getEntities(Obstacle.class).isEmpty());
+        assertFalse(world.getEntities(Bullet.class).isEmpty());
+
+        collisionDetector.process(gameData, world);
+
+        assertFalse(world.getEntities(Obstacle.class).isEmpty());
+        assertTrue(world.getEntities(Bullet.class).isEmpty());
     }
 
     @Test
