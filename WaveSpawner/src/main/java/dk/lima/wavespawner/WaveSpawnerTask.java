@@ -108,7 +108,7 @@ public class WaveSpawnerTask implements ITimeTask {
         world.addEntity(enemy);
     }
 
-    private Collection<? extends IEnemy> getEnemies() {
+    protected Collection<? extends IEnemy> getEnemies() {
         return ServiceLoader.load(IEnemy.class).stream().map(ServiceLoader.Provider::get).collect(Collectors.toList());
     }
 }
