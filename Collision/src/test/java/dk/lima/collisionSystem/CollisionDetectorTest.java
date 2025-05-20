@@ -3,7 +3,6 @@ package dk.lima.collisionSystem;
 import dk.lima.bullet.BulletGamePlugin;
 import dk.lima.common.bullet.Bullet;
 import dk.lima.common.data.Coordinate;
-import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -11,10 +10,8 @@ import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entitycomponents.DamageCP;
 import dk.lima.common.entitycomponents.HealthCP;
 import dk.lima.common.entitycomponents.TransformCP;
-import dk.lima.common.player.Player;
 import dk.lima.obstacle.Obstacle;
 import dk.lima.playersystem.PlayerCollisionHandler;
-import dk.lima.playersystem.PlayerPlugin;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -94,6 +91,7 @@ class CollisionDetectorTest {
         assertFalse(world.getEntities(Obstacle.class).isEmpty());
         assertTrue(world.getEntities(Bullet.class).isEmpty());
     }
+
 
     @Test
     public void testCollisionDecreasesHealth(){

@@ -45,7 +45,7 @@ public class WorldGenerator implements IGamePluginService {
         return obstacle;
     }
 
-    private Entity createHazard(GameData gameData, Coordinate coordinate) {
+    Entity createHazard(GameData gameData, Coordinate coordinate) {
         Entity hazard = new Hazard();
 
         for (IEntityComponent component : getEntityComponents()) {
