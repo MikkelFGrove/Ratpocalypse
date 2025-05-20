@@ -25,9 +25,9 @@ public class CollisionDetector implements IPostEntityProcessingService {
 
 
         for (Entity e : world.getEntities()) {
-            /*if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
+            if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
                 continue;
-            }*/
+            }
 
             TransformCP eTransformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
             if (eTransformCP == null) {

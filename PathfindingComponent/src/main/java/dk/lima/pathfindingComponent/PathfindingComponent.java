@@ -62,15 +62,15 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         }
 
         map = world.getTileMap();
-        maxStepSize = gameData.tileSize;
+        maxStepSize = gameData.getTileSize();
 
         TransformCP transformCP = (TransformCP) entity.getComponent(EntityComponentTypes.TRANSFORM);
         Coordinate coord = transformCP.getCoord();
         Coordinate nextStep = transformCP.getCoord().clone();
 
         // Calculate new path if path is empty or if player has moved a certain distance from current goal
-        if (path == null || (heuristic(path[path.length - 1], target) > goalRadius * heuristic(coord, target) && coordinateIsValid(target))) {
-            path = calculatePath(coord, target);
+        if (path == null || (heuristic(path[path.length - 1], target) > goalRadius * heuristic(coord, target) && world.isCoordinateTraversable(target))) {
+            path = calculatePath(coord, target, world);
             stepsTaken = 0;
         }
 
@@ -109,7 +109,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         return new Coordinate(start.getX() + xDistance / scaledHyp, start.getY() + yDistance / scaledHyp);
     }
 
-    public Coordinate[] calculatePath(Coordinate start, Coordinate goal) {
+    public Coordinate[] calculatePath(Coordinate start, Coordinate goal, World world) {
         TreeSet<Node> fringe = new TreeSet<>();
         Node initialNode = new Node(start);
         fringe.add(initialNode);
@@ -129,9 +129,9 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
 
             double dist = heuristic(goal, currentNode.getCoordinates());
             if (dist >= maxStepSize) {
-                children = expandNode(currentNode, maxStepSize);
+                children = expandNode(currentNode, maxStepSize, world);
             } else {
-                children = expandNode(currentNode, dist);
+                children = expandNode(currentNode, dist, world);
             }
 
             for (Node child : children) {
@@ -148,12 +148,12 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         return Math.sqrt(Math.pow((goal.getX() - start.getX()), 2) + Math.pow((goal.getY() - start.getY()), 2));
     }
 
-    private List<Node> expandNode(Node parentState, double scalingFactor){
+    private List<Node> expandNode(Node parentState, double scalingFactor, World world){
         List<Node> successorStates = new ArrayList<>();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
                 Coordinate coordinate = new Coordinate(parentState.getCoordinates().getX() + i * scalingFactor, parentState.getCoordinates().getY() + j * scalingFactor);
-                if ((i == j && i == 0) || !coordinateIsValid(coordinate)) {
+                if ((i == j && i == 0) || !world.isCoordinateTraversable(coordinate)) {
                     continue;
                 }
                 Node successorState = new Node(parentState, coordinate, Math.sqrt(Math.pow(i * scalingFactor, 2) + Math.pow(j * scalingFactor, 2)));
@@ -161,16 +161,5 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
             }
         }
         return successorStates;
-    }
-
-    private boolean coordinateIsValid(Coordinate coordinate) {
-        if (map == null) return true;
-
-        int x = (int) Math.floor((coordinate.getX())  / maxStepSize);
-        int y = (int) Math.floor((coordinate.getY()) / maxStepSize);
-
-        if ((x < 0 || y < 0) || (x >= map.length || y >= map[x].length)) return true;
-
-        return map[x][y] != 18;
     }
 }

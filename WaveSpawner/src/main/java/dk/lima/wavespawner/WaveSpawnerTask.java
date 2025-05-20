@@ -96,10 +96,11 @@ public class WaveSpawnerTask implements ITimeTask {
         double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
         double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
         Coordinate coordinate = new Coordinate(x,y);
-        while (!world.isCoordinateInObstacle(coordinate)) {
+
+        while (!world.isCoordinateTraversable(coordinate)) {
             angle = rnd.nextDouble(0, 2 * Math.PI);
             x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
-            y = (Math.sin(angle) * gameData.getDisplayHeight() / 2);
+            y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
             coordinate = new Coordinate(x,y);
         }
 
