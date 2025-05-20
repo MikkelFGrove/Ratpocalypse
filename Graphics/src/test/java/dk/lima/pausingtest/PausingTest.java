@@ -22,7 +22,7 @@ class PausingTest {
     static {
         try {
             CountDownLatch latch = new CountDownLatch(1);
-            Platform.startup(latch::countDown); // start JavaFX
+            Platform.startup(latch::countDown);
             latch.await();
             javafxInitialized.set(true);
         } catch (IllegalStateException ignored) {
@@ -50,7 +50,6 @@ class PausingTest {
     @Test
     public void testPlayerPluginSpawnsPlayer() throws Exception {
         assertTrue(gameData.isGameRunning());
-
         gameData.getInputs().setInput(EGameInputs.PAUSE, true);
 
         CountDownLatch latch = new CountDownLatch(1);
@@ -59,7 +58,6 @@ class PausingTest {
             latch.countDown();
         });
         latch.await();
-
         assertFalse(gameData.isGameRunning());
     }
 }
