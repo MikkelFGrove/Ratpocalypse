@@ -77,6 +77,6 @@ public class World {
 
         if ((x < 0 || y < 0) || (x >= tileMap.length || y >= tileMap[x].length)) return true;
 
-        return tileMap[x][y] != 18;
+        return !(tileMap[x][y] == 18 | tileMap[x][y] == 2);
     }
 }
