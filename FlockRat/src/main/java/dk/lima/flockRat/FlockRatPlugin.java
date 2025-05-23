@@ -10,7 +10,6 @@ import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
 import dk.lima.common.entitycomponents.*;
 import dk.lima.common.services.IGamePluginService;
-import dk.lima.flockComponent.FlockCP;
 
 import java.util.Collection;
 import java.util.Random;
@@ -30,17 +29,13 @@ public class FlockRatPlugin implements IGamePluginService, IEnemy {
     }
 
     @Override
-    public Entity createEnemy(GameData gameData, World world) {
+    public Entity createEnemy(GameData gameData, Coordinate coordinate) {
         FlockRat enemy = new FlockRat();
         enemy.setEntityType(EEntityTypes.ENEMY);
         Random rnd = new Random();
         int scalingFactor = 6;
 
         String[] pathsToSprites = {"gang_rat.png"};
-
-        double angle = rnd.nextDouble(0, 2 * Math.PI);
-        double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
-        double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
         enemy.addComponent(new FlockRatCollisionHandler());
         enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
@@ -58,8 +53,8 @@ public class FlockRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case SPRITE -> {
                     SpriteCP spriteCP = (SpriteCP) component;
-                    spriteCP.setHeight(gameData.tileSize);
-                    spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setHeight(gameData.getTileSize());
+                    spriteCP.setWidth(gameData.getTileSize());
                     spriteCP.setAmountOfSprites(pathsToSprites.length);
                     spriteCP.setPathsToSprite(pathsToSprites);
                     spriteCP.setLayer(1);
@@ -67,7 +62,7 @@ public class FlockRatPlugin implements IGamePluginService, IEnemy {
                 }
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
-                    transformCP.setCoord(new Coordinate(x, y));
+                    transformCP.setCoord(coordinate);
                     transformCP.setRotation(rnd.nextInt(90));
                     transformCP.setSize(2 * scalingFactor);
                     transformCP.setEntity(enemy);

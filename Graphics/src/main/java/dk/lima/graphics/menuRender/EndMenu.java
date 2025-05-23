@@ -1,10 +1,8 @@
 package dk.lima.graphics.menuRender;
 
-import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.graphics.IMenu;
-import dk.lima.common.graphics.MenuType;
+import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.graphics.menuRender.menuComponent.backToMenuButton;
 import dk.lima.graphics.menuRender.menuComponent.exitButton;
@@ -15,29 +13,21 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
-import javafx.scene.Cursor;
 import dk.lima.common.player.Player;
 
-import java.time.Duration;
 import java.util.Collection;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class EndMenu implements IMenu {
+public class EndMenu implements IGraphicsService {
     static Pane endMenuPane;
     private boolean shouldShow = false;
     private Text highscoreLabel;
     private Text currentscoreLabel;
-
-    @Override
-    public MenuType getType() {
-        return MenuType.END;
-    }
 
     @Override
     public Node createComponent(GameData gameData, World world) {

@@ -1,11 +1,9 @@
 package dk.lima.graphics.menuRender;
 
-import dk.lima.common.data.Coordinate;
 import dk.lima.common.data.EGameInputs;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
-import dk.lima.common.graphics.IMenu;
-import dk.lima.common.graphics.MenuType;
+import dk.lima.common.graphics.IGraphicsService;
 import dk.lima.common.services.IGamePluginService;
 import dk.lima.graphics.menuRender.menuComponent.backToMenuButton;
 import dk.lima.graphics.menuRender.menuComponent.exitButton;
@@ -19,22 +17,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import java.time.Duration;
 
 import java.util.Collection;
 import java.util.ServiceLoader;
 
 import static java.util.stream.Collectors.toList;
 
-public class PauseMenu implements IMenu {
+public class PauseMenu implements IGraphicsService {
     Pane pauseMenuPane;
     private boolean shouldShow = false;
     private boolean wasPausePressed;
-
-    @Override
-    public MenuType getType() {
-        return MenuType.PAUSE;
-    }
 
     @Override
     public Node createComponent(GameData gameData, World world) {

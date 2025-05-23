@@ -7,7 +7,6 @@ import dk.lima.common.data.World;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.entity.EntityComponentTypes;
 import dk.lima.common.entity.IEntityComponent;
-import dk.lima.common.player.Player;
 
 public class MovementCP implements IEntityComponent {
 
@@ -36,19 +35,35 @@ public class MovementCP implements IEntityComponent {
             //Checks what input is registered and then either move, rotate or fires a bullet based on that.
             if (gameData.getInputs().isDown(EGameInputs.UP)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setY(playerCoord.getY() - velocity);
+                double playerX = playerCoord.getX();
+                double playerY = playerCoord.getY() - velocity - transformCP.getSize() ;
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
+                    playerCoord.setY(playerCoord.getY() - velocity);
+                }
             }
             if (gameData.getInputs().isDown(EGameInputs.DOWN)) {
-                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setY(playerCoord.getY() + velocity);
+                //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world
+                double playerX = playerCoord.getX() ;
+                double playerY = playerCoord.getY() + velocity + transformCP.getSize() ;
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
+                    playerCoord.setY(playerCoord.getY() + velocity);
+                }
             }
             if (gameData.getInputs().isDown(EGameInputs.LEFT)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setX(playerCoord.getX() - velocity);
+                double playerX = playerCoord.getX() - velocity - transformCP.getSize() ;
+                double playerY = playerCoord.getY();
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
+                    playerCoord.setX(playerCoord.getX() - velocity);
+                }
             }
             if (gameData.getInputs().isDown(EGameInputs.RIGHT)) {
                 //Updates the player's world position ensuring it can move, and keeps track on where the player is in the world.
-                playerCoord.setX(playerCoord.getX() + velocity);
+                double playerX = playerCoord.getX() + velocity + transformCP.getSize() ;
+                double playerY = playerCoord.getY();
+                if (world.isCoordinateTraversable(new Coordinate(playerX, playerY))) {
+                    playerCoord.setX(playerCoord.getX() + velocity);
+                }
             }
             world.setPlayerPosition(playerCoord);
     }

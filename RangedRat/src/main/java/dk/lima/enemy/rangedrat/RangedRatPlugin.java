@@ -30,16 +30,12 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
     }
 
     @Override
-    public Entity createEnemy(GameData gameData, World world) {
+    public Entity createEnemy(GameData gameData, Coordinate coordinate) {
         RangedRat enemy = new RangedRat();
         enemy.setEntityType(EEntityTypes.ENEMY);
         Random rnd = new Random();
 
         String[] pathsToSprites = {"soldier_rat.png"};
-
-        double angle = rnd.nextDouble(0, 2 * Math.PI);
-        double x = (Math.cos(angle) * gameData.getDisplayWidth() / 2) + world.getPlayerPosition().getX();
-        double y = (Math.sin(angle) * gameData.getDisplayHeight() / 2) + world.getPlayerPosition().getY();
 
         enemy.addComponent(new RangedRatCollisionHandler());
         enemy.getComponent(EntityComponentTypes.COLLISION).setEntity(enemy);
@@ -54,14 +50,14 @@ public class RangedRatPlugin implements IGamePluginService, IEnemy {
                     SpriteCP spriteCP = (SpriteCP) component;
                     spriteCP.setAmountOfSprites(pathsToSprites.length);
                     spriteCP.setPathsToSprite(pathsToSprites);
-                    spriteCP.setHeight(gameData.tileSize);
-                    spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setHeight(gameData.getTileSize());
+                    spriteCP.setWidth(gameData.getTileSize());
                     spriteCP.setLayer(1);
                     enemy.addComponent(spriteCP);
                 }
                 case TRANSFORM -> {
                     TransformCP transformCP = (TransformCP) component;
-                    transformCP.setCoord(new Coordinate(x, y));
+                    transformCP.setCoord(coordinate);
                     transformCP.setRotation(rnd.nextInt(90));
                     transformCP.setSize(15);
                     enemy.addComponent(transformCP);

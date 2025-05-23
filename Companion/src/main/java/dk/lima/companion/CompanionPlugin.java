@@ -42,8 +42,8 @@ public class CompanionPlugin implements IGamePluginService {
             switch (component.getType()) {
                 case SPRITE -> {
                     SpriteCP spriteCP = (SpriteCP) component;
-                    spriteCP.setHeight(gameData.tileSize);
-                    spriteCP.setWidth(gameData.tileSize);
+                    spriteCP.setHeight(gameData.getTileSize());
+                    spriteCP.setWidth(gameData.getTileSize());
                     spriteCP.setAmountOfSprites(pathsToSprites.length);
                     spriteCP.setPathsToSprite(pathsToSprites);
                     spriteCP.setLayer(1);

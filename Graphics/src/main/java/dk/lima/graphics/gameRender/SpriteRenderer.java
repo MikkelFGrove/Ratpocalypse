@@ -67,9 +67,17 @@ public class SpriteRenderer implements IGraphicsService {
                 Coordinate coord = transformCP.getCoord();
 
                 if(entity instanceof Player) {
-                    gc.drawImage(spriteCP.getImage(), gameData.getDisplayWidth() /2d - spriteCP.getWidth() / 2d, gameData.getDisplayHeight() / 2d - spriteCP.getHeight() / 2d, spriteCP.getWidth(), spriteCP.getHeight());
+                    if (transformCP.getRotation() < 90 && transformCP.getRotation() > -90) {
+                        gc.drawImage(spriteCP.getImage(), gameData.getDisplayWidth() /2d - spriteCP.getWidth() / 2d, gameData.getDisplayHeight() / 2d - spriteCP.getHeight() / 2d, spriteCP.getWidth(), spriteCP.getHeight());
+                    } else {
+                        gc.drawImage(spriteCP.getImage(), gameData.getDisplayWidth() /2d + spriteCP.getWidth() / 2d, gameData.getDisplayHeight() / 2d - spriteCP.getHeight() / 2d, -spriteCP.getWidth(), spriteCP.getHeight());
+                    }
                 } else {
-                    gc.drawImage(spriteCP.getImage(), coord.getX() - spriteCP.getWidth() / 2d + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX(), coord.getY() - spriteCP.getHeight() / 2d + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY(), spriteCP.getWidth(), spriteCP.getHeight());
+                    if (transformCP.getRotation() < 90 && transformCP.getRotation() > -90) {
+                        gc.drawImage(spriteCP.getImage(), coord.getX() - spriteCP.getWidth() / 2d + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX(), coord.getY() - spriteCP.getHeight() / 2d + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY(), spriteCP.getWidth(), spriteCP.getHeight());
+                    } else {
+                        gc.drawImage(spriteCP.getImage(), coord.getX() + spriteCP.getWidth() / 2d + gameData.getDisplayWidth() / 2d - world.getPlayerPosition().getX(), coord.getY() - spriteCP.getHeight() / 2d + gameData.getDisplayHeight() / 2d - world.getPlayerPosition().getY(), -spriteCP.getWidth(), spriteCP.getHeight());
+                    }
                 }
             }
         }

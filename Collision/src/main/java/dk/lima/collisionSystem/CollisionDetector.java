@@ -12,44 +12,33 @@ import dk.lima.common.entitycomponents.TransformCP;
 import dk.lima.common.entitycomponents.ICollisionHandler;
 import dk.lima.common.services.IPostEntityProcessingService;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class CollisionDetector implements IPostEntityProcessingService {
-    private final List<EEntityTypes> invincibleTypes = List.of(EEntityTypes.COMPANION, EEntityTypes.HAZARD, EEntityTypes.OBSTACLE);
-
     public CollisionDetector() {
     }
 
     @Override
     public void process(GameData gameData, World world) {
-
-
         for (Entity e : world.getEntities()) {
-            /*if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
+            if (e.getEntityType() == EEntityTypes.HAZARD || e.getEntityType() == EEntityTypes.OBSTACLE) {
                 continue;
-            }*/
+            }
 
             TransformCP eTransformCP = (TransformCP) e.getComponent(EntityComponentTypes.TRANSFORM);
             if (eTransformCP == null) {
                 continue;
             }
+
+
             Coordinate eCoord = eTransformCP.getCoord();
 
             for (Entity e2 : world.getEntities()) {
                 // Make sure entities are different. Cannot collide with oneself
-                if (e.getID().equals(e2.getID())){
+                if (e.equals(e2)){
                     continue;
                 }
-
-                // If E1 is invincible and E2 is a bullet, skip collision
-                /*if (e2.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e.getEntityType())) {
-                    continue;
-                }
-
-                // If E2 is invincible and E1 is a bullet, skip collision
-                if (e.getEntityType() == EEntityTypes.BULLET && invincibleTypes.contains(e2.getEntityType())) {
-                    continue;
-                }*/
 
                 //If entities are of the same type, they will  not kill each other by collision
                 if (e.getEntityType() != null && e2.getEntityType() != null && e.getEntityType().equals(e2.getEntityType())) {
