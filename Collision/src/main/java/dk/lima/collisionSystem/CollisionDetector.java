@@ -16,9 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 
 public class CollisionDetector implements IPostEntityProcessingService {
-    private final List<EEntityTypes> invincibleTypes = List.of(EEntityTypes.COMPANION, EEntityTypes.HAZARD, EEntityTypes.OBSTACLE);
-    private final HashSet<String> checkedEntities = new HashSet<>();
-
     public CollisionDetector() {
     }
 
@@ -34,17 +31,12 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 continue;
             }
 
-            checkedEntities.add(e.getID());
 
             Coordinate eCoord = eTransformCP.getCoord();
 
             for (Entity e2 : world.getEntities()) {
-                if (checkedEntities.contains(e2.getID())) {
-                    continue;
-                }
-
                 // Make sure entities are different. Cannot collide with oneself
-                if (e.getID().equals(e2.getID())){
+                if (e.equals(e2)){
                     continue;
                 }
 
@@ -75,7 +67,5 @@ public class CollisionDetector implements IPostEntityProcessingService {
                 }
             }
         }
-
-        checkedEntities.clear();
     }
 }

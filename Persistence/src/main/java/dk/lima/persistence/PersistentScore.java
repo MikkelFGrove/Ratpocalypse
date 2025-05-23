@@ -14,12 +14,13 @@ public class PersistentScore implements IPostEntityProcessingService {
     public void process(GameData gameData, World world) {
         if (highscore == -1) {
             highscore = readScoreFromFile();
+            gameData.setHighscore(highscore);
         }
         if (gameData.getScore() > highscore) {
             highscore = gameData.getScore();
+            saveScoreToFile(highscore);
+            gameData.setHighscore(highscore);
         }
-        saveScoreToFile(highscore);
-        gameData.setHighscore(highscore);
     }
 
     public void saveScoreToFile(int score) {
