@@ -3,7 +3,6 @@ package dk.lima.collisionSystem;
 import dk.lima.bullet.BulletGamePlugin;
 import dk.lima.common.bullet.Bullet;
 import dk.lima.common.data.Coordinate;
-import dk.lima.common.data.EEntityTypes;
 import dk.lima.common.entity.Entity;
 import dk.lima.common.data.GameData;
 import dk.lima.common.data.World;
@@ -16,8 +15,6 @@ import dk.lima.playersystem.PlayerCollisionHandler;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -120,39 +117,6 @@ class CollisionDetectorTest {
 
         assertEquals(9, healthCP.getHealth());
 
-    }
-
-    @Test
-    public void performanceTestCollision() {
-        System.out.println("Performance Testing for Collision");
-        for (int i = 0; i < 5; i++) {
-            int n = i + 2;
-            double time = averageTimeCollision(3, (int) Math.pow(4, n));
-            System.out.println("Running 4^" + n + " entities - Time to run: " + time + "ms");
-        }
-    }
-
-    private double averageTimeCollision(int times, int n) {
-        double sum = 0;
-        for (int i = 0; i < times; i++) {
-            sum += timeCollision(n);
-        }
-        return sum / times;
-    }
-
-    private double timeCollision(int n) {
-        Random random = new Random();
-
-        for (int i = 0; i < n; i++) {
-            Entity entity = new Entity();
-            entity.setEntityType(i % 2 == 0 ? EEntityTypes.ENEMY : EEntityTypes.PLAYER);
-            entity.addComponent(new TransformCP(new Coordinate(random.nextDouble(10), random.nextFloat(10)), 0, 5));
-            world.addEntity(entity);
-        }
-
-        long timeBefore = System.currentTimeMillis();
-        collisionDetector.process(gameData, world);
-        return System.currentTimeMillis() - timeBefore;
     }
 /*
     @Test
