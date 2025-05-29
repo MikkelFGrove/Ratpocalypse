@@ -16,5 +16,4 @@ module Core {
     uses dk.lima.common.services.IPostEntityProcessingService;
     uses IGraphicsService;
     uses IInputSPI;
-    uses ITimeTask;
 }
