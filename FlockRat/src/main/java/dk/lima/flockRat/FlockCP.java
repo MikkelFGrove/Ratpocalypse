@@ -141,4 +141,8 @@ public class FlockCP implements IEntityComponent {
                 Math.pow(coord1.getX() - coord2.getX(), 2) +
                 Math.pow(coord1.getY() - coord2.getY(), 2));
     }
+
+    public boolean hasAttacked() {
+        return hasAttacked;
+    }
 }
