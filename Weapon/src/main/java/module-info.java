@@ -6,7 +6,7 @@ module Weapon {
     requires Common;
     requires CommonEntityCP;
     requires CommonBullet;
-    provides dk.lima.common.weapon.IWeaponSPI with Rifle;
 
+    provides dk.lima.common.weapon.IWeaponSPI with Rifle;
     uses IBulletSPI;
 }
