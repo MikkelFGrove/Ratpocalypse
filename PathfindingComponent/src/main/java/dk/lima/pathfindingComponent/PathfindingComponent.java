@@ -111,8 +111,10 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
 
     public Coordinate[] calculatePath(Coordinate start, Coordinate goal, World world) {
         TreeSet<Node> fringe = new TreeSet<>();
+        HashSet<Node> expandedNodes = new HashSet<>();
         Node initialNode = new Node(start);
         fringe.add(initialNode);
+
         while (!fringe.isEmpty()) {
             Node currentNode = fringe.removeFirst();
             if (currentNode.getCoordinates().approxEquals(goal)) {
@@ -129,9 +131,9 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
 
             double dist = heuristic(goal, currentNode.getCoordinates());
             if (dist >= maxStepSize) {
-                children = expandNode(currentNode, maxStepSize, world);
+                children = expandNode(currentNode, maxStepSize, world, expandedNodes);
             } else {
-                children = expandNode(currentNode, dist, world);
+                children = expandNode(currentNode, dist, world, expandedNodes);
             }
 
             for (Node child : children) {
@@ -148,7 +150,7 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
         return Math.sqrt(Math.pow((goal.getX() - start.getX()), 2) + Math.pow((goal.getY() - start.getY()), 2));
     }
 
-    private List<Node> expandNode(Node parentState, double scalingFactor, World world){
+    private List<Node> expandNode(Node parentState, double scalingFactor, World world, Set<Node> expandedNodes){
         List<Node> successorStates = new ArrayList<>();
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
@@ -157,7 +159,10 @@ public class PathfindingComponent implements IEntityComponent, IPathfinding {
                     continue;
                 }
                 Node successorState = new Node(parentState, coordinate, Math.sqrt(Math.pow(i * scalingFactor, 2) + Math.pow(j * scalingFactor, 2)));
-                if (!successorState.equals(parentState)) successorStates.add(successorState);
+                if (!successorState.equals(parentState) && !expandedNodes.contains(successorState)) {
+                    successorStates.add(successorState);
+                    expandedNodes.add(successorState);
+                }
             }
         }
         return successorStates;
