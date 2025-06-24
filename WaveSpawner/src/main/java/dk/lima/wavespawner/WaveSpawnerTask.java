@@ -17,20 +17,39 @@ public class WaveSpawnerTask implements ITimeTask {
     private World world;
     private GameData gameData;
 
-    private List<List<IEnemy>> manualWaves = new ArrayList<>();
+    private final List<List<IEnemy>> manualWaves = new ArrayList<>();
     private boolean wavesInitialized = false;
 
     private void manualWaves() {
         List<IEnemy> allEnemies = new ArrayList<>(getEnemies());
-        IEnemy RangedRat = allEnemies.get(0);
-        IEnemy MeleeRat = allEnemies.get(1);
-        IEnemy FlockRat = allEnemies.get(2);
 
-        manualWaves.add(List.of(MeleeRat));
-        manualWaves.add(List.of(MeleeRat, RangedRat));
-        manualWaves.add(List.of(MeleeRat, MeleeRat, RangedRat));
-        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, RangedRat));
-        manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, RangedRat, RangedRat));
+        if (allEnemies.size() == 1) {
+            IEnemy RangedRat = allEnemies.getFirst();
+            manualWaves.add(List.of(RangedRat));
+            manualWaves.add(List.of(RangedRat, RangedRat));
+            return;
+        }
+
+        if (allEnemies.size() == 2) {
+            IEnemy RangedRat = allEnemies.get(0);
+            IEnemy MeleeRat = allEnemies.get(1);
+            manualWaves.add(List.of(MeleeRat));
+            manualWaves.add(List.of(MeleeRat, RangedRat));
+            manualWaves.add(List.of(MeleeRat, MeleeRat, RangedRat));
+            return;
+        }
+
+        if (allEnemies.size() == 3) {
+            IEnemy RangedRat = allEnemies.get(0);
+            IEnemy MeleeRat = allEnemies.get(1);
+            IEnemy FlockRat = allEnemies.get(2);
+
+            manualWaves.add(List.of(MeleeRat));
+            manualWaves.add(List.of(MeleeRat, RangedRat));
+            manualWaves.add(List.of(MeleeRat, MeleeRat, RangedRat));
+            manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, RangedRat));
+            manualWaves.add(List.of(FlockRat, FlockRat, FlockRat, RangedRat, RangedRat));
+        }
     }
 
     @Override

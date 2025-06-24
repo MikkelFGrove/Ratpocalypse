@@ -12,33 +12,43 @@
 
     <modules>
         <module>Core</module>
+
+        <!-- Common -->
         <module>Common</module>
         <module>CommonInput</module>
-        <module>Input</module>
         <module>CommonBullet</module>
-        <module>Bullet</module>
-        <module>RangedRat</module>
-        <module>MeleeRat</module>
         <module>CommonEnemy</module>
-        <module>Player</module>
         <module>CommonPlayer</module>
         <module>CommonWeapon</module>
-        <module>Weapon</module>
-        <module>Collision</module>
-        <module>TileManager</module>
-        <module>WaveSpawner</module>
-        <module>Timer</module>
         <module>CommonGraphics</module>
-        <module>TaskSchedulerPlugin</module>
-        <module>Graphics</module>
-        <module>Persistence</module>
-        <module>PathfindingComponent</module>
-        <module>FlockRat</module>
         <module>CommonEntityCP</module>
         <module>CommonPathfinding</module>
         <module>CommonObstacle</module>
-        <module>WorldGenerator</module>
+
+        <!-- Entities -->
+        <module>MeleeRat</module>
+        <module>RangedRat</module>
+        <module>FlockRat</module>
         <module>Companion</module>
+        <module>Bullet</module>
+        <module>Player</module>
+
+        <!-- Tasks -->
+        <module>TaskSchedulerPlugin</module>
+        <module>WaveSpawner</module>
+        <module>Timer</module>
+
+        <!-- IGamePlugin, IEntityProcessing, IPostEntityProcessing -->
+        <module>Persistence</module>
+        <module>Collision</module>
+
+        <!-- Misc -->
+        <module>Input</module>
+        <module>Weapon</module>
+        <module>PathfindingComponent</module>
+        <module>TileManager</module>
+        <module>WorldGenerator</module>
+        <module>Graphics</module>
     </modules>
     <properties>
         <java>java</java>
